@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {TopService} from "../services/topservice/top.service";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
+import {MatSort} from "@angular/material/sort";
 
 @Component({
   selector: 'app-run-list',
@@ -14,6 +15,7 @@ export class RunListComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   constructor(private topService: TopService) { }
 
@@ -22,6 +24,7 @@ export class RunListComponent implements OnInit {
       this.runs = data;
       this.dataSource = new MatTableDataSource<any>(this.runs.slice().reverse());
       this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     });
   }
 

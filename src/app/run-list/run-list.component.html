@@ -1,41 +1,41 @@
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
   <ng-container matColumnDef="host">
-    <th mat-header-cell *matHeaderCellDef> Host </th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Host </th>
     <td mat-cell *matCellDef="let element"> {{element.host}} </td>
   </ng-container>
 
   <ng-container matColumnDef="deck">
-    <th mat-header-cell *matHeaderCellDef> Starting Deck </th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Starting Deck </th>
     <td mat-cell *matCellDef="let element"> {{element.deck}} </td>
   </ng-container>
 
   <ng-container matColumnDef="ascension">
-    <th mat-header-cell *matHeaderCellDef> Ascension Level </th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Ascension Level </th>
     <td mat-cell *matCellDef="let element"> {{element.ascension}} </td>
   </ng-container>
 
   <ng-container matColumnDef="challenge">
-    <th mat-header-cell *matHeaderCellDef> Challenge </th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Challenge </th>
     <td mat-cell *matCellDef="let element"> {{element.challenge}} </td>
   </ng-container>
 
   <ng-container matColumnDef="victory">
-    <th mat-header-cell *matHeaderCellDef> Victory </th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Victory </th>
     <td mat-cell *matCellDef="let element"> {{element.victory}} </td>
   </ng-container>
 
   <ng-container matColumnDef="killedBy">
-    <th mat-header-cell *matHeaderCellDef> Killed By </th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Killed By </th>
     <td mat-cell *matCellDef="let element"> {{element.killedBy}} </td>
   </ng-container>
 
   <ng-container matColumnDef="floor">
-    <th mat-header-cell *matHeaderCellDef> Floor </th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Floor </th>
     <td mat-cell *matCellDef="let element"> {{element.floor}} </td>
   </ng-container>
 
   <ng-container matColumnDef="kaiba">
-    <th mat-header-cell *matHeaderCellDef> Kaiba </th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Kaiba </th>
     <td mat-cell *matCellDef="let element"> {{element.kaiba}} </td>
   </ng-container>
 

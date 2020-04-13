@@ -17,11 +17,6 @@ export class DeckCompareComponent implements OnInit {
 
   constructor(private topService: TopService) { }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-
   ngOnInit(): void {
     this.topService.getDeckCompare().subscribe(data => {
       this.cards = data;
