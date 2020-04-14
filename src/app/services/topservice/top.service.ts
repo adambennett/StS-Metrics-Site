@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class TopService {
 
-  public API = 'https://sts-metrics-site.herokuapp.com/';
+  public API = 'https://sts-duelist-metrics.herokuapp.com/';
 
   constructor(private http: HttpClient) { }
 
