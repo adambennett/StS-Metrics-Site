@@ -10,7 +10,7 @@ import {MatSort} from "@angular/material/sort";
   styleUrls: ['./run-list.component.scss']
 })
 export class RunListComponent implements OnInit {
-  displayedColumns: string[] = ['host', 'deck', 'ascension', 'challenge', 'victory', 'killedBy', 'floor', 'kaiba'];
+  displayedColumns: string[] = ['host', 'time', 'deck', 'ascension', 'challenge', 'victory', 'killedBy', 'floor', 'kaiba'];
   runs: Array<any>;
   dataSource: MatTableDataSource<any>;
 

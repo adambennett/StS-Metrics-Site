@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RunListComponent } from './run-list/run-list.component';
-import {BundleService} from "./services/bundleservice/bundle.service";
 import {TopService} from "./services/topservice/top.service";
 import { HttpClientModule } from '@angular/common/http';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
@@ -1028,7 +1027,7 @@ const appRoutes: Routes = [
     MatTooltipModule,
     PortalModule,
   ],
-  providers: [TopService, BundleService],
+  providers: [TopService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
