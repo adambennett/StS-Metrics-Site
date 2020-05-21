@@ -11,7 +11,7 @@ import {TopService} from "../../../services/topservice/top.service";
 })
 export class AllRelicsComponent implements OnInit {
 
-  displayedColumns: string[] = ['name', 'popularity', 'power', 'picked', 'pickVic'];
+  displayedColumns: string[] = ['name', 'power', 'picked', 'pickVic', 'id'];
   relics: Array<any>;
   dataSource: MatTableDataSource<any>;
 

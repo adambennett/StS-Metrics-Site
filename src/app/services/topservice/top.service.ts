@@ -8,52 +8,48 @@ import { Observable } from 'rxjs';
 })
 export class TopService {
 
-  public API = 'https://sts-duelist-metrics.herokuapp.com/';
-  // public API = 'http://localhost:8080/';
+  // public API = 'https://sts-duelist-metrics.herokuapp.com/';
+  public API = 'http://localhost:8080/';
 
   constructor(private http: HttpClient) { }
 
   getDeckCompare(): Observable<any> {
-    return this.http.get(this.API + 'Decks');
-  }
-
-  getDeckInfo(deck: string): Observable<any> {
-    return this.http.get(this.API + 'Decks/' + deck + "/info");
+    return this.http.get(this.API + 'decks');
   }
 
   getCards(): Observable<any> {
-    return this.http.get(this.API + 'Cards');
+    return this.http.get(this.API + 'cards');
   }
 
   getRelics(): Observable<any> {
-    return this.http.get(this.API + 'Relics');
+    return this.http.get(this.API + 'relics');
   }
 
   getPotions(): Observable<any> {
-    return this.http.get(this.API + 'Potions');
+    return this.http.get(this.API + 'potions');
   }
 
   getNeows(): Observable<any> {
-    return this.http.get(this.API + 'Neow');
+    return this.http.get(this.API + 'neow');
   }
 
   getCardsFromDeck(deck: string): Observable<any> {
-    return this.http.get(this.API + 'Cards/' + deck);
+    return this.http.get(this.API + 'cards/' + deck);
   }
 
   getRelicsFromDeck(deck: string): Observable<any> {
-    return this.http.get(this.API + 'Relics/' + deck);
+    return this.http.get(this.API + 'relics/' + deck);
   }
 
   getPotionsFromDeck(deck: string): Observable<any> {
-    return this.http.get(this.API + 'Potions/' + deck);
+    return this.http.get(this.API + 'potions/' + deck);
   }
 
   getNeowsFromDeck(deck: string): Observable<any> {
-    return this.http.get(this.API + 'Neow/' + deck);
+    return this.http.get(this.API + 'neow/' + deck);
   }
 
-  getRuns(): Observable<any> {
-    return this.http.get(this.API + 'Runs');
+  getDuelistRuns(): Observable<any> {
+    return this.http.get(this.API + 'runs/THE_DUELIST');
   }
 }
