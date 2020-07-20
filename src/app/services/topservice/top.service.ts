@@ -49,11 +49,19 @@ export class TopService {
     return this.http.get(this.API + 'neow/' + deck);
   }
 
+  getAllRuns(): Observable<any> {
+    return this.http.get(this.API + 'runs');
+  }
+
   getDuelistRuns(): Observable<any> {
     return this.http.get(this.API + 'runs/THE_DUELIST');
   }
 
   getNonDuelistRuns(): Observable<any> {
     return this.http.get(this.API + 'runs/nonduelist');
+  }
+
+  getCharacters(): Observable<any> {
+    return this.http.get(this.API + 'allCharacters');
   }
 }

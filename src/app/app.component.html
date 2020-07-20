@@ -4,11 +4,17 @@
   </mat-toolbar-row>
 
   <mat-toolbar-row>
-<!--    <button mat-menu-item [routerLink]="['/run-list']" class="home-btn">Run Log</button>-->
     <button mat-menu-item [matMenuTriggerFor]="runmenu" class="home-btn">Runs</button>
     <mat-menu #runmenu="matMenu">
+      <button mat-menu-item [routerLink]="['/all-run-list']">All</button>
       <button mat-menu-item [routerLink]="['/run-list']">The Duelist</button>
-      <button mat-menu-item [routerLink]="['/all-run-list']">Other Characters</button>
+      <button mat-menu-item [matMenuTriggerFor]="charactersmenu">Characters</button>
+      <mat-menu #charactersmenu="matMenu">
+        <div *ngFor="let char of characters">
+          <button mat-menu-item [routerLink]="['/run-list']">{{char}}</button>
+        </div>
+      </mat-menu>
+      <button mat-menu-item [routerLink]="['/all-run-list']">Non-Duelist</button>
     </mat-menu>
     <button mat-menu-item [matMenuTriggerFor]="deckmenu" class="decks-btn">Decks</button>
     <mat-menu #deckmenu="matMenu">

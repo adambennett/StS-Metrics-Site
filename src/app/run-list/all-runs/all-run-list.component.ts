@@ -20,7 +20,7 @@ export class AllRunListComponent implements OnInit {
   constructor(private topService: TopService) { }
 
   ngOnInit(): void {
-    this.topService.getNonDuelistRuns().subscribe(data => {
+    this.topService.getAllRuns().subscribe(data => {
       this.runs = data;
       this.dataSource = new MatTableDataSource<any>(this.runs.slice().reverse());
       this.dataSource.paginator = this.paginator;
