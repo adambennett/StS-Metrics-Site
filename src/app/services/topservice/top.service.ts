@@ -8,8 +8,8 @@ import { Observable } from 'rxjs';
 })
 export class TopService {
 
-  public API = 'https://sts-duelist-metrics.herokuapp.com/';
-  //public API = 'http://localhost:8080/';
+  //public API = 'https://sts-duelist-metrics.herokuapp.com/';
+  public API = 'http://localhost:8080/';
 
   constructor(private http: HttpClient) { }
 
@@ -51,5 +51,9 @@ export class TopService {
 
   getDuelistRuns(): Observable<any> {
     return this.http.get(this.API + 'runs/THE_DUELIST');
+  }
+
+  getNonDuelistRuns(): Observable<any> {
+    return this.http.get(this.API + 'runs/nonduelist');
   }
 }

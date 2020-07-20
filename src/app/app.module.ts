@@ -194,6 +194,7 @@ import { AllRelicsComponent } from './deckpages/relics/all-relics/all-relics.com
 import { AllPotionsComponent } from './deckpages/potions/all-potions/all-potions.component';
 import { AllCardsComponent } from './deckpages/cards/all-cards/all-cards.component';
 import { WarriorPotionsComponent } from './deckpages/potions/warrior-potions/warrior-potions.component';
+import { AllRunListComponent } from './run-list/non-duelist/all-run-list.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/run-list', pathMatch: 'full' },
@@ -820,6 +821,10 @@ const appRoutes: Routes = [
   {
     path: 'run-list',
     component: RunListComponent
+  },
+  {
+    path: 'all-run-list',
+    component: AllRunListComponent
   }
 ];
 
@@ -977,6 +982,7 @@ const appRoutes: Routes = [
     AllPotionsComponent,
     AllCardsComponent,
     WarriorPotionsComponent,
+    AllRunListComponent,
   ],
   imports: [
     BrowserModule,

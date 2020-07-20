@@ -4,7 +4,12 @@
   </mat-toolbar-row>
 
   <mat-toolbar-row>
-    <button mat-menu-item [routerLink]="['/run-list']" class="home-btn">Run Log</button>
+<!--    <button mat-menu-item [routerLink]="['/run-list']" class="home-btn">Run Log</button>-->
+    <button mat-menu-item [matMenuTriggerFor]="runmenu" class="home-btn">Runs</button>
+    <mat-menu #runmenu="matMenu">
+      <button mat-menu-item [routerLink]="['/run-list']">The Duelist</button>
+      <button mat-menu-item [routerLink]="['/all-run-list']">Other Characters</button>
+    </mat-menu>
     <button mat-menu-item [matMenuTriggerFor]="deckmenu" class="decks-btn">Decks</button>
     <mat-menu #deckmenu="matMenu">
       <button mat-menu-item [matMenuTriggerFor]="allMenu">All</button>
