@@ -3,14 +3,14 @@ import {TopService} from "../../services/topservice/top.service";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatSort} from "@angular/material/sort";
-@Component({
-  selector: 'app-all-run-list',
-  templateUrl: './all-run-list.component.html',
-  styleUrls: ['./all-run-list.component.scss']
-})
-export class AllRunListComponent implements OnInit {
 
-  displayedColumns: string[] = ['host', 'character', 'floor', 'victory', 'ascension', 'killedBy', 'time'];
+@Component({
+  selector: 'app-run-list',
+  templateUrl: './run-list.component.html',
+  styleUrls: ['./run-list.component.scss']
+})
+export class RunListComponent implements OnInit {
+  displayedColumns: string[] = ['host', 'deck', 'floor', 'victory', 'ascension', 'challenge', 'killedBy', 'kaiba', 'time'];
   runs: Array<any>;
   dataSource: MatTableDataSource<any>;
 
@@ -20,7 +20,7 @@ export class AllRunListComponent implements OnInit {
   constructor(private topService: TopService) { }
 
   ngOnInit(): void {
-    this.topService.getAllRuns().subscribe(data => {
+    this.topService.getDuelistRuns().subscribe(data => {
       this.runs = data;
       this.dataSource = new MatTableDataSource<any>(this.runs.slice().reverse());
       this.dataSource.paginator = this.paginator;
@@ -29,3 +29,5 @@ export class AllRunListComponent implements OnInit {
   }
 
 }
+
+

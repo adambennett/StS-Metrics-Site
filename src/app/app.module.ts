@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { RunListComponent } from './run-list/run-list.component';
+import { RunListComponent } from './run-list/duelist-runs/run-list.component';
 import {TopService} from "./services/topservice/top.service";
 import { HttpClientModule } from '@angular/common/http';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
@@ -194,7 +194,10 @@ import { AllRelicsComponent } from './deckpages/relics/all-relics/all-relics.com
 import { AllPotionsComponent } from './deckpages/potions/all-potions/all-potions.component';
 import { AllCardsComponent } from './deckpages/cards/all-cards/all-cards.component';
 import { WarriorPotionsComponent } from './deckpages/potions/warrior-potions/warrior-potions.component';
-import { AllRunListComponent } from './run-list/all-runs/all-run-list.component';
+import { NonDuelistRunComponent } from './run-list/non-duelist/non-duelist-run.component';
+import { CharRunsComponent } from './run-list/specific-char/char-runs.component';
+import {AllRunsComponent} from "./run-list/all-runs/all-runs.component";
+import { RunViewerComponent } from './run-list/run-viewer/run-viewer.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: '/run-list', pathMatch: 'full' },
@@ -824,7 +827,27 @@ const appRoutes: Routes = [
   },
   {
     path: 'all-run-list',
-    component: AllRunListComponent
+    component: AllRunsComponent
+  },
+  {
+    path: 'non-duelist-run-list',
+    component: NonDuelistRunComponent
+  },
+  {
+    path: 'run-list-character/:char',
+    component: CharRunsComponent
+  },
+  {
+    path: 'run-view/:id',
+    component: RunViewerComponent
+  },
+  {
+    path: 'run-list-country/:country',
+    component: RunViewerComponent // change
+  },
+  {
+    path: 'run-list-time/:time',
+    component: RunViewerComponent // change
   }
 ];
 
@@ -832,6 +855,7 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     RunListComponent,
+    AllRunsComponent,
     DeckCompareComponent,
     StandardCardsComponent,
     DragonCardsComponent,
@@ -982,7 +1006,9 @@ const appRoutes: Routes = [
     AllPotionsComponent,
     AllCardsComponent,
     WarriorPotionsComponent,
-    AllRunListComponent,
+    NonDuelistRunComponent,
+    CharRunsComponent,
+    RunViewerComponent,
   ],
   imports: [
     BrowserModule,

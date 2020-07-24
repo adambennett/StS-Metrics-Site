@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AllRunListComponent } from './all-run-list.component';
+import { NonDuelistRunComponent } from './non-duelist-run.component';
 
 describe('AllRunListComponent', () => {
-  let component: AllRunListComponent;
-  let fixture: ComponentFixture<AllRunListComponent>;
+  let component: NonDuelistRunComponent;
+  let fixture: ComponentFixture<NonDuelistRunComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AllRunListComponent ]
+      declarations: [ NonDuelistRunComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AllRunListComponent);
+    fixture = TestBed.createComponent(NonDuelistRunComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
