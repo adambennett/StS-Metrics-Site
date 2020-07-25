@@ -4,8 +4,8 @@ import {MatTableDataSource} from "@angular/material/table";
 import {MatSort} from "@angular/material/sort";
 import {Subscription} from 'rxjs/Subscription';
 import {ActivatedRoute, Router} from '@angular/router';
-import {TopService} from "../../../services/topservice/top.service";
 import {RunLog} from "../../../models/RunLog";
+import {RunLogService} from "../../../services/run-log-service/run-log.service";
 
 @Component({
   selector: 'app-runs',
@@ -25,7 +25,7 @@ export class RunsComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private topService: TopService) { }
+              private runService: RunLogService) { }
 
   ngOnInit(): void {
     this.sub = this.route.params.subscribe(params => {
@@ -37,7 +37,7 @@ export class RunsComponent implements OnInit {
         switch (type) {
           case 'All':
             this.runType = 'All';
-            this.topService.getAllRuns().subscribe(data => {
+            this.runService.getAllRuns().subscribe(data => {
               this.runs = data;
               this.dataSource = new MatTableDataSource<RunLog>(this.runs.slice().reverse());
               this.dataSource.paginator = this.paginator;
@@ -46,7 +46,7 @@ export class RunsComponent implements OnInit {
             break;
           case 'Duelist':
             this.runType = 'Duelist';
-            this.topService.getDuelistRuns().subscribe(data => {
+            this.runService.getDuelistRuns().subscribe(data => {
               this.runs = data;
               this.dataSource = new MatTableDataSource<RunLog>(this.runs.slice().reverse());
               this.dataSource.paginator = this.paginator;
@@ -55,7 +55,7 @@ export class RunsComponent implements OnInit {
             break;
           case 'Non-Duelist':
             this.runType = 'Non-Duelist';
-            this.topService.getNonDuelistRuns().subscribe(data => {
+            this.runService.getNonDuelistRuns().subscribe(data => {
               this.runs = data;
               this.dataSource = new MatTableDataSource<RunLog>(this.runs.slice().reverse());
               this.dataSource.paginator = this.paginator;
@@ -66,7 +66,7 @@ export class RunsComponent implements OnInit {
             switch (secondType) {
               case 'Character':
                 this.runType = 'Character';
-                this.topService.getCharacterRuns(type).subscribe(data => {
+                this.runService.getCharacterRuns(type).subscribe(data => {
                   this.runs = data;
                   this.dataSource = new MatTableDataSource<RunLog>(this.runs.slice().reverse());
                   this.dataSource.paginator = this.paginator;
@@ -78,6 +78,12 @@ export class RunsComponent implements OnInit {
                 break;
               case 'Time':
                 this.runType = 'Time';
+                this.runService.getRunsByTime('20190101000000', '25621031154130').subscribe(data => {
+                  this.runs = data;
+                  this.dataSource = new MatTableDataSource<RunLog>(this.runs.slice().reverse());
+                  this.dataSource.paginator = this.paginator;
+                  this.dataSource.sort = this.sort;
+                });
                 break;
             }
             break;

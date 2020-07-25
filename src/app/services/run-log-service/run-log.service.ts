@@ -36,5 +36,8 @@ export class RunLogService extends TopService {
     return this.http.get(this.API + 'run/' + id);
   }
 
+  getRunsByTime(timeStart: string, timeEnd: string): Observable<any>  {
+    return this.http.get(this.API + 'runs/time' + timeStart + '/' + timeEnd);
+  }
 
 }

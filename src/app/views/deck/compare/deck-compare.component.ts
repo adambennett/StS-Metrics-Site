@@ -1,8 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {MatSort} from "@angular/material/sort";
-import {TopService} from "../../../services/topservice/top.service";
-import {MatPaginator} from "@angular/material/paginator";
+import {RunLogService} from "../../../services/run-log-service/run-log.service";
 
 @Component({
   selector: 'app-deck-compare',
@@ -15,10 +14,10 @@ export class DeckCompareComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor(private topService: TopService) { }
+  constructor(private runLogService: RunLogService) { }
 
   ngOnInit(): void {
-    this.topService.getDeckCompare().subscribe(data => {
+    this.runLogService.getDeckCompare().subscribe(data => {
       this.cards = data;
       this.dataSource = new MatTableDataSource<any>(this.cards);
       this.dataSource.sort = this.sort;

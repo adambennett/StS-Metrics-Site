@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import {environment} from "../../../environments/environment";
-import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {TopService} from "../topservice/top.service";
 import {DisplayCard} from "../../models/DisplayCard";
