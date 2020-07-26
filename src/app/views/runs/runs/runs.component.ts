@@ -6,6 +6,7 @@ import {Subscription} from 'rxjs/Subscription';
 import {ActivatedRoute, Router} from '@angular/router';
 import {RunLog} from "../../../models/RunLog";
 import {RunLogService} from "../../../services/run-log-service/run-log.service";
+import {DateFormatter} from "../../../utils/DateFormatter";
 
 @Component({
   selector: 'app-runs',
@@ -29,12 +30,11 @@ export class RunsComponent implements OnInit {
 
   ngOnInit(): void {
     this.sub = this.route.params.subscribe(params => {
-      const type = params.type;
-      const secondType = params.secondType;
-      console.log("types:", type, secondType);
-      if (type) {
-        this.displayedColumns = type === 'Duelist' ? ['host', 'deck', 'floor', 'victory', 'ascension', 'challenge', 'killedBy', 'kaiba', 'time'] : ['host', 'character', 'floor', 'victory', 'ascension', 'killedBy', 'time'];
-        switch (type) {
+      const runType = params.type;
+      const specificRunType = params.secondType;
+      if (runType) {
+        this.displayedColumns = runType === 'Duelist' ? ['host', 'deck', 'floor', 'victory', 'ascension', 'challenge', 'killedBy', 'kaiba', 'time'] : ['host', 'character', 'floor', 'victory', 'ascension', 'killedBy', 'time'];
+        switch (runType) {
           case 'All':
             this.runType = 'All';
             this.runService.getAllRuns().subscribe(data => {
@@ -62,34 +62,36 @@ export class RunsComponent implements OnInit {
               this.dataSource.sort = this.sort;
             });
             break;
-          default:
-            switch (secondType) {
-              case 'Character':
-                this.runType = 'Character';
-                this.runService.getCharacterRuns(type).subscribe(data => {
-                  this.runs = data;
-                  this.dataSource = new MatTableDataSource<RunLog>(this.runs.slice().reverse());
-                  this.dataSource.paginator = this.paginator;
-                  this.dataSource.sort = this.sort;
-                });
-                break;
-              case 'Country':
-                this.runType = 'Country';
-                break;
-              case 'Time':
-                this.runType = 'Time';
-                this.runService.getRunsByTime('20190101000000', '25621031154130').subscribe(data => {
-                  this.runs = data;
-                  this.dataSource = new MatTableDataSource<RunLog>(this.runs.slice().reverse());
-                  this.dataSource.paginator = this.paginator;
-                  this.dataSource.sort = this.sort;
-                });
-                break;
-            }
+          case 'Character':
+            this.runType = 'Character';
+            this.runService.getCharacterRuns(specificRunType).subscribe(data => {
+              this.runs = data;
+              this.dataSource = new MatTableDataSource<RunLog>(this.runs.slice().reverse());
+              this.dataSource.paginator = this.paginator;
+              this.dataSource.sort = this.sort;
+            });
+            break;
+          case 'Country':
+            this.runType = 'Country';
+            this.runService.getRunsByCountry(specificRunType).subscribe(data => {
+              this.runs = data;
+              this.dataSource = new MatTableDataSource<RunLog>(this.runs.slice().reverse());
+              this.dataSource.paginator = this.paginator;
+              this.dataSource.sort = this.sort;
+            });
+            break;
+          case 'Time':
+            this.runType = 'Time';
+            const timestamp = DateFormatter.getTimestamp(specificRunType);
+            this.runService.getRunsByTime(timestamp.start, timestamp.end).subscribe(data => {
+              this.runs = data;
+              this.dataSource = new MatTableDataSource<RunLog>(this.runs.slice().reverse());
+              this.dataSource.paginator = this.paginator;
+              this.dataSource.sort = this.sort;
+            });
             break;
         }
       }
     });
   }
-
 }

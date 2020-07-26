@@ -8,8 +8,12 @@ import {DisplayCard} from "../../models/DisplayCard";
 })
 export class CardService extends TopService {
 
-  getCards(): Observable<any> {
-    return this.http.get(this.API + 'cards');
+  getCardsFromMod(mod: string): Observable<DisplayCard[]> {
+    return this.http.get<DisplayCard[]>(this.API + 'mods/cards/' + mod);
+  }
+
+  getCards(): Observable<DisplayCard[]> {
+    return this.http.get<DisplayCard[]>(this.API + 'cards');
   }
 
   getCardsFromDeck(deck: string): Observable<DisplayCard[]> {

@@ -1,26 +1,30 @@
 import { Injectable } from '@angular/core';
 import {Observable} from "rxjs";
 import {TopService} from "../topservice/top.service";
+import {CountryRunCount} from "../../models/CountryRunCount";
+import {ModInfoBundle} from "../../models/ModInfoBundle";
+import {Country} from "../../models/Country";
+import {ModViewer} from "../../models/ModViewer";
 
 @Injectable({
   providedIn: 'root'
 })
 export class BundleService extends TopService {
 
-  getRunCountByCountry(): Observable<any> {
-    return this.http.get(this.API + 'runCountByCountry');
+  getModsFromBundle(id: number): Observable<ModViewer[]> {
+    return this.http.get<ModViewer[]>(this.API + 'mods' + id);
   }
 
-  getCountries(): Observable<any> {
-    return this.http.get(this.API + 'countries');
+  getFullModsFromBundle(id: number): Observable<ModInfoBundle[]> {
+    return this.http.get<ModInfoBundle[]>(this.API + 'fullmods' + id);
   }
 
-  getModsFromBundle(id: number): Observable<any> {
-    return this.http.get(this.API + 'mods' + id);
+  getCountries(): Observable<Country[]> {
+    return this.http.get<Country[]>(this.API + 'countries');
   }
 
-  getFullModsFromBundle(id: number): Observable<any> {
-    return this.http.get(this.API + 'fullmods' + id);
+  getRunCountByCountry(): Observable<CountryRunCount[]> {
+    return this.http.get<CountryRunCount[]>(this.API + 'runCountByCountry');
   }
 
 }

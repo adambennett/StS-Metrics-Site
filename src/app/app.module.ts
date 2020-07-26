@@ -55,6 +55,11 @@ import {InfoService} from "./services/info-service/info.service";
 import {RunLogService} from "./services/run-log-service/run-log.service";
 import { RunsComponent } from './views/runs/runs/runs.component';
 import { RunViewerComponent } from './views/runs/run-details/run-viewer.component';
+import { RunCountCountryComponent } from './views/info/run-count-country/run-count-country.component';
+import { StatsComponent } from './views/info/stats/stats.component';
+import { CardListComponent } from './views/mods/card-list/card-list.component';
+import { RelicListComponent } from './views/mods/relic-list/relic-list.component';
+import { PotionListComponent } from './views/mods/potion-list/potion-list.component';
 
 const appRoutes: Routes = [
   {
@@ -67,7 +72,11 @@ const appRoutes: Routes = [
     component: DeckCompareComponent
   },
   {
-    path: 'info/:deck',
+    path: 'info/run-count-country',
+    component: RunCountCountryComponent
+  },
+  {
+    path: 'info/decks/:deck',
     component: InfoComponent
   },
   {
@@ -110,7 +119,12 @@ const appRoutes: Routes = [
     PotionsComponent,
     NeowComponent,
     RunsComponent,
-    RunViewerComponent
+    RunViewerComponent,
+    RunCountCountryComponent,
+    StatsComponent,
+    CardListComponent,
+    RelicListComponent,
+    PotionListComponent
   ],
   imports: [
     BrowserModule,

@@ -1,34 +1,46 @@
 import { Injectable } from '@angular/core';
 import {TopService} from "../topservice/top.service";
 import {Observable} from "rxjs";
+import {DisplayObject} from "../../models/DisplayObject";
 
 @Injectable({
   providedIn: 'root'
 })
 export class DisplayObjectService extends TopService {
 
-  getRelics(): Observable<any> {
-    return this.http.get(this.API + 'relics');
+  getRelicsFromMod(modId: string): Observable<DisplayObject[]> {
+    return this.http.get<DisplayObject[]>(this.API + 'mods/relics/' + modId);
   }
 
-  getRelicsFromDeck(deck: string): Observable<any> {
-    return this.http.get(this.API + 'relics/' + deck);
+  getPotionsFromMod(modId: string): Observable<DisplayObject[]> {
+    return this.http.get<DisplayObject[]>(this.API + 'mods/potions/' + modId);
   }
 
-  getPotions(): Observable<any> {
-    return this.http.get(this.API + 'potions');
+  getNeowsFromMod(modId: string): Observable<DisplayObject[]> {
+    return this.http.get<DisplayObject[]>(this.API + 'mods/neow/' + modId);
   }
 
-  getPotionsFromDeck(deck: string): Observable<any> {
-    return this.http.get(this.API + 'potions/' + deck);
+  getRelics(): Observable<DisplayObject[]> {
+    return this.http.get<DisplayObject[]>(this.API + 'relics');
   }
 
-  getNeows(): Observable<any> {
-    return this.http.get(this.API + 'neow');
+  getRelicsFromDeck(deck: string): Observable<DisplayObject[]> {
+    return this.http.get<DisplayObject[]>(this.API + 'relics/' + deck);
   }
 
-  getNeowsFromDeck(deck: string): Observable<any> {
-    return this.http.get(this.API + 'neow/' + deck);
+  getPotions(): Observable<DisplayObject[]> {
+    return this.http.get<DisplayObject[]>(this.API + 'potions');
   }
 
+  getPotionsFromDeck(deck: string): Observable<DisplayObject[]> {
+    return this.http.get<DisplayObject[]>(this.API + 'potions/' + deck);
+  }
+
+  getNeows(): Observable<DisplayObject[]> {
+    return this.http.get<DisplayObject[]>(this.API + 'neow');
+  }
+
+  getNeowsFromDeck(deck: string): Observable<DisplayObject[]> {
+    return this.http.get<DisplayObject[]>(this.API + 'neow/' + deck);
+  }
 }
