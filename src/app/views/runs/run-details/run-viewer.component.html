@@ -1,1 +1,80 @@
-<p>run-viewer works!</p>
+<div class="mat-elevation-z25">
+
+<!-- Path -->
+<div *ngIf="!emptyPath">
+  <div class="mat-elevation-z7">
+    <mat-label>Path Taken</mat-label>
+    <table style="display: block; width:100%; margin-top: 10pt">
+      <tr>
+        <th style="padding-right: 25px">Path</th>
+        <td class="right" *ngFor="let icon of pathURLs">
+          <img src="{{icon}}" alt="not found">
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<br><br>
+
+<!-- Mod List -->
+<div *ngIf="run.event.modList.length > 0">
+  <div class="mat-elevation-z7">
+    <mat-label>Mod List</mat-label>
+    <table style="display: block; width:100%; margin-top: 10pt">
+      <tr>
+        <th style="padding-right: 25px">Mod</th>
+        <td class="right" *ngFor="let mod of run.event.modList" style="padding-left: 35px; padding-right: 35px">
+          {{mod.name}}
+        </td>
+      </tr>
+      <tr>
+        <th style="padding-right: 25px">Version</th>
+        <td class="right" *ngFor="let mod of run.event.modList" style="padding-left: 35px; padding-right: 35px">
+          {{mod.modVersion}}
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<br><br>
+
+<!-- Card Choices -->
+<div class="mat-elevation-z7">
+  <mat-label>Card Choices</mat-label>
+  <table style="display: block; width:100%; margin-top: 10pt;">
+    <tr>
+      <th style="padding-right: 25px">Picked</th>
+      <td class="right" *ngFor="let i of run.event.card_choices" style="padding-left: 35px; padding-right: 35px">
+        {{i.picked}}
+      </td>
+    </tr>
+    <tr>
+      <th style="padding-right: 25px">Not Picked 1</th>
+      <td class="right" *ngFor="let i of run.event.card_choices" style="padding-left: 35px; padding-right: 35px">
+        {{i.not_picked[0]}}
+      </td>
+    </tr>
+    <tr>
+      <th style="padding-right: 25px">Not Picked 2</th>
+      <td class="right" *ngFor="let i of run.event.card_choices" style="padding-left: 35px; padding-right: 35px">
+        {{i.not_picked[1]}}
+      </td>
+    </tr>
+    <tr>
+      <th style="padding-right: 25px">Not Picked 3</th>
+      <td class="right" *ngFor="let i of run.event.card_choices" style="padding-left: 35px; padding-right: 35px">
+        {{i.not_picked[2]}}
+      </td>
+    </tr>
+    <tr>
+      <th style="padding-right: 25px">Not Picked 4</th>
+      <td class="right" *ngFor="let i of run.event.card_choices" style="padding-left: 35px; padding-right: 35px">
+        {{i.not_picked[3]}}
+      </td>
+    </tr>
+  </table>
+</div>
+
+</div>

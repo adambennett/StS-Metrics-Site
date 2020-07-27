@@ -3,15 +3,15 @@ import {Observable} from "rxjs";
 import {RunLog} from "../../models/RunLog";
 import {TopService} from "../topservice/top.service";
 import {DisplayDeck} from "../../models/DisplayDeck";
-import {RunDetails} from "../../models/RunDetails";
+import {TopBundle} from '../../models/TopBundle';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RunLogService extends TopService {
 
-  getRunView(id: number): Observable<RunDetails> {
-    return this.http.get<RunDetails>(this.API + 'run/' + id);
+  getRunView(id: number): Observable<TopBundle> {
+    return this.http.get<TopBundle>(this.API + 'run/' + id);
   }
 
   getDeckCompare(): Observable<DisplayDeck[]> {

@@ -1,4 +1,12 @@
-import {TopBundle} from "./TopBundle";
+import { TopBundle } from "./TopBundle";
+import { MiniMod } from "./MiniMod";
+import { BossRelic } from "./BossRelic";
+import { Event } from "./Event";
+import { SpireCard } from "./SpireCard";
+import { Potion } from "./Potion";
+import { Relic } from "./Relic";
+import { CampfireChoice } from "./CampfireChoice";
+import { DamageInfo } from "./DamageInfo";
 
 export interface Bundle {
 
@@ -81,12 +89,12 @@ export interface Bundle {
   path_taken: string[];
   relics: string[];
 
-  modList: any[];
-  boss_relics: any[];
-  event_choices: any[];
-  card_choices: any[];
-  potions_obtained: any[];
-  relics_obtained: any[];
-  campfire_choices: any[];
-  damage_taken: any[];
+  modList: MiniMod[];
+  boss_relics: BossRelic[];
+  event_choices: Event[];
+  card_choices: SpireCard[];
+  potions_obtained: Potion[];
+  relics_obtained: Relic[];
+  campfire_choices: CampfireChoice[];
+  damage_taken: DamageInfo[];
 }
