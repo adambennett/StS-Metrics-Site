@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {MatSort} from "@angular/material/sort";
 import {RunLogService} from "../../../services/run-log-service/run-log.service";
+import {DisplayDeck} from '../../../models/DisplayDeck';
 
 @Component({
   selector: 'app-deck-compare',
@@ -10,16 +11,17 @@ import {RunLogService} from "../../../services/run-log-service/run-log.service";
 })
 export class DeckCompareComponent implements OnInit {
   displayedColumns: string[] = ['deck', 'runs', 'wins', 'a20runs', 'a20wins', 'highestChallenge', 'c20runs', 'c20wins', 'floor', 'killed', 'kaiba'];
-  cards: Array<any>;
-  dataSource: MatTableDataSource<any>;
+  decks: DisplayDeck[];
+  dataSource: MatTableDataSource<DisplayDeck>;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   constructor(private runLogService: RunLogService) { }
 
   ngOnInit(): void {
     this.runLogService.getDeckCompare().subscribe(data => {
-      this.cards = data;
-      this.dataSource = new MatTableDataSource<any>(this.cards);
+      this.decks = data;
+      sessionStorage.hallOfFame = JSON.stringify(data);
+      this.dataSource = new MatTableDataSource<DisplayDeck>(this.decks);
       this.dataSource.sort = this.sort;
     });
   }

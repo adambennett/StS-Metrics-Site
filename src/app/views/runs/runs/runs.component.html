@@ -1,15 +1,24 @@
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
 
   <!-- General Columns - Used on all run list pages -->
+  <ng-container matColumnDef="details">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+    <td mat-cell *matCellDef="let element">
+      <button [routerLink]="['/run-view', element.run_id]" class="btn btn-raised btn-primary color-btn">View Details</button>
+    </td>
+  </ng-container>
+
   <ng-container matColumnDef="host">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Host </th>
     <td mat-cell *matCellDef="let element">
-      {{element.host}}<br><button [routerLink]="['/run-view', element.run_id]">View Details</button>
+      <button [routerLink]="['/runs/Host/', element.host]" class="btn btn-raised btn-primary color-btn">{{element.host}}</button>
     </td>
   </ng-container>
   <ng-container matColumnDef="time">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Time </th>
-    <td mat-cell *matCellDef="let element"> {{element.time}} </td>
+    <td mat-cell *matCellDef="let element">
+      {{element.time}}
+    </td>
   </ng-container>
   <ng-container matColumnDef="ascension">
     <th mat-header-cell *matHeaderCellDef mat-sort-header> Ascension Level </th>

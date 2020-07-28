@@ -1,10 +1,12 @@
 import {PathImage} from "./PathImage";
 
 export interface PathIconArchive {
+  BadMatchIcon: string;
   Icons: PathImage[];
 }
 
 export const Archive: PathIconArchive = {
+  BadMatchIcon: '/assets/path/unknownMonster.png',
   Icons: [
     { id: 'BOSS',
       url:'/assets/path/boss.png'
@@ -26,6 +28,14 @@ export const Archive: PathIconArchive = {
     },
     { id: '$',
       url:'/assets/path/shop.png'
+    },
+    {
+      id: 'R_BF',
+      url: '/assets/path/bonfire.png'
+    },
+    {
+      id: 'NM',
+      url: '/assets/path/nightmare.png'
     }
    ]
 }

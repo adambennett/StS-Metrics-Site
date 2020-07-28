@@ -104,6 +104,10 @@ const appRoutes: Routes = [
     component: RunsComponent
   },
   {
+    path: 'runs/:type/:secondType/:hofType',
+    component: RunsComponent
+  },
+  {
     path: 'run-view/:id',
     component: RunViewerComponent
   }

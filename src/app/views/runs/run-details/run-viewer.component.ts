@@ -16,10 +16,32 @@ import {MatSort} from '@angular/material/sort';
 })
 export class RunViewerComponent implements OnInit {
 
+  displayedColumns: string[] = [
+    'add_base_game_cards',
+    'allow_boosters',
+    'always_boosters',
+    'remove_card_rewards',
+    'bonus_puzzle_summons',
+    'chose_seed',
+    'customized_card_pool',
+    'duelist_curses',
+    'encounter_duelist_enemies',
+    'is_beta',
+    'is_daily',
+    'is_endless',
+    'playing_as_kaiba',
+    'reduced_basic',
+    'remove_creator',
+    'remove_exodia',
+    'remove_ojama',
+    'remove_toons',
+    'victory'
+  ];
   dataSource: MatTableDataSource<TopBundle>;
   pathIcons: PathIconArchive = Archive;
   pathURLs: string[] = [];
   emptyPath: boolean = false;
+  triggeredBadMatches: boolean = false;
   run: TopBundle;
   sub: Subscription;
 
@@ -36,6 +58,11 @@ export class RunViewerComponent implements OnInit {
       if (id) {
         this.runService.getRunView(id).subscribe(data => {
           this.run = data;
+          const arr: TopBundle[] = [];
+          arr.push(this.run);
+          this.dataSource = new MatTableDataSource<TopBundle>(arr);
+          //this.dataSource.paginator = this.paginator;
+          //this.dataSource.sort = this.sort;
           this.calculatePath();
         });
       }
@@ -64,16 +91,15 @@ export class RunViewerComponent implements OnInit {
       if (!foundOne) {
         foundAll = false;
         badMatches.push(curr);
-        this.pathURLs.push('/assets/path/unknownMonster.png');
+        this.pathURLs.push(this.pathIcons.BadMatchIcon);
       }
       if (environment.localhost) {
         console.log('found a match on all paths: ', foundAll)
       }
-      if (!foundAll) {
-        if (environment.localhost) {
-          //alert('Bad path text found!');
-          console.log('bad matches: ', badMatches);
-        }
+      if (!foundAll && environment.localhost && !this.triggeredBadMatches) {
+        alert('Bad path text found!');
+        console.log('bad matches: ', badMatches);
+        this.triggeredBadMatches = true;
       }
     }
   }

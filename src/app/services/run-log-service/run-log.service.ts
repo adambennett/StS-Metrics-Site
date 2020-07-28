@@ -4,11 +4,19 @@ import {RunLog} from "../../models/RunLog";
 import {TopService} from "../topservice/top.service";
 import {DisplayDeck} from "../../models/DisplayDeck";
 import {TopBundle} from '../../models/TopBundle';
+import {HttpParams} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RunLogService extends TopService {
+
+  getRunsByIds(id: number[]): Observable<RunLog[]> {
+    let params = new HttpParams();
+    params = params.append('', id.join(', '));
+    const paramString = params.toString().substring(1);
+    return this.http.get<RunLog[]>(this.API + 'runs-id/' + paramString);
+  }
 
   getRunView(id: number): Observable<TopBundle> {
     return this.http.get<TopBundle>(this.API + 'run/' + id);
@@ -27,7 +35,7 @@ export class RunLogService extends TopService {
   }
 
   getNonDuelistRuns(): Observable<RunLog[]> {
-    return this.http.get<RunLog[]>(this.API + 'runs/nonduelist');
+    return this.http.get<RunLog[]>(this.API + 'runs-nonduelist');
   }
 
   getCharacters(): Observable<string[]> {
@@ -39,10 +47,14 @@ export class RunLogService extends TopService {
   }
 
   getRunsByTime(timeStart: string, timeEnd: string): Observable<RunLog[]>  {
-    return this.http.get<RunLog[]>(this.API + 'runs/time/' + timeStart + '/' + timeEnd);
+    return this.http.get<RunLog[]>(this.API + 'runs-time/' + timeStart + '/' + timeEnd);
   }
 
   getRunsByCountry(country: string): Observable<RunLog[]> {
-    return this.http.get<RunLog[]>(this.API + 'runs/country/' + country);
+    return this.http.get<RunLog[]>(this.API + 'runs-country/' + country);
+  }
+
+  getRunsByHost(host: string): Observable<RunLog[]> {
+    return this.http.get<RunLog[]>(this.API + 'runs-host/' + host);
   }
 }

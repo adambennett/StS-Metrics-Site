@@ -2,4 +2,29 @@ table {
   display: block;
   overflow-x: auto;
   white-space: nowrap;
+  width: 100%;
+}
+
+.table-dark {
+  width: 100%;
+}
+
+.path-div {
+  margin: 20pt;
+}
+
+.mod-div {
+  margin: 20pt;
+}
+
+.card-choice-div {
+  margin: 20pt;
+}
+
+.relic-choice-div {
+  margin: 20pt;
+}
+
+.footer {
+  flex-shrink: 0;
 }

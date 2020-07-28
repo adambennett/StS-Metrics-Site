@@ -1,80 +1,326 @@
 <div class="mat-elevation-z25">
 
-<!-- Path -->
-<div *ngIf="!emptyPath">
-  <div class="mat-elevation-z7">
-    <mat-label>Path Taken</mat-label>
-    <table style="display: block; width:100%; margin-top: 10pt">
-      <tr>
-        <th style="padding-right: 25px">Path</th>
-        <td class="right" *ngFor="let icon of pathURLs">
-          <img src="{{icon}}" alt="not found">
-        </td>
-      </tr>
-    </table>
+  <!-- Path -->
+  <div *ngIf="!emptyPath" class="path-div">
+    <div class="mat-elevation-z7">
+      <mat-label>Path Taken</mat-label>
+      <table style="display: block; width:100%; margin-top: 10pt" class="table table-dark">
+        <tr>
+          <td class="right" *ngFor="let icon of pathURLs">
+            <img src="{{icon}}" alt="not found">
+          </td>
+        </tr>
+      </table>
+    </div>
   </div>
-</div>
 
-<br><br>
-
-<!-- Mod List -->
-<div *ngIf="run.event.modList.length > 0">
-  <div class="mat-elevation-z7">
-    <mat-label>Mod List</mat-label>
-    <table style="display: block; width:100%; margin-top: 10pt">
-      <tr>
-        <th style="padding-right: 25px">Mod</th>
-        <td class="right" *ngFor="let mod of run.event.modList" style="padding-left: 35px; padding-right: 35px">
-          {{mod.name}}
-        </td>
-      </tr>
-      <tr>
-        <th style="padding-right: 25px">Version</th>
-        <td class="right" *ngFor="let mod of run.event.modList" style="padding-left: 35px; padding-right: 35px">
-          {{mod.modVersion}}
-        </td>
-      </tr>
-    </table>
+  <!-- Mod List -->
+  <div *ngIf="run.event.modList.length > 0" class="mod-div">
+    <div class="mat-elevation-z7">
+      <mat-label>Mod List</mat-label>
+      <table style="display: block; width:100%; margin-top: 10pt" class="table table-dark">
+        <tr>
+          <th style="padding-right: 25px">Mod</th>
+          <td class="right" *ngFor="let mod of run.event.modList" style="padding-left: 35px; padding-right: 35px">
+            {{mod.name}}
+          </td>
+        </tr>
+        <tr>
+          <th style="padding-right: 25px">Version</th>
+          <td class="right" *ngFor="let mod of run.event.modList" style="padding-left: 35px; padding-right: 35px">
+            {{mod.modVersion}}
+          </td>
+        </tr>
+      </table>
+    </div>
   </div>
-</div>
 
-<br><br>
+  <!-- Card Choices -->
+  <div *ngIf="run.event.card_choices.length > 0" class="card-choice-div">
+    <div class="mat-elevation-z7">
+      <mat-label>Card Choices</mat-label>
+      <table style="display: block; width:100%; margin-top: 10pt;" class="table table-dark">
+        <tr>
+          <th style="padding-right: 25px">Picked</th>
+          <td class="right" *ngFor="let i of run.event.card_choices" style="font-weight: bold; padding-left: 35px; padding-right: 35px">
+            {{i.picked}}
+          </td>
+        </tr>
+        <tr>
+          <th style="padding-right: 25px">Not Picked 1</th>
+          <td class="right" *ngFor="let i of run.event.card_choices" style="padding-left: 35px; padding-right: 35px">
+            <div *ngIf="i.not_picked.length > 0; else elseBlock">{{i.not_picked[0]}}</div>
+            <ng-template #elseBlock>---</ng-template>
+          </td>
+        </tr>
+        <tr>
+          <th style="padding-right: 25px">Not Picked 2</th>
+          <td class="right" *ngFor="let i of run.event.card_choices" style="padding-left: 35px; padding-right: 35px">
+            <div *ngIf="i.not_picked.length > 1; else elseBlock">{{i.not_picked[1]}}</div>
+            <ng-template #elseBlock>---</ng-template>
+          </td>
+        </tr>
+        <tr>
+          <th style="padding-right: 25px">Not Picked 3</th>
+          <td class="right" *ngFor="let i of run.event.card_choices" style="padding-left: 35px; padding-right: 35px">
+            <div *ngIf="i.not_picked.length > 2; else elseBlock">{{i.not_picked[2]}}</div>
+            <ng-template #elseBlock>---</ng-template>
+          </td>
+        </tr>
+        <tr>
+          <th style="padding-right: 25px">Not Picked 4</th>
+          <td class="right" *ngFor="let i of run.event.card_choices" style="padding-left: 35px; padding-right: 35px">
+            <div *ngIf="i.not_picked.length > 3; else elseBlock">{{i.not_picked[3]}}</div>
+            <ng-template #elseBlock>---</ng-template>
+          </td>
+        </tr>
+        <tr>
+          <th style="padding-right: 25px">Not Picked 5</th>
+          <td class="right" *ngFor="let i of run.event.card_choices" style="padding-left: 35px; padding-right: 35px">
+            <div *ngIf="i.not_picked.length > 4; else elseBlock">{{i.not_picked[4]}}</div>
+            <ng-template #elseBlock>---</ng-template>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
 
-<!-- Card Choices -->
-<div class="mat-elevation-z7">
-  <mat-label>Card Choices</mat-label>
-  <table style="display: block; width:100%; margin-top: 10pt;">
-    <tr>
-      <th style="padding-right: 25px">Picked</th>
-      <td class="right" *ngFor="let i of run.event.card_choices" style="padding-left: 35px; padding-right: 35px">
-        {{i.picked}}
-      </td>
-    </tr>
-    <tr>
-      <th style="padding-right: 25px">Not Picked 1</th>
-      <td class="right" *ngFor="let i of run.event.card_choices" style="padding-left: 35px; padding-right: 35px">
-        {{i.not_picked[0]}}
-      </td>
-    </tr>
-    <tr>
-      <th style="padding-right: 25px">Not Picked 2</th>
-      <td class="right" *ngFor="let i of run.event.card_choices" style="padding-left: 35px; padding-right: 35px">
-        {{i.not_picked[1]}}
-      </td>
-    </tr>
-    <tr>
-      <th style="padding-right: 25px">Not Picked 3</th>
-      <td class="right" *ngFor="let i of run.event.card_choices" style="padding-left: 35px; padding-right: 35px">
-        {{i.not_picked[2]}}
-      </td>
-    </tr>
-    <tr>
-      <th style="padding-right: 25px">Not Picked 4</th>
-      <td class="right" *ngFor="let i of run.event.card_choices" style="padding-left: 35px; padding-right: 35px">
-        {{i.not_picked[3]}}
-      </td>
-    </tr>
-  </table>
-</div>
+  <!-- Boss Relic Choices -->
+  <div *ngIf="run.event.boss_relics.length > 0" class="card-choice-div">
+    <div class="mat-elevation-z7">
+      <mat-label>Boss Relic Choices</mat-label>
+      <table style="display: block; width:100%; margin-top: 10pt;" class="table table-dark">
+        <tr>
+          <th style="padding-right: 25px">Picked</th>
+          <td class="right" *ngFor="let i of run.event.boss_relics" style="font-weight: bold; padding-left: 35px; padding-right: 35px">
+            {{i.picked}}
+          </td>
+        </tr>
+        <tr>
+          <th style="padding-right: 25px">Not Picked 1</th>
+          <td class="right" *ngFor="let i of run.event.boss_relics" style="padding-left: 35px; padding-right: 35px">
+            <div *ngIf="i.not_picked.length > 0; else elseBlock">{{i.not_picked[0]}}</div>
+            <ng-template #elseBlock>---</ng-template>
+          </td>
+        </tr>
+        <tr>
+          <th style="padding-right: 25px">Not Picked 2</th>
+          <td class="right" *ngFor="let i of run.event.boss_relics" style="padding-left: 35px; padding-right: 35px">
+            <div *ngIf="i.not_picked.length > 1; else elseBlock">{{i.not_picked[1]}}</div>
+            <ng-template #elseBlock>---</ng-template>
+          </td>
+        </tr>
+        <tr>
+          <th style="padding-right: 25px">Not Picked 3</th>
+          <td class="right" *ngFor="let i of run.event.boss_relics" style="padding-left: 35px; padding-right: 35px">
+            <div *ngIf="i.not_picked.length > 2; else elseBlock">{{i.not_picked[2]}}</div>
+            <ng-template #elseBlock>---</ng-template>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
 
+  <div *ngIf="run.event.relics.length > 0" class="relic-choice-div">
+    <div class="mat-elevation-z7">
+      <mat-label>Relics</mat-label>
+      <table style="display: block; width:100%; margin-top: 10pt;" class="table table-dark">
+        <tr *ngFor="let relic of run.event.relics">
+          {{relic}}
+        </tr>
+        <tr *ngFor="let relic of run.event.boss_relics">
+          {{relic.picked}}
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- Booleans -->
+    <div class="mat-elevation-z7">
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z7" matSort>
+        <ng-container matColumnDef="add_base_game_cards">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Add Base Game Cards</th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="element.event.add_base_game_cards !== null">
+              {{element.event.add_base_game_cards | json}}
+            </div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="allow_boosters">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Allow Boosters</th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="element.event.allow_boosters !== null">
+              {{element.event.allow_boosters | json}}
+            </div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="always_boosters">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Always Boosters</th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="element.event.always_boosters !== null">
+              {{element.event.always_boosters | json}}
+            </div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="bonus_puzzle_summons">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Bonus Puzzle Summons</th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="element.event.bonus_puzzle_summons !== null">
+              {{element.event.bonus_puzzle_summons | json}}
+            </div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="chose_seed">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Seeded</th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="element.event.chose_seed !== null">
+              {{element.event.chose_seed | json}}
+            </div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="customized_card_pool">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Customized Card Pool</th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="element.event.customized_card_pool !== null">
+              {{element.event.customized_card_pool | json}}
+            </div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="duelist_curses">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Duelist Curses</th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="element.event.duelist_curses !== null">
+              {{element.event.duelist_curses | json}}
+            </div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="encounter_duelist_enemies">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Enemy Duelist Encounters</th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="element.event.encounter_duelist_enemies !== null">
+              {{element.event.encounter_duelist_enemies | json}}
+            </div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="is_beta">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Beta</th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="element.event.is_beta !== null">
+              {{element.event.is_beta | json}}
+            </div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="is_daily">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Daily</th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="element.event.is_daily !== null">
+              {{element.event.is_daily | json}}
+            </div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="is_endless">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Endless</th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="element.event.is_endless !== null">
+              {{element.event.is_endless | json}}
+            </div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="playing_as_kaiba">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Kaiba</th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="element.event.playing_as_kaiba !== null">
+              {{element.event.playing_as_kaiba | json}}
+            </div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="reduced_basic">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Reduced Basic Set</th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="element.event.reduced_basic !== null">
+              {{element.event.reduced_basic | json}}
+            </div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="remove_card_rewards">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Removed Card Rewards</th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="element.event.remove_card_rewards !== null">
+              {{element.event.remove_card_rewards | json}}
+            </div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="remove_creator">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Creator Disabled</th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="element.event.remove_creator !== null">
+              {{element.event.remove_creator | json}}
+            </div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="remove_exodia">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Exodia Disabled</th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="element.event.remove_exodia !== null">
+              {{element.event.remove_exodia | json}}
+            </div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="remove_ojama">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Ojama Disabled</th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="element.event.remove_ojama !== null">
+              {{element.event.remove_ojama | json}}
+            </div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="remove_toons">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Toons Disabled</th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="element.event.remove_toons !== null">
+              {{element.event.remove_toons | json}}
+            </div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="victory">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Victory</th>
+          <td mat-cell *matCellDef="let element">
+            <div *ngIf="element.event.victory !== null">
+              {{element.event.victory | json}}
+            </div>
+          </td>
+        </ng-container>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
 </div>

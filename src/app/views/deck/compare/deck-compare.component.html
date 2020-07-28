@@ -17,7 +17,9 @@
 
     <ng-container matColumnDef="a20runs">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Runs (A20) </th>
-      <td mat-cell *matCellDef="let element"> {{element.a20runs}} </td>
+      <td mat-cell *matCellDef="let element">
+          {{element.a20runs}}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="a20wins">
@@ -27,7 +29,23 @@
 
     <ng-container matColumnDef="highestChallenge">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Highest Challenge </th>
-      <td mat-cell *matCellDef="let element"> {{element.highestChallenge}} </td>
+      <td mat-cell *matCellDef="let element">
+        <div *ngIf="element.highestChallenge > 0 && element.highestChallengeRunID.length > 0; else elseBlock">
+          <div *ngIf=" element.highestChallengeRunID.length > 1; else elseBlock">
+            <button [routerLink]="['/runs', 'hall-of-fame', element.deck, 'highest-challenge']"  class="btn btn-raised btn-primary color-btn">
+              {{element.highestChallenge}}
+            </button>
+          </div>
+          <ng-template #elseBlock>
+            <button [routerLink]="['/run-view', element.highestChallengeRunID[0]]"  class="btn btn-raised btn-primary color-btn">
+              {{element.highestChallenge}}
+            </button>
+          </ng-template>
+        </div>
+        <ng-template #elseBlock>
+          {{element.highestChallenge}}
+        </ng-template>
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="c20runs">
@@ -42,7 +60,11 @@
 
     <ng-container matColumnDef="floor">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Highest Floor </th>
-      <td mat-cell *matCellDef="let element"> {{element.floor}} </td>
+      <td mat-cell *matCellDef="let element">
+        <button [routerLink]="['/run-view', element.run_id]" class="btn btn-raised btn-primary color-btn">
+          {{element.floor}}
+        </button>
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="killed">

@@ -10,4 +10,6 @@ export interface DisplayDeck {
   c20wins: number;
   kaiba: number;
   highestChallenge: number;
+  highestChallengeRunID: number[];
+  highestFloorRunID: number[];
 }
