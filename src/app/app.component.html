@@ -59,14 +59,20 @@
       </mat-menu>-->
       <button mat-menu-item [routerLink]="['/info/run-count-country']">Run Count by Country</button>
     </mat-menu>
+    <button mat-menu-item [matMenuTriggerFor]="modmenu" class="decks-btn">Mods</button>
+    <mat-menu #modmenu="matMenu">
+      <div *ngFor="let mod of mods">
+        <button mat-menu-item>{{mod.name}}</button>
+      </div>
+    </mat-menu>
     <!--<button mat-menu-item [matMenuTriggerFor]="modmenu" class="decks-btn">Mods</button>
     <mat-menu #modmenu="matMenu">
       <div *ngFor="let mod of mods">
         <button mat-menu-item [matMenuTriggerFor]="modSubMenu">{{mod.name}}</button>
         <mat-menu #modSubMenu="matMenu">
-          <button mat-menu-item [routerLink]="['/mods/cards', mod.modID]">Card List</button>
+          &lt;!&ndash;<button mat-menu-item [routerLink]="['/mods/cards', mod.modID]">Card List</button>
           <button mat-menu-item [routerLink]="['/mods/relics', mod.modID]">Relic List</button>
-          <button mat-menu-item [routerLink]="['/mods/potions', mod.modID]">Potion List</button>
+          <button mat-menu-item [routerLink]="['/mods/potions', mod.modID]">Potion List</button>&ndash;&gt;
         </mat-menu>
       </div>
     </mat-menu>-->
