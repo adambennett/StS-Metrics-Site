@@ -60,6 +60,7 @@ import { StatsComponent } from './views/info/stats/stats.component';
 import { CardListComponent } from './views/mods/card-list/card-list.component';
 import { RelicListComponent } from './views/mods/relic-list/relic-list.component';
 import { PotionListComponent } from './views/mods/potion-list/potion-list.component';
+import { CardLookupComponent } from './views/info/card-lookup/card-lookup.component';
 
 const appRoutes: Routes = [
   {
@@ -110,6 +111,10 @@ const appRoutes: Routes = [
   {
     path: 'run-view/:id',
     component: RunViewerComponent
+  },
+  {
+    path: 'cardLookup/:card',
+    component: CardLookupComponent
   }
 ];
 
@@ -128,7 +133,8 @@ const appRoutes: Routes = [
     StatsComponent,
     CardListComponent,
     RelicListComponent,
-    PotionListComponent
+    PotionListComponent,
+    CardLookupComponent
   ],
   imports: [
     BrowserModule,

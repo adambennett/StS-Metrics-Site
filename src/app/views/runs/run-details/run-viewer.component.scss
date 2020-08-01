@@ -5,6 +5,14 @@ table {
   width: 100%;
 }
 
+.vertical-line{
+  width: 0px; /* Use only border style */
+  height: 100%;
+  float: right;
+  border: 1px inset; /* This is default border style for <hr> tag */
+  margin: 5px auto;
+}
+
 .table-dark {
   width: 100%;
 }
@@ -17,6 +25,11 @@ table {
   margin: 20pt;
 }
 
+.deck-div {
+  margin: 20pt;
+}
+
+
 .card-choice-div {
   margin: 20pt;
 }
@@ -27,4 +40,68 @@ table {
 
 .footer {
   flex-shrink: 0;
+}
+
+.path-icons-div {
+  position: relative;
+  width: 85px;
+  height: 250px;
+}
+
+.path-icon-img {
+  width: 48px;
+  height: 48px;
+  margin: 5px auto;
+}
+
+.path-gold-label {
+  width: 48px;
+  height: 48px;
+  margin: 5px auto;
+  color: gold;
+}
+
+.path-floor-label {
+  width: 48px;
+  height: 48px;
+  margin: 5px auto;
+}
+
+.path-hp-label {
+  width: 48px;
+  height: 48px;
+  margin: 5px auto;
+  color: red;
+}
+
+.path-icons-div-labels {
+  position: relative;
+  width: 85px;
+  height: 175px;
+}
+
+.path-icon-img-label {
+  width: 48px;
+  height: 25px;
+  margin: 5px auto;
+}
+
+.path-gold-label-label {
+  width: 48px;
+  height: 25px;
+  margin: 5px auto;
+  color: gold;
+}
+
+.path-floor-label-label {
+  width: 48px;
+  height: 25px;
+  margin: 5px auto;
+}
+
+.path-hp-label-label {
+  width: 48px;
+  height: 25px;
+  margin: 5px auto;
+  color: red;
 }

@@ -1,5 +1,15 @@
 import {PathImage} from "./PathImage";
 
+export interface RunsColumnsModel {
+  duelist: string[],
+  general: string[]
+}
+
+export const RunsColumns: RunsColumnsModel = {
+  duelist: ['host', 'deck',      'floor', 'victory', 'ascension', 'challenge', 'killedBy', 'time', 'details'],
+  general: ['host', 'character', 'floor', 'victory', 'ascension', 'challenge', 'killedBy', 'time', 'details']
+}
+
 export interface PathIconArchive {
   BadMatchIcon: string;
   Icons: PathImage[];

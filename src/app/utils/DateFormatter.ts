@@ -9,7 +9,7 @@ export class DateFormatter {
         timestamp = DateFormatter.getDayStartAndEnd(date);
         break;
       case 'Week':
-        timestamp = DateFormatter.getWeekStartAndEnd(date);
+        timestamp = DateFormatter.getWeekStartAndEnd();
         break;
       case 'Month':
         timestamp = DateFormatter.getMonthStartAndEnd(date);
@@ -40,11 +40,13 @@ export class DateFormatter {
   }
 
   static getDayStartAndEnd = (date: Date) => {
+    const tomorrow = moment().add(1, 'days').toDate();
     const ye = new Intl.DateTimeFormat('en', { year: 'numeric' }).format(date);
     const mo = new Intl.DateTimeFormat('en', { month: '2-digit' }).format(date);
     const da = new Intl.DateTimeFormat('en', { day: '2-digit' }).format(date);
+    const daT= new Intl.DateTimeFormat('en', { day: '2-digit' }).format(tomorrow);
     const start = ye + mo + da + '00' + '00' + '00';
-    const end = ye + mo + da + '12' + '59' + '59';
+    const end = ye + mo + daT + '00' + '00' + '00';
     return {start, end};
   }
 
@@ -70,7 +72,7 @@ export class DateFormatter {
     return {start, end};
   }
 
-  static getWeekStartAndEnd = (date: Date) => {
+  static getWeekStartAndEnd = () => {
     const startOfWeek = moment().startOf('week').toDate();
     const endOfWeek   = moment().endOf('week').toDate();
     const start = DateFormatter.formatDate(startOfWeek);

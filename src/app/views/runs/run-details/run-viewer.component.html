@@ -1,3 +1,19 @@
+{{run.top.event.character_chosen}} : {{log.time}}
+
+<br>
+
+<div *ngIf="log.victory; else elseBlock">
+  Victory on Floor {{log.floor}}!
+</div>
+<ng-template #elseBlock>
+  Slain on Floor {{log.floor}} by {{log.killedBy}}
+</ng-template>
+<br>
+
+Ascension: {{log.ascension}}<br>
+Challenge: {{log.challenge}}<br>
+Score: {{run.top.event.score}}<br>
+
 <div class="mat-elevation-z25">
 
   <!-- Path -->
@@ -6,28 +22,46 @@
       <mat-label>Path Taken</mat-label>
       <table style="display: block; width:100%; margin-top: 10pt" class="table table-dark">
         <tr>
-          <td class="right" *ngFor="let icon of pathURLs">
-            <img src="{{icon}}" alt="not found">
+          <td class="right" *ngFor="let icon of pathURLs; let i = index">
+            <div class="path-icons-div">
+              <div class="vertical-line" style="height: 245px;"></div>
+              <label class="path-floor-label" for="path-icon-img">{{i + 1}}</label><br>
+              <label class="path-gold-label" for="path-icon-img">{{run.top.event.gold_per_floor[i]}}</label><br>
+              <label class="path-hp-label" for="path-icon-img">{{run.top.event.current_hp_per_floor[i]}}/{{run.top.event.max_hp_per_floor[i]}}</label><br>
+              <img src="{{icon}}" alt="not found" id="path-icon-img" class="path-icon-img">
+            </div>
           </td>
         </tr>
       </table>
     </div>
   </div>
 
+<!-- Master Deck -->
+  <div *ngIf="run.top.event.master_deck.length > 0" class="deck-div">
+    <div class="mat-elevation-z7">
+      <mat-label>Master Deck</mat-label>
+      <table style="display: block; width:100%; margin-top: 10pt;" class="table table-dark">
+        <tr *ngFor="let card of run.top.event.master_deck">
+          <a target="_blank" (click)="getLookupCard(card)" [routerLink]="['/cardLookup', lookupCard]" class="btn btn-raised btn-link color-btn text-white">{{card}}</a>
+        </tr>
+      </table>
+    </div>
+  </div>
+
   <!-- Mod List -->
-  <div *ngIf="run.event.modList.length > 0" class="mod-div">
+  <div *ngIf="run.top.event.modList.length > 0" class="mod-div">
     <div class="mat-elevation-z7">
       <mat-label>Mod List</mat-label>
       <table style="display: block; width:100%; margin-top: 10pt" class="table table-dark">
         <tr>
           <th style="padding-right: 25px">Mod</th>
-          <td class="right" *ngFor="let mod of run.event.modList" style="padding-left: 35px; padding-right: 35px">
+          <td class="right" *ngFor="let mod of run.top.event.modList" style="padding-left: 35px; padding-right: 35px">
             {{mod.name}}
           </td>
         </tr>
         <tr>
           <th style="padding-right: 25px">Version</th>
-          <td class="right" *ngFor="let mod of run.event.modList" style="padding-left: 35px; padding-right: 35px">
+          <td class="right" *ngFor="let mod of run.top.event.modList" style="padding-left: 35px; padding-right: 35px">
             {{mod.modVersion}}
           </td>
         </tr>
@@ -36,48 +70,58 @@
   </div>
 
   <!-- Card Choices -->
-  <div *ngIf="run.event.card_choices.length > 0" class="card-choice-div">
+  <div *ngIf="run.top.event.card_choices.length > 0" class="card-choice-div">
     <div class="mat-elevation-z7">
       <mat-label>Card Choices</mat-label>
       <table style="display: block; width:100%; margin-top: 10pt;" class="table table-dark">
         <tr>
           <th style="padding-right: 25px">Picked</th>
-          <td class="right" *ngFor="let i of run.event.card_choices" style="font-weight: bold; padding-left: 35px; padding-right: 35px">
-            {{i.picked}}
+          <td class="right" *ngFor="let i of run.top.event.card_choices" style="font-weight: bold; padding-left: 35px; padding-right: 35px">
+            <a button target="_blank" (click)="getLookupCard(i.picked)" [routerLink]="['/cardLookup', lookupCard]" class="btn btn-raised btn-link color-btn text-white">{{i.picked}}</a>
           </td>
         </tr>
         <tr>
           <th style="padding-right: 25px">Not Picked 1</th>
-          <td class="right" *ngFor="let i of run.event.card_choices" style="padding-left: 35px; padding-right: 35px">
-            <div *ngIf="i.not_picked.length > 0; else elseBlock">{{i.not_picked[0]}}</div>
+          <td class="right" *ngFor="let i of run.top.event.card_choices" style="padding-left: 35px; padding-right: 35px">
+            <div *ngIf="i.not_picked.length > 0; else elseBlock">
+              <a button target="_blank" (click)="getLookupCard(i.not_picked[0])" [routerLink]="['/cardLookup', lookupCard]" class="btn btn-raised btn-link color-btn text-white">{{i.not_picked[0]}}</a>
+            </div>
             <ng-template #elseBlock>---</ng-template>
           </td>
         </tr>
         <tr>
           <th style="padding-right: 25px">Not Picked 2</th>
-          <td class="right" *ngFor="let i of run.event.card_choices" style="padding-left: 35px; padding-right: 35px">
-            <div *ngIf="i.not_picked.length > 1; else elseBlock">{{i.not_picked[1]}}</div>
+          <td class="right" *ngFor="let i of run.top.event.card_choices" style="padding-left: 35px; padding-right: 35px">
+            <div *ngIf="i.not_picked.length > 1; else elseBlock">
+              <a button target="_blank" (click)="getLookupCard(i.not_picked[1])" [routerLink]="['/cardLookup', lookupCard]" class="btn btn-raised btn-link color-btn text-white">{{i.not_picked[1]}}</a>
+            </div>
             <ng-template #elseBlock>---</ng-template>
           </td>
         </tr>
         <tr>
           <th style="padding-right: 25px">Not Picked 3</th>
-          <td class="right" *ngFor="let i of run.event.card_choices" style="padding-left: 35px; padding-right: 35px">
-            <div *ngIf="i.not_picked.length > 2; else elseBlock">{{i.not_picked[2]}}</div>
+          <td class="right" *ngFor="let i of run.top.event.card_choices" style="padding-left: 35px; padding-right: 35px">
+            <div *ngIf="i.not_picked.length > 2; else elseBlock">
+              <a button target="_blank" (click)="getLookupCard(i.not_picked[2])" [routerLink]="['/cardLookup', lookupCard]" class="btn btn-raised btn-link color-btn text-white">{{i.not_picked[2]}}</a>
+            </div>
             <ng-template #elseBlock>---</ng-template>
           </td>
         </tr>
         <tr>
           <th style="padding-right: 25px">Not Picked 4</th>
-          <td class="right" *ngFor="let i of run.event.card_choices" style="padding-left: 35px; padding-right: 35px">
-            <div *ngIf="i.not_picked.length > 3; else elseBlock">{{i.not_picked[3]}}</div>
+          <td class="right" *ngFor="let i of run.top.event.card_choices" style="padding-left: 35px; padding-right: 35px">
+            <div *ngIf="i.not_picked.length > 3; else elseBlock">
+              <a button target="_blank" (click)="getLookupCard(i.not_picked[3])" [routerLink]="['/cardLookup', lookupCard]" class="btn btn-raised btn-link color-btn text-white">{{i.not_picked[3]}}</a>
+            </div>
             <ng-template #elseBlock>---</ng-template>
           </td>
         </tr>
         <tr>
           <th style="padding-right: 25px">Not Picked 5</th>
-          <td class="right" *ngFor="let i of run.event.card_choices" style="padding-left: 35px; padding-right: 35px">
-            <div *ngIf="i.not_picked.length > 4; else elseBlock">{{i.not_picked[4]}}</div>
+          <td class="right" *ngFor="let i of run.top.event.card_choices" style="padding-left: 35px; padding-right: 35px">
+            <div *ngIf="i.not_picked.length > 4; else elseBlock">
+              <a button target="_blank" (click)="getLookupCard(i.not_picked[4])" [routerLink]="['/cardLookup', lookupCard]" class="btn btn-raised btn-link color-btn text-white">{{i.not_picked[4]}}</a>
+            </div>
             <ng-template #elseBlock>---</ng-template>
           </td>
         </tr>
@@ -86,33 +130,33 @@
   </div>
 
   <!-- Boss Relic Choices -->
-  <div *ngIf="run.event.boss_relics.length > 0" class="card-choice-div">
+  <div *ngIf="run.top.event.boss_relics.length > 0" class="card-choice-div">
     <div class="mat-elevation-z7">
       <mat-label>Boss Relic Choices</mat-label>
       <table style="display: block; width:100%; margin-top: 10pt;" class="table table-dark">
         <tr>
           <th style="padding-right: 25px">Picked</th>
-          <td class="right" *ngFor="let i of run.event.boss_relics" style="font-weight: bold; padding-left: 35px; padding-right: 35px">
+          <td class="right" *ngFor="let i of run.top.event.boss_relics" style="font-weight: bold; padding-left: 35px; padding-right: 35px">
             {{i.picked}}
           </td>
         </tr>
         <tr>
           <th style="padding-right: 25px">Not Picked 1</th>
-          <td class="right" *ngFor="let i of run.event.boss_relics" style="padding-left: 35px; padding-right: 35px">
+          <td class="right" *ngFor="let i of run.top.event.boss_relics" style="padding-left: 35px; padding-right: 35px">
             <div *ngIf="i.not_picked.length > 0; else elseBlock">{{i.not_picked[0]}}</div>
             <ng-template #elseBlock>---</ng-template>
           </td>
         </tr>
         <tr>
           <th style="padding-right: 25px">Not Picked 2</th>
-          <td class="right" *ngFor="let i of run.event.boss_relics" style="padding-left: 35px; padding-right: 35px">
+          <td class="right" *ngFor="let i of run.top.event.boss_relics" style="padding-left: 35px; padding-right: 35px">
             <div *ngIf="i.not_picked.length > 1; else elseBlock">{{i.not_picked[1]}}</div>
             <ng-template #elseBlock>---</ng-template>
           </td>
         </tr>
         <tr>
           <th style="padding-right: 25px">Not Picked 3</th>
-          <td class="right" *ngFor="let i of run.event.boss_relics" style="padding-left: 35px; padding-right: 35px">
+          <td class="right" *ngFor="let i of run.top.event.boss_relics" style="padding-left: 35px; padding-right: 35px">
             <div *ngIf="i.not_picked.length > 2; else elseBlock">{{i.not_picked[2]}}</div>
             <ng-template #elseBlock>---</ng-template>
           </td>
@@ -121,14 +165,14 @@
     </div>
   </div>
 
-  <div *ngIf="run.event.relics.length > 0" class="relic-choice-div">
+  <div *ngIf="run.top.event.relics.length > 0" class="relic-choice-div">
     <div class="mat-elevation-z7">
       <mat-label>Relics</mat-label>
       <table style="display: block; width:100%; margin-top: 10pt;" class="table table-dark">
-        <tr *ngFor="let relic of run.event.relics">
+        <tr *ngFor="let relic of run.top.event.relics">
           {{relic}}
         </tr>
-        <tr *ngFor="let relic of run.event.boss_relics">
+        <tr *ngFor="let relic of run.top.event.boss_relics">
           {{relic.picked}}
         </tr>
       </table>

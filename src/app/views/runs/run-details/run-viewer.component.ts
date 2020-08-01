@@ -4,10 +4,13 @@ import {Subscription} from "rxjs/Subscription";
 import {ActivatedRoute, Router} from "@angular/router";
 import {RunLogService} from "../../../services/run-log-service/run-log.service";
 import {environment} from '../../../../environments/environment';
-import {TopBundle} from '../../../models/TopBundle';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
+import {RunDetails} from '../../../models/RunDetails';
+import {TopBundle} from '../../../models/TopBundle';
+import {RunLog} from '../../../models/RunLog';
+import {InfoLookup} from '../../../utils/InfoLookup';
 
 @Component({
   selector: 'app-run-viewer',
@@ -42,8 +45,11 @@ export class RunViewerComponent implements OnInit {
   pathURLs: string[] = [];
   emptyPath: boolean = false;
   triggeredBadMatches: boolean = false;
-  run: TopBundle;
+  run: RunDetails;
   sub: Subscription;
+  log: RunLog;
+  grabbedRunLog: boolean = false;
+  lookupCard: string = '';
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -53,32 +59,35 @@ export class RunViewerComponent implements OnInit {
               private runService: RunLogService) { }
 
   ngOnInit(): void {
+    this.log = sessionStorage.runLog ? JSON.parse(sessionStorage.runLog) : {};
+    console.log('log??', this.log);
     this.sub = this.route.params.subscribe(params => {
       const id = params.id;
       if (id) {
         this.runService.getRunView(id).subscribe(data => {
           this.run = data;
           const arr: TopBundle[] = [];
-          arr.push(this.run);
+          arr.push(this.run.top);
           this.dataSource = new MatTableDataSource<TopBundle>(arr);
-          //this.dataSource.paginator = this.paginator;
-          //this.dataSource.sort = this.sort;
           this.calculatePath();
         });
       }
     });
   }
 
+  getLookupCard(card: string): void {
+    this.lookupCard = InfoLookup.getLookupCard(card);
+  }
 
   calculatePath(): void {
-    if (this.run.event.path_taken.length == 0) {
+    if (this.run.top.event.path_taken.length == 0) {
       this.emptyPath = true;
       return;
     }
     let foundAll = true;
     const badMatches: string[] = [];
-    for (let i = 0; i < this.run.event.path_taken.length; i++) {
-      const curr = this.run.event.path_taken[i];
+    for (let i = 0; i < this.run.top.event.path_taken.length; i++) {
+      const curr = this.run.top.event.path_taken[i];
       let foundOne = false;
       for (let j = 0; j < this.pathIcons.Icons.length; j++) {
         const archiveCurr = this.pathIcons.Icons[j];
@@ -92,9 +101,6 @@ export class RunViewerComponent implements OnInit {
         foundAll = false;
         badMatches.push(curr);
         this.pathURLs.push(this.pathIcons.BadMatchIcon);
-      }
-      if (environment.localhost) {
-        console.log('found a match on all paths: ', foundAll)
       }
       if (!foundAll && environment.localhost && !this.triggeredBadMatches) {
         alert('Bad path text found!');

@@ -9,4 +9,7 @@ export class RunLog {
   floor: number;
   kaiba: boolean;
   victory: boolean;
+  country: string;
+  language: string;
+  filterDate: string;
 }

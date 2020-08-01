@@ -6,6 +6,8 @@ import {Subscription} from 'rxjs/Subscription';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CardService} from "../../../services/card-service/card.service";
 import {DisplayCard} from "../../../models/DisplayCard";
+import {InfoLookup} from '../../../utils/InfoLookup';
+import {FullCardInfo} from '../../../models/FullCardInfo';
 
 @Component({
   selector: 'app-cards',
@@ -18,6 +20,9 @@ export class CardsComponent implements OnInit {
   cards: DisplayCard[];
   dataSource: MatTableDataSource<DisplayCard>;
   sub: Subscription;
+  lookupCard: string = '';
+  fullCards: FullCardInfo[] = [];
+  fullyLoaded: true;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -56,5 +61,9 @@ export class CardsComponent implements OnInit {
         }
       }
     });
+  }
+
+  getLookupCard(card: string): void {
+    this.lookupCard = InfoLookup.getLookupCard(card);
   }
 }

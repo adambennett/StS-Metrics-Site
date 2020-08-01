@@ -1,4 +1,3 @@
-import { Component } from '@angular/core';
 import { BundleService } from "./services/bundle-service/bundle.service";
 import { RunLogService } from "./services/run-log-service/run-log.service";
 import { DeckList } from "./models/DeckList";
@@ -6,6 +5,7 @@ import { Timestamps } from "./models/Timestamps";
 import {Country} from "./models/Country";
 import {ModInfoBundle} from "./models/ModInfoBundle";
 import {InfoService} from "./services/info-service/info.service";
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -20,6 +20,7 @@ export class AppComponent {
   title = 'frontend';
   times = Timestamps.times;
   decks = DeckList.decks;
+
 
   constructor(
     private bundleService: BundleService,

@@ -3,8 +3,8 @@ import {Observable} from "rxjs";
 import {RunLog} from "../../models/RunLog";
 import {TopService} from "../topservice/top.service";
 import {DisplayDeck} from "../../models/DisplayDeck";
-import {TopBundle} from '../../models/TopBundle';
 import {HttpParams} from '@angular/common/http';
+import {RunDetails} from '../../models/RunDetails';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +18,8 @@ export class RunLogService extends TopService {
     return this.http.get<RunLog[]>(this.API + 'runs-id/' + paramString);
   }
 
-  getRunView(id: number): Observable<TopBundle> {
-    return this.http.get<TopBundle>(this.API + 'run/' + id);
+  getRunView(id: number): Observable<RunDetails> {
+    return this.http.get<RunDetails>(this.API + 'run/' + id);
   }
 
   getDeckCompare(): Observable<DisplayDeck[]> {
