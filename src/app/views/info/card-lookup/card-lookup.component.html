@@ -3,7 +3,12 @@
     <!-- DUELIST -->
     <div *ngIf="cardData.duelistCard; else elseBlock2">
       <mat-label><span style="font-weight:bold">Name:</span>  <br>{{cardData.name}}</mat-label><br><br>
-      <mat-label><span style="font-weight:bold">Text:</span>  <br>{{cardData.text}}</mat-label><br><br>
+      <div *ngIf="cardData.newLineText; else elseBlock">
+        <mat-label><span style="font-weight:bold">Text:</span>  <br><span class="card-text">{{cardData.newLineText}}</span></mat-label><br><br>
+      </div>
+      <ng-template #elseBlock>
+        <mat-label><span style="font-weight:bold">Text:</span>  <br>{{cardData.text}}</mat-label><br><br>
+      </ng-template>
       <mat-label><span style="font-weight:bold">Color:</span>  <br>{{cardData.color}}</mat-label><br><br>
       <mat-label><span style="font-weight:bold">Rarity:</span>  <br>{{cardData.rarity}}</mat-label><br><br>
       <mat-label><span style="font-weight:bold">Type:</span>  <br>{{cardData.type}}</mat-label><br><br>

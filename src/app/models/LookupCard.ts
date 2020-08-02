@@ -7,6 +7,7 @@ export interface LookupCard {
   duelistType: string;
   cost: string;
   text: string;
+  newLineText: string;
   block: number;
   damage: number;
   magicNumber: number;

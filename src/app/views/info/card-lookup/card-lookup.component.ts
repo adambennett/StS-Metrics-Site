@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Subscription} from "rxjs/Subscription";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Subscription} from 'rxjs/Subscription';
+import {ActivatedRoute, Router} from '@angular/router';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {InfoService} from '../../../services/info-service/info.service';
@@ -30,6 +30,9 @@ export class CardLookupComponent implements OnInit {
      this.card = params.card;
       this.infoService.lookupCard(this.card).subscribe(data => {
         this.cardData = data;
+        const newText = this.cardData.newLineText.replace(/ NL /gi, '\n');
+        const next = newText.replace(/\*/gi, '');
+        this.cardData.newLineText = next.replace(/\. /gi, '. \n');
       });
     });
   }

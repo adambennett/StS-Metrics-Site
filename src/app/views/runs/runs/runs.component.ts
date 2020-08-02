@@ -63,7 +63,17 @@ export class RunsComponent implements OnInit {
     this.infoService.getAllMods().subscribe(data =>       { this.mods = data; });
   }
 
-  onChange(value: MatSlideToggleChange) {
+  toggleFilterBox(show: string): void {
+    if (show === 'show') {
+      document.getElementById('filter-box').style.display = 'block';
+      document.getElementById('show-filters').style.display = 'none';
+    } else {
+      document.getElementById('filter-box').style.display = 'none';
+      document.getElementById('show-filters').style.display = 'block';
+    }
+  }
+
+  onChange(value: MatSlideToggleChange): void {
     this.matchAll = value.checked;
   }
 
