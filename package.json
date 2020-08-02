@@ -8,7 +8,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "heroku-postbuild": "ng build --prod",
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "ng serve"
   },
   "private": true,
   "dependencies": {
@@ -25,7 +26,11 @@
     "@angular/platform-browser-dynamic": "~9.1.0",
     "@angular/router": "~9.1.0",
     "@hallysonh/pageable": "^1.0.3",
+    "bootstrap": "^4.5.0",
+    "country-code-lookup": "0.0.17",
     "express": "^4.17.1",
+    "jquery": "^3.5.1",
+    "moment": "^2.27.0",
     "path": "^0.12.7",
     "rxjs": "~6.5.4",
     "rxjs-compat": "^6.5.5",
