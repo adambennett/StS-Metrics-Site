@@ -35,6 +35,7 @@ export class RunsComponent implements OnInit {
   countries: Country[];
   mods: ModInfoBundle[];
 
+  disableRefresh: boolean = false;
   matchAll: boolean = false;
   characterFilter: string[];
   countryFilter: string[];
@@ -79,6 +80,10 @@ export class RunsComponent implements OnInit {
 
   checkForUpdates(): void {
     this.render(this.params);
+    this.disableRefresh = true;
+    setTimeout(() => {
+      this.disableRefresh = false;
+    }, 30000);
   }
 
   storeRunData(index: number): void {
@@ -204,6 +209,7 @@ export class RunsComponent implements OnInit {
   }
 
   render(params: Params): void {
+    document.body.style.cursor = 'wait';
     const runType: string = params.type;
     const specificRunType: string = params.secondType;
     const hallOfFameType: string = params.hofType;
@@ -278,5 +284,6 @@ export class RunsComponent implements OnInit {
           break;
       }
     }
+    document.body.style.cursor = 'auto';
   }
 }

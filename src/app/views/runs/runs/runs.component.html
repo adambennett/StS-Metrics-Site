@@ -18,7 +18,7 @@
   <br>
 <button (click)="filterRuns()" style="margin:5pt" class="btn btn-raised btn-primary color-btn">Filter Runs</button>
 <button (click)="clearFilters()" style="margin:5pt" class="btn btn-raised btn-primary color-btn">Reset Filters</button>
-<button (click)="checkForUpdates()" style="margin:5pt" class="btn btn-raised btn-primary color-btn">Refresh Runs</button>
+<button [disabled]="disableRefresh" (click)="checkForUpdates()" style="margin:5pt" class="btn btn-raised btn-primary color-btn" id="refresh-btn">Refresh Runs</button>
   <button (click)="toggleFilterBox('hide')" style="margin:5pt" class="btn btn-raised btn-primary color-btn">Hide Filters</button>
   <mat-slide-toggle color="primary" name="matchAll" (change)="onChange($event)" [(ngModel)]="matchAll" style="margin:5pt" class="filter-and-or-toggle"> Match All Filters </mat-slide-toggle>
 </form>
