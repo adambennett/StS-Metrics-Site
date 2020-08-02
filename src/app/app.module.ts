@@ -69,6 +69,11 @@ const appRoutes: Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'run-list',
+    redirectTo: 'runs/All',
+    pathMatch: 'full'
+  },
+  {
     path: 'compare',
     component: DeckCompareComponent
   },
