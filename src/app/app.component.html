@@ -65,6 +65,12 @@
         <button mat-menu-item>{{mod.name}}</button>
       </div>
     </mat-menu>
+    <button mat-menu-item [matMenuTriggerFor]="donationMenu" class="decks-btn">Donate</button>
+    <mat-menu #donationMenu="matMenu">
+      <button mat-menu-item (click)="goToUrl('paypal')">Paypal</button>
+      <!--<button mat-menu-item target="_blank" (click)="goToUrl('cashapp')">CashApp</button>
+      <button mat-menu-item target="_blank" (click)="goToUrl('venmo')">Venmo</button>-->
+    </mat-menu>
     <!--<button mat-menu-item [matMenuTriggerFor]="modmenu" class="decks-btn">Mods</button>
     <mat-menu #modmenu="matMenu">
       <div *ngFor="let mod of mods">
