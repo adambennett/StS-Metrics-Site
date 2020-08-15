@@ -48,12 +48,6 @@
     </mat-menu>
     <button mat-menu-item [matMenuTriggerFor]="infomenu" class="decks-btn">Info</button>
     <mat-menu #infomenu="matMenu">
-      <button mat-menu-item [matMenuTriggerFor]="donationMenu">Donate</button>
-      <mat-menu #donationMenu="matMenu">
-        <button mat-menu-item (click)="goToUrl('paypal')">Paypal</button>
-        <!--<button mat-menu-item target="_blank" (click)="goToUrl('cashapp')">CashApp</button>
-        <button mat-menu-item target="_blank" (click)="goToUrl('venmo')">Venmo</button>-->
-      </mat-menu>
       <!--<button mat-menu-item [matMenuTriggerFor]="infoSubStatsMenu">Stats</button>
       <mat-menu #infoSubStatsMenu="matMenu">
         <button mat-menu-item [routerLink]="['/info/stats', 'THE_DUELIST']">The Duelist</button>
@@ -70,6 +64,12 @@
       <div *ngFor="let mod of mods">
         <button mat-menu-item>{{mod.name}}</button>
       </div>
+    </mat-menu>
+    <button mat-menu-item [matMenuTriggerFor]="donationMenu" class="decks-btn">Donate</button>
+    <mat-menu #donationMenu="matMenu">
+      <button mat-menu-item (click)="goToUrl('paypal')">Paypal</button>
+      <!--<button mat-menu-item target="_blank" (click)="goToUrl('cashapp')">CashApp</button>
+      <button mat-menu-item target="_blank" (click)="goToUrl('venmo')">Venmo</button>-->
     </mat-menu>
     <!--<button mat-menu-item [matMenuTriggerFor]="modmenu" class="decks-btn">Mods</button>
     <mat-menu #modmenu="matMenu">
