@@ -30,6 +30,16 @@ export class AppComponent {
       this.bundleService.getCountries().subscribe(data =>   { this.countries = data;  });
       this.infoService.getAllMods().subscribe(data =>       { this.mods = data; });
     }
+
+    goToUrl(type: string) : void {
+    let url;
+    if (type === 'paypal') {
+      url = 'https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=US9KN9GPC3FDA&currency_code=USD&source=url';
+    } else {
+      url = 'www.stackoverflow.com';
+    }
+      window.open(url, "_blank");
+    }
 }
 
 
