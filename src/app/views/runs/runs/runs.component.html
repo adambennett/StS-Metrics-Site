@@ -15,6 +15,30 @@
       </mat-option>
     </mat-select>
   </mat-form-field>
+  <mat-form-field style="margin-bottom: -1.25em" appearance="fill">
+    <mat-label>Timeframe</mat-label>
+    <mat-select class="country-select-box" [multiple]="false" [(ngModel)]="timeFilter" name="time">
+      <mat-option *ngFor="let time of timeframes" [value]="time">
+        {{time}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field style="margin-bottom: -1.25em" appearance="fill">
+    <mat-label>Starting Deck</mat-label>
+    <mat-select class="country-select-box" [multiple]="true" [(ngModel)]="startingDecksFilter" name="startingDeck">
+      <mat-option *ngFor="let deck of startingDecks" [value]="deck">
+        {{deck}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field style="margin-bottom: -1.25em" appearance="fill">
+    <mat-label>Killed By</mat-label>
+    <mat-select class="country-select-box" [multiple]="true" [(ngModel)]="killedByFilter" name="killedBy">
+      <mat-option *ngFor="let kb of killedBys" [value]="kb">
+        {{kb}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
   <br>
 <button (click)="filterRuns()" style="margin:5pt" class="btn btn-raised btn-primary color-btn">Filter Runs</button>
 <button (click)="clearFilters()" style="margin:5pt" class="btn btn-raised btn-primary color-btn">Reset Filters</button>
