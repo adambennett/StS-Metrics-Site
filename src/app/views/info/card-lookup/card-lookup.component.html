@@ -1,60 +1,110 @@
-<div class="path-div">
-  <div *ngIf="cardData; else elseBlock">
-    <!-- DUELIST -->
-    <div *ngIf="cardData.duelistCard; else elseBlock2">
-      <mat-label><span style="font-weight:bold">Name:</span>  <br>{{cardData.name}}</mat-label><br><br>
-      <div *ngIf="cardData.newLineText; else elseBlock">
-        <mat-label><span style="font-weight:bold">Text:</span>  <br><span class="card-text">{{cardData.newLineText}}</span></mat-label><br><br>
-      </div>
-      <ng-template #elseBlock>
-        <mat-label><span style="font-weight:bold">Text:</span>  <br>{{cardData.text}}</mat-label><br><br>
-      </ng-template>
-      <mat-label><span style="font-weight:bold">Color:</span>  <br>{{cardData.color}}</mat-label><br><br>
-      <mat-label><span style="font-weight:bold">Rarity:</span>  <br>{{cardData.rarity}}</mat-label><br><br>
-      <mat-label><span style="font-weight:bold">Type:</span>  <br>{{cardData.type}}</mat-label><br><br>
-      <mat-label><span style="font-weight:bold">Duelist Type:</span>  <br>{{cardData.duelistType}}</mat-label><br><br>
-      <mat-label><span style="font-weight:bold">Cost:</span>  <br>{{cardData.cost}}</mat-label><br><br>
-      <mat-label><span style="font-weight:bold">Damage:</span> <br>{{cardData.damage}}</mat-label><br><br>
-      <mat-label><span style="font-weight:bold">Block:</span>  <br>{{cardData.block}}</mat-label><br><br>
-      <mat-label><span style="font-weight:bold">Magic Number:</span>  <br>{{cardData.magicNumber}}</mat-label><br><br>
-      <mat-label><span style="font-weight:bold">Magic Number B:</span>  <br>{{cardData.secondMag}}</mat-label><br><br>
-      <mat-label><span style="font-weight:bold">Magic Number C:</span>  <br>{{cardData.thirdMag}}</mat-label><br><br>
-      <mat-label><span style="font-weight:bold">Summons:</span>  <br>{{cardData.summons}}</mat-label><br><br>
-      <mat-label><span style="font-weight:bold">Tributes:</span>  <br>{{cardData.tributes}}</mat-label><br><br>
-      <mat-label><span style="font-weight:bold">Entomb:</span>  <br>{{cardData.entomb}}</mat-label><br><br>
-      <mat-label><span style="font-weight:bold">Appears In:</span>  <br>
-        <div *ngFor="let pool of cardData.pools">
-          {{pool}}
+<div class="row">
+  <div class="column">
+    <div *ngIf="cardData; else elseBlock">
+      <!-- DUELIST -->
+      <div *ngIf="cardData.duelistCard; else elseBlock2">
+        <div class="duelist-info-grid mat-elevation-z15">
+          <div class="duelist-info-grid-row">
+            <div class="duelist-info-grid-column">
+              <mat-label><span style="font-weight:bold">Name:</span>  <br>{{cardData.name}}</mat-label><br><br>
+              <div *ngIf="cardData.newLineText; else elseBlock">
+                <mat-label><span style="font-weight:bold">Text:</span>  <br><span class="card-text">{{cardData.newLineText}}</span></mat-label><br><br>
+              </div>
+              <ng-template #elseBlock>
+                <mat-label><span style="font-weight:bold">Text:</span>  <br>{{cardData.text}}</mat-label><br><br>
+              </ng-template>
+              <mat-label><span style="font-weight:bold">Color:</span>  <br>{{cardData.color}}</mat-label><br><br>
+              <mat-label><span style="font-weight:bold">Rarity:</span>  <br>{{cardData.rarity}}</mat-label><br><br>
+              <mat-label><span style="font-weight:bold">Type:</span>  <br>{{cardData.type}}</mat-label><br><br>
+              <mat-label><span style="font-weight:bold">Duelist Type:</span>  <br>{{cardData.duelistType}}</mat-label><br><br>
+              <mat-label><span style="font-weight:bold">Cost:</span>  <br>{{cardData.cost}}</mat-label><br><br>
+            </div>
+          </div>
         </div>
-      </mat-label><br><br>
-    </div>
+        <br>
+        <div class="duelist-info-grid mat-elevation-z15">
+          <div class="duelist-info-grid-row">
+            <div class="duelist-info-grid-column">
+              <mat-label><span style="font-weight:bold">Appears In:</span>  <br>
+                <div *ngFor="let pool of cardData.pools">
+                  {{pool}}
+                </div>
+              </mat-label><br><br>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="duelist-info-grid mat-elevation-z15">
+        <div class="duelist-info-grid-row">
+          <div class="duelist-info-grid-column">
+            <mat-label><span style="font-weight:bold">Damage:</span> <br>{{cardData.damage}}</mat-label><br><br>
+            <mat-label><span style="font-weight:bold">Block:</span>  <br>{{cardData.block}}</mat-label><br><br>
+            <mat-label><span style="font-weight:bold">Magic Number:</span>  <br>{{cardData.magicNumber}}</mat-label><br><br>
+            <mat-label><span style="font-weight:bold">Magic Number B:</span>  <br>{{cardData.secondMag}}</mat-label><br><br>
+            <mat-label><span style="font-weight:bold">Magic Number C:</span>  <br>{{cardData.thirdMag}}</mat-label><br><br>
+            <mat-label><span style="font-weight:bold">Summons:</span>  <br>{{cardData.summons}}</mat-label><br><br>
+            <mat-label><span style="font-weight:bold">Tributes:</span>  <br>{{cardData.tributes}}</mat-label><br><br>
+            <mat-label><span style="font-weight:bold">Entomb:</span>  <br>{{cardData.entomb}}</mat-label><br><br>
+          </div>
+        </div>
+      </div>
+      <br>
 
-
-    <!-- NON-DUELIST -->
-    <ng-template #elseBlock2>
-      <mat-label><span style="font-weight:bold">Name:</span>  <br>{{cardData.name}}</mat-label><br><br>
-      <mat-label><span style="font-weight:bold">Text:</span>  <br>{{cardData.text}}</mat-label><br><br>
-      <mat-label><span style="font-weight:bold">Color:</span>  <br>{{cardData.color}}</mat-label><br><br>
-      <mat-label><span style="font-weight:bold">Rarity:</span>  <br>{{cardData.rarity}}</mat-label><br><br>
-      <mat-label><span style="font-weight:bold">Type:</span>  <br>{{cardData.type}}</mat-label><br><br>
-      <mat-label><span style="font-weight:bold">Cost:</span>  <br>{{cardData.cost}}</mat-label><br><br>
-      <mat-label><span style="font-weight:bold">Damage:</span> {{cardData.damage}}</mat-label><br>
-      <mat-label><span style="font-weight:bold">Block:</span>  {{cardData.block}}</mat-label><br>
-      <mat-label><span style="font-weight:bold">Magic Number:</span>  {{cardData.magicNumber}}</mat-label><br>
-    </ng-template>
-  </div>
-  <ng-template #elseBlock>
-    <div *ngIf="deprecatedCards.indexOf(card) > -1; else elseBlock">
-      This card has been removed from the game.
+      <!-- NON-DUELIST -->
+      <ng-template #elseBlock2>
+        <mat-label><span style="font-weight:bold">Name:</span>  <br>{{cardData.name}}</mat-label><br><br>
+        <mat-label><span style="font-weight:bold">Text:</span>  <br>{{cardData.text}}</mat-label><br><br>
+        <mat-label><span style="font-weight:bold">Color:</span>  <br>{{cardData.color}}</mat-label><br><br>
+        <mat-label><span style="font-weight:bold">Rarity:</span>  <br>{{cardData.rarity}}</mat-label><br><br>
+        <mat-label><span style="font-weight:bold">Type:</span>  <br>{{cardData.type}}</mat-label><br><br>
+        <mat-label><span style="font-weight:bold">Cost:</span>  <br>{{cardData.cost}}</mat-label><br><br>
+        <mat-label><span style="font-weight:bold">Damage:</span> {{cardData.damage}}</mat-label><br>
+        <mat-label><span style="font-weight:bold">Block:</span>  {{cardData.block}}</mat-label><br>
+        <mat-label><span style="font-weight:bold">Magic Number:</span>  {{cardData.magicNumber}}</mat-label><br>
+      </ng-template>
     </div>
     <ng-template #elseBlock>
-      <div *ngIf="card === 'SKIP'; else elseBlock2">
-        This is not a card. This means the player did not choose a card on this card reward, but instead opted to completely skip a card choice.
+      <div *ngIf="deprecatedCards.indexOf(card) > -1; else elseBlock">
+        This card has been removed from the game.
       </div>
-      <ng-template #elseBlock2>
-        Error loading card data.
-      </ng-template>
+      <ng-template #elseBlock>
+        <div *ngIf="card === 'SKIP'; else elseBlock2">
+          This is not a card. This means the player did not choose a card on this card reward, but instead opted to completely skip a card choice.
+        </div>
+        <ng-template #elseBlock2>
+          Error loading card data.
+        </ng-template>
 
+      </ng-template>
     </ng-template>
-  </ng-template>
+  </div>
+
+  <div class="column">
+    <div *ngIf="upgradeImageNames.length > 0; else elseBlockOuter">
+      <img class="card-preview-left" (error)="hideImage()" src="{{getImageFromS3(imageName)}}" id="image-preview-double">
+      <img class="card-preview-right" src="{{getImageFromS3(upgradeImageNames[0])}}" id="upgrade-image-preview-left-1">
+      <div *ngFor="let image of upgradeImageNames">
+        <div *ngIf="counter !== 0; else elseBlockOut">
+          <div *ngIf="counter + 1 < upgradeImageNames.length; else elseBlock">
+            <img class="card-preview-left" src="{{getImageFromS3(upgradeImageNames[counter])}}">
+            <img class="card-preview-right" src="{{getImageFromS3(upgradeImageNames[counter + 1])}}">
+            {{incCounter(2)}}
+          </div>
+          <ng-template #elseBlock>
+            <div *ngIf="counter < upgradeImageNames.length">
+              <img class="card-preview-left" src="{{getImageFromS3(upgradeImageNames[counter])}}">
+              {{incCounter(1)}}
+            </div>
+          </ng-template>
+        </div>
+        <ng-template #elseBlockOut>
+          {{incCounter(1)}}
+        </ng-template>
+      </div>
+    </div>
+    <ng-template #elseBlockOuter>
+      <img class="card-preview-left" (error)="hideImage()" src="{{getImageFromS3(imageName)}}" id="image-preview-solo">
+    </ng-template>
+  </div>
 </div>

@@ -16,6 +16,8 @@ import {InfoService} from '../../../services/info-service/info.service';
 import {MatSlideToggleChange} from '@angular/material/slide-toggle';
 import {Timestamps} from '../../../models/Timestamps';
 import {Utilities} from '../../../utils/RunUtils';
+import {GeneralUtil} from '../../../utils/Utilities';
+import {MatRipple} from '@angular/material/core';
 
 @Component({
   selector: 'app-runs',
@@ -45,9 +47,11 @@ export class RunsComponent implements OnInit {
   startingDecks: string[] = [];
   startingDecksFilter: string[] = [];
   timeFilter: string = '';
+  loadedInitialRuns: boolean = false;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatRipple) ripple: MatRipple;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -56,6 +60,7 @@ export class RunsComponent implements OnInit {
               private infoService: InfoService) { }
 
   ngOnInit(): void {
+    GeneralUtil.setPageTitle('Run Log');
     this.sub = this.route.params.subscribe(params => {
       this.runs = null;
       this.params = params;
@@ -67,6 +72,17 @@ export class RunsComponent implements OnInit {
     });
     this.bundleService.getCountries().subscribe(data =>   { this.countries = data;  });
     this.infoService.getAllMods().subscribe(data =>       { this.mods = data; });
+  }
+
+  launchRipple() {
+    const rippleRef = this.ripple.launch({
+      persistent: true,
+      centered: true
+    });
+
+    // Fade out the ripple later.
+    setTimeout(() => { rippleRef.fadeOut(); }, 300);
+
   }
 
   populateFilters(): void {
@@ -114,13 +130,7 @@ export class RunsComponent implements OnInit {
   }
 
   toggleFilterBox(show: string): void {
-    if (show === 'show') {
-      document.getElementById('filter-box').style.display = 'block';
-      document.getElementById('show-filters').style.display = 'none';
-    } else {
-      document.getElementById('filter-box').style.display = 'none';
-      document.getElementById('show-filters').style.display = 'block';
-    }
+    Utilities.toggleFilter(show);
   }
 
   onChange(value: MatSlideToggleChange): void {
@@ -132,7 +142,8 @@ export class RunsComponent implements OnInit {
     this.disableRefresh = true;
     setTimeout(() => {
       this.disableRefresh = false;
-    }, 30000);
+
+    }, 7500);
   }
 
   storeRunData(index: number): void {
@@ -145,11 +156,23 @@ export class RunsComponent implements OnInit {
     this.startingDecksFilter = [];
     this.killedByFilter = [];
     this.timeFilter = '';
+    const currentRunSize = this.currentRuns.length;
     this.currentRuns = this.runs;
+    if (currentRunSize !== this.currentRuns.length) {
+      this.launchRipple();
+    }
     this.refreshTable();
   }
 
-  checkFilters(run: RunLog, all: boolean): boolean {
+  allFiltersEmpty(): boolean {
+    return this.characterFilter.length < 1
+      && this.countryFilter.length < 1
+      && this.timeFilter === ''
+      && this.startingDecksFilter.length < 1
+      && this.killedByFilter.length < 1;
+  }
+
+  checkFilters(run: RunLog, all: boolean, allEmpty: boolean): boolean {
     if (all) {
       return Utilities.matchAtLeastOneSelectedCharacter(this.characterFilter, run, all)
         &&   Utilities.matchAtLeastOneSelectedCountry(this.countryFilter, run, all)
@@ -157,7 +180,8 @@ export class RunsComponent implements OnInit {
         &&   Utilities.matchFilterToRunProperty('deck', this.startingDecksFilter, run, all)
         &&   Utilities.matchFilterToRunProperty('killedBy', this.killedByFilter, run, all);
     } else {
-      return Utilities.matchAtLeastOneSelectedCharacter(this.characterFilter, run, all)
+      return allEmpty
+        ||   Utilities.matchAtLeastOneSelectedCharacter(this.characterFilter, run, all)
         ||   Utilities.matchAtLeastOneSelectedCountry(this.countryFilter, run, all)
         ||   Utilities.matchSelectedTime(this.timeFilter, run, all)
         ||   Utilities.matchFilterToRunProperty('deck', this.startingDecksFilter, run, all)
@@ -166,13 +190,24 @@ export class RunsComponent implements OnInit {
   }
 
   filterRuns(): void {
+
     document.body.style.cursor = 'wait';
-    this.currentRuns = this.runs.filter((run) => this.checkFilters(run, this.matchAll));
+    const allFiltersAreEmpty: boolean = this.allFiltersEmpty();
+    const currentRunSize = this.currentRuns.length;
+    this.currentRuns = this.runs.filter((run) => this.checkFilters(run, this.matchAll, allFiltersAreEmpty));
+    if (currentRunSize !== this.currentRuns.length) {
+      this.launchRipple();
+    }
     this.refreshTable();
     document.body.style.cursor = 'auto';
   }
 
   refreshRuns(data: RunLog[]): void {
+    if (this.loadedInitialRuns) {
+      this.launchRipple();
+    } else {
+      this.loadedInitialRuns = true;
+    }
     if (this.runs == null || this.runs.length < data.length) {
       this.runs = data;
       this.currentRuns = this.runs;

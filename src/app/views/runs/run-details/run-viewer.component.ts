@@ -11,6 +11,7 @@ import {RunDetails} from '../../../models/RunDetails';
 import {TopBundle} from '../../../models/TopBundle';
 import {RunLog} from '../../../models/RunLog';
 import {InfoLookup} from '../../../utils/InfoLookup';
+import {GeneralUtil} from '../../../utils/Utilities';
 
 @Component({
   selector: 'app-run-viewer',
@@ -59,8 +60,8 @@ export class RunViewerComponent implements OnInit {
               private runService: RunLogService) { }
 
   ngOnInit(): void {
+    GeneralUtil.setPageTitle('Run Viewer');
     this.log = sessionStorage.runLog ? JSON.parse(sessionStorage.runLog) : {};
-    console.log('log??', this.log);
     this.sub = this.route.params.subscribe(params => {
       const id = params.id;
       if (id) {

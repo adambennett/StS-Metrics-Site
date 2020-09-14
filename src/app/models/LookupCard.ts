@@ -16,6 +16,7 @@ export interface LookupCard {
   tributes: number;
   summons: number;
   entomb: number;
+  maxUpgrades: number;
   duelistCard: boolean;
   pools: string[];
 }

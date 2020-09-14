@@ -2,6 +2,70 @@
   margin: auto;
 }
 
+.site-title {
+  height: 10%;
+}
+
+.sidebar-nav-label {
+  font-weight: bold;
+  font-size: 12pt;
+  margin-left: 5pt;
+}
+
+.sidebar-options-label {
+  font-weight: bold;
+  font-size: 12pt;
+  margin-left: 5pt;
+}
+
+.sidebar-links-label {
+  font-weight: bold;
+  font-size: 12pt;
+  margin-left: 5pt;
+}
+
+.top-container {
+  height: 100%;
+  min-height:100%;
+}
+
+.all-page-content {
+  height: 90%;
+  min-height: 90%;
+}
+
+.sidebar {
+  height: 100%;
+  min-height: 100%;
+  //overflow: hidden;
+}
+
+.drawer-content {
+  height: 100%;
+  min-height:100%;
+}
+
+.dynamic-page-content {
+  //height: auto;
+}
+
+.page-title {
+  height: 20%;
+  width: 80%;
+  text-align: center;
+  align-content: center;
+  margin: auto;
+}
+
+.page-title-text {
+  text-align: center;
+  align-content: center;
+}
+
+.flipSvg {
+  transform: rotate(180deg);
+}
+
 .home-btn {
   width: 1000px;
   text-align:center;

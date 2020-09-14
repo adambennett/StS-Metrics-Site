@@ -6,6 +6,7 @@ import {Subscription} from "rxjs/Subscription";
 import {ActivatedRoute, Router} from "@angular/router";
 import {DisplayObjectService} from "../../../services/display-object-service/display-object.service";
 import {DisplayObject} from "../../../models/DisplayObject";
+import {GeneralUtil} from '../../../utils/Utilities';
 
 @Component({
   selector: 'app-potions',
@@ -36,6 +37,7 @@ export class PotionsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    GeneralUtil.setPageTitle('Potion Stats');
     this.sub = this.route.params.subscribe(params => {
       const deck = params.deck;
       if (deck) {

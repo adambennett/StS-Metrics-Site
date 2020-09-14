@@ -52,4 +52,16 @@ export class Utilities {
     }
     return false;
   }
+
+  static toggleFilter(show: string): void {
+    if (show === 'show') {
+      document.getElementById('filter-box').style.display = 'block';
+      document.getElementById('hide-filters').style.display = 'block';
+      document.getElementById('show-filters').style.display = 'none';
+    } else {
+      document.getElementById('filter-box').style.display = 'none';
+      document.getElementById('hide-filters').style.display = 'none';
+      document.getElementById('show-filters').style.display = 'block';
+    }
+  }
 }

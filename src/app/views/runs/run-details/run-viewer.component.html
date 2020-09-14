@@ -1,18 +1,20 @@
-{{run.top.event.character_chosen}} : {{log.time}}
+<div class="top-run-text">
+  {{run.top.event.character_chosen}} : {{log.time}}
 
-<br>
+  <br>
 
-<div *ngIf="log.victory; else elseBlock">
-  Victory on Floor {{log.floor}}!
+  <div *ngIf="log.victory; else elseBlock">
+    Victory on Floor {{log.floor}}!
+  </div>
+  <ng-template #elseBlock>
+    Slain on Floor {{log.floor}} by {{log.killedBy}}
+  </ng-template>
+  <br>
+
+  Ascension: {{log.ascension}}<br>
+  Challenge: {{log.challenge}}<br>
+  Score: {{run.top.event.score}}<br>
 </div>
-<ng-template #elseBlock>
-  Slain on Floor {{log.floor}} by {{log.killedBy}}
-</ng-template>
-<br>
-
-Ascension: {{log.ascension}}<br>
-Challenge: {{log.challenge}}<br>
-Score: {{run.top.event.score}}<br>
 
 <div class="mat-elevation-z25">
 
@@ -77,7 +79,7 @@ Score: {{run.top.event.score}}<br>
         <tr>
           <th style="padding-right: 25px">Picked</th>
           <td class="right" *ngFor="let i of run.top.event.card_choices" style="font-weight: bold; padding-left: 35px; padding-right: 35px">
-            <a button target="_blank" (click)="getLookupCard(i.picked)" [routerLink]="['/cardLookup', lookupCard]" class="btn btn-raised btn-link color-btn text-white">{{i.picked}}</a>
+            <a button target="_blank" (click)="getLookupCard(i.picked)" [routerLink]="['/cardLookup', lookupCard]" class="btn btn-raised btn-link color-btn text-white" style="font-weight: bold">{{i.picked}}</a>
           </td>
         </tr>
         <tr>
@@ -334,34 +336,6 @@ Score: {{run.top.event.score}}<br>
             </div>
           </td>
         </ng-container>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

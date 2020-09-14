@@ -8,6 +8,7 @@ import {CardService} from "../../../services/card-service/card.service";
 import {DisplayCard} from "../../../models/DisplayCard";
 import {InfoLookup} from '../../../utils/InfoLookup';
 import {FullCardInfo} from '../../../models/FullCardInfo';
+import {GeneralUtil} from '../../../utils/Utilities';
 
 @Component({
   selector: 'app-cards',
@@ -41,6 +42,7 @@ export class CardsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    GeneralUtil.setPageTitle('Card Stats');
     this.sub = this.route.params.subscribe(params => {
       const deck = params.deck;
       if (deck) {

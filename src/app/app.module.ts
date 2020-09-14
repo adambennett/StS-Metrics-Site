@@ -61,6 +61,8 @@ import { CardListComponent } from './views/mods/card-list/card-list.component';
 import { RelicListComponent } from './views/mods/relic-list/relic-list.component';
 import { PotionListComponent } from './views/mods/potion-list/potion-list.component';
 import { CardLookupComponent } from './views/info/card-lookup/card-lookup.component';
+import { ModListComponent } from './views/info/mod-list/mod-list.component';
+import { ModDetailsComponent } from './views/mods/mod-details/mod-details.component';
 
 const appRoutes: Routes = [
   {
@@ -120,6 +122,10 @@ const appRoutes: Routes = [
   {
     path: 'cardLookup/:card',
     component: CardLookupComponent
+  },
+  {
+    path: 'modList',
+    component: ModListComponent
   }
 ];
 
@@ -139,7 +145,9 @@ const appRoutes: Routes = [
     CardListComponent,
     RelicListComponent,
     PotionListComponent,
-    CardLookupComponent
+    CardLookupComponent,
+    ModListComponent,
+    ModDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -194,4 +202,4 @@ const appRoutes: Routes = [
   bootstrap: [AppComponent]
 })
 
-export class AppModule { }
+export class AppModule {}
