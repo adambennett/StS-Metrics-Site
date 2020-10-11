@@ -52,6 +52,7 @@
           <mat-menu #deckSubMenu="matMenu">
             <div *ngIf="deck.name === 'All'; else elseBlock">
               <button mat-menu-item [routerLink]="['/compare']">Compare</button>
+              <button mat-menu-item [routerLink]="['/deckPopularity']">Popularity</button>
             </div>
             <ng-template #elseBlock>
               <!--<button mat-menu-item [routerLink]="['/info', deck.id]">Info</button>-->
@@ -84,6 +85,13 @@
         <button mat-menu-item (click)="toggleFilterBox('hide')" id="hide-filters">Hide Filters</button>
         <button mat-menu-item (click)="toggleFilterBox('show')" style="display: none" id="show-filters">Show Filters</button>
       </div>
+      <div *ngIf="getTitle() === 'Deck Popularity'">
+        <button mat-menu-item [matMenuTriggerFor]="years">Year</button>
+        <mat-menu #years="matMenu">
+          <button mat-menu-item [routerLink]="['/deckPopularity', 2020]">2020</button>
+          <button mat-menu-item [routerLink]="['/deckPopularity', 2019]">2019</button>
+        </mat-menu>
+      </div>
 
 
       <mat-label class="sidebar-links-label">Links</mat-label>
@@ -105,6 +113,9 @@
       </mat-menu>
 
       <!--  Arrows to Collapse Sidenav Bar -->
+<!--      <div style="margin-left: 10px">
+        <img src="https://visitor-badge.glitch.me/badge?page_id=sts-metrics-site" alt="visitor badge"/>
+      </div>-->
       <button mat-menu-item (click)="toggleSidebar(drawer)">
         <img src="assets/icons/arrows.svg" class="flipSvg" alt="sidebar toggle arrow icon (close)">
       </button>

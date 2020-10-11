@@ -5,6 +5,7 @@ import {TopService} from "../topservice/top.service";
 import {DisplayDeck} from "../../models/DisplayDeck";
 import {HttpParams} from '@angular/common/http';
 import {RunDetails} from '../../models/RunDetails';
+import {DeckPopularity} from '../../models/DeckPopularity';
 
 @Injectable({
   providedIn: 'root'
@@ -56,5 +57,9 @@ export class RunLogService extends TopService {
 
   getRunsByHost(host: string): Observable<RunLog[]> {
     return this.http.get<RunLog[]>(this.API + 'runs-host/' + host);
+  }
+
+  getDeckPopularity(): Observable<DeckPopularity[]> {
+    return this.http.get<DeckPopularity[]>(this.API + 'deckPopularity');
   }
 }

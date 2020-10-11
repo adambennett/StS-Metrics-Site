@@ -63,6 +63,9 @@ import { PotionListComponent } from './views/mods/potion-list/potion-list.compon
 import { CardLookupComponent } from './views/info/card-lookup/card-lookup.component';
 import { ModListComponent } from './views/info/mod-list/mod-list.component';
 import { ModDetailsComponent } from './views/mods/mod-details/mod-details.component';
+import { DeckPopularityComponent } from './views/info/deck-popularity/deck-popularity.component';
+import { DiscordComponent } from './views/info/discord/discord.component';
+
 
 const appRoutes: Routes = [
   {
@@ -126,6 +129,18 @@ const appRoutes: Routes = [
   {
     path: 'modList',
     component: ModListComponent
+  },
+  {
+    path: 'deckPopularity',
+    component: DeckPopularityComponent
+  },
+  {
+    path: 'deckPopularity/:year',
+    component: DeckPopularityComponent
+  },
+  {
+    path: 'discord',
+    component: DiscordComponent
   }
 ];
 
@@ -147,7 +162,9 @@ const appRoutes: Routes = [
     PotionListComponent,
     CardLookupComponent,
     ModListComponent,
-    ModDetailsComponent
+    ModDetailsComponent,
+    DeckPopularityComponent,
+    DiscordComponent
   ],
   imports: [
     BrowserModule,
@@ -196,7 +213,7 @@ const appRoutes: Routes = [
     MatTabsModule,
     MatToolbarModule,
     MatTooltipModule,
-    PortalModule,
+    PortalModule
   ],
   providers: [TopService, CardService, BundleService, DisplayObjectService, InfoService, RunLogService],
   bootstrap: [AppComponent]
