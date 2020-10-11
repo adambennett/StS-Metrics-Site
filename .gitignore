@@ -94,5 +94,3 @@ testem.log
 .DS_Store
 Thumbs.db
 /src/main/resources/
-/config.json
-/.env
