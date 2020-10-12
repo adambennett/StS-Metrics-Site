@@ -65,6 +65,7 @@ import { ModListComponent } from './views/info/mod-list/mod-list.component';
 import { ModDetailsComponent } from './views/mods/mod-details/mod-details.component';
 import { DeckPopularityComponent } from './views/info/deck-popularity/deck-popularity.component';
 import { DiscordComponent } from './views/info/discord/discord.component';
+import { SearchComponent } from './views/runs/search/search.component';
 
 
 const appRoutes: Routes = [
@@ -141,6 +142,14 @@ const appRoutes: Routes = [
   {
     path: 'discord',
     component: DiscordComponent
+  },
+  {
+    path: 'mod-view',
+    component: ModDetailsComponent
+  },
+  {
+    path: 'search-runs',
+    component: SearchComponent
   }
 ];
 
@@ -164,7 +173,8 @@ const appRoutes: Routes = [
     ModListComponent,
     ModDetailsComponent,
     DeckPopularityComponent,
-    DiscordComponent
+    DiscordComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,

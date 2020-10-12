@@ -4,6 +4,11 @@
 
 .site-title {
   height: 10%;
+  background-image: url("../assets/textures/brushed-alum-dark.png");
+}
+
+.test-bg {
+  background-image: url("../assets/textures/spellcasterFlip.png");
 }
 
 .sidebar-nav-label {
@@ -34,9 +39,15 @@
   min-height: 90%;
 }
 
+.sidebar-option {
+  padding: 0 20px;
+}
+
 .sidebar {
   height: 100%;
   min-height: 100%;
+  width: 120px;
+  background-image: url("../assets/textures/brushed-alum-dark.png");
   //overflow: hidden;
 }
 

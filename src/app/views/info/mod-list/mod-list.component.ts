@@ -5,6 +5,7 @@ import {ModInfoBundle} from '../../../models/ModInfoBundle';
 import {InfoService} from '../../../services/info-service/info.service';
 import {GeneralUtil} from '../../../utils/Utilities';
 import {MatPaginator} from '@angular/material/paginator';
+import {StateService} from '../../../services/state.service';
 
 @Component({
   selector: 'app-mod-list',
@@ -20,7 +21,11 @@ export class ModListComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor(private infoService: InfoService) { }
+  constructor(private infoService: InfoService, private state: StateService) { }
+
+  storeRunData(index: number): void {
+    this.state.mod = this.mods[index];
+  }
 
   ngOnInit(): void {
     GeneralUtil.setPageTitle('Mod List');

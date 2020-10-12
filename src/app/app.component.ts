@@ -7,6 +7,7 @@ import {ModInfoBundle} from "./models/ModInfoBundle";
 import {InfoService} from "./services/info-service/info.service";
 import {Component} from '@angular/core';
 import {Utilities} from './utils/RunUtils';
+import {StateService} from './services/state.service';
 
 @Component({
   selector: 'app-root',
@@ -21,15 +22,19 @@ export class AppComponent {
   times = Timestamps.times;
   decks = DeckList.decks;
   sidebarOpen: boolean = true;
+  graphYears: number[] = [];
 
   static pageTitle: string = '';
 
   constructor(
     private bundleService: BundleService,
-    private runLogService: RunLogService,
-    private infoService: InfoService) {
+    private runService: RunLogService,
+    private infoService: InfoService,
+    private state: StateService)
+
+  {
     this.sidebarOpen = sessionStorage.sidebar ? sessionStorage.sidebar === 'true' : true;
-    this.runLogService.getCharacters().subscribe(data => {
+    this.runService.getCharacters().subscribe(data => {
       this.characters = data;
     });
     this.bundleService.getCountries().subscribe(data => {
@@ -38,6 +43,11 @@ export class AppComponent {
     this.infoService.getAllMods().subscribe(data => {
       this.mods = data;
     });
+    const today = new Date().getFullYear();
+    for (let i = 2019; i <= today; i++) {
+      this.graphYears.push(i);
+    }
+    this.graphYears = this.graphYears.slice().reverse();
   }
 
   goToUrl(url: string, newTab: boolean): void {

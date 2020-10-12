@@ -1,27 +1,35 @@
-<div class="top-container">
+<div class="top-container test-bg">
 
   <!-- Site Title Bar -->
   <mat-toolbar color="primary" class="site-title">
     <mat-toolbar-row>
+      <!-- Open Sidebar -->
+      <div class="example-sidenav-content">
+        <div id="sidebar-opener2">
+          <button id="hamburger" type="button" mat-button (click)="toggleSidebar(drawer)" >
+            <img src="assets/icons/hamburger.svg" alt="sidebar toggle arrow icon (open)">
+          </button>
+        </div>
+      </div>
+
+      <!-- Title Bar -->
       <span class="span">
         <a [routerLink]="['/']" class="hidden-link" >Duelist Metrics Server</a>
       </span>
+
     </mat-toolbar-row>
   </mat-toolbar>
 
-  <mat-drawer-container class="all-page-content" autosize>
-    <!-- Page Title -->
-    <!-- <mat-toolbar color="#303030" class="page-title">
-      <mat-toolbar-row>
-        <span class="span">{{getTitle()}}</span>
-      </mat-toolbar-row>
-    </mat-toolbar>-->
+  <!-- Content -->
+  <mat-drawer-container class="all-page-content  test-bg" autosize>
 
     <!-- Sidebar -->
     <mat-drawer #drawer class="sidebar" mode="side" [opened]="isSidebarOpen()">
+
+      <!--  Navigation  -->
       <mat-label class="sidebar-nav-label">Navigation</mat-label>
       <mat-divider></mat-divider>
-      <button mat-menu-item [matMenuTriggerFor]="runmenu">Runs</button>
+      <button class="sidebar-option" mat-menu-item [matMenuTriggerFor]="runmenu">Runs</button>
       <mat-menu #runmenu="matMenu">
         <button mat-menu-item [matMenuTriggerFor]="charactersmenu">Characters</button>
         <mat-menu #charactersmenu="matMenu">
@@ -43,16 +51,18 @@
         </mat-menu>
         <button mat-menu-item [routerLink]="['/runs', 'Duelist']">The Duelist</button>
         <button mat-menu-item [routerLink]="['/runs', 'Non-Duelist']">Non-Duelist</button>
+        <!--<button mat-menu-item [routerLink]="['/search-runs']">Search</button>-->
         <button mat-menu-item [routerLink]="['/runs', 'All']">All</button>
       </mat-menu>
-      <button mat-menu-item [matMenuTriggerFor]="deckmenu">Decks</button>
+
+      <!--  Decks  -->
+      <button class="sidebar-option" mat-menu-item [matMenuTriggerFor]="deckmenu">Decks</button>
       <mat-menu #deckmenu="matMenu">
         <div *ngFor="let deck of decks">
           <button mat-menu-item [matMenuTriggerFor]="deckSubMenu">{{deck.name}}</button>
           <mat-menu #deckSubMenu="matMenu">
             <div *ngIf="deck.name === 'All'; else elseBlock">
               <button mat-menu-item [routerLink]="['/compare']">Compare</button>
-              <button mat-menu-item [routerLink]="['/deckPopularity']">Popularity</button>
             </div>
             <ng-template #elseBlock>
               <!--<button mat-menu-item [routerLink]="['/info', deck.id]">Info</button>-->
@@ -64,71 +74,67 @@
           </mat-menu>
         </div>
       </mat-menu>
-      <button mat-menu-item [matMenuTriggerFor]="infomenu">Info</button>
+
+      <!--  Info  -->
+      <button class="sidebar-option" mat-menu-item [matMenuTriggerFor]="infomenu">Info</button>
       <mat-menu #infomenu="matMenu">
-        <!--<button mat-menu-item [matMenuTriggerFor]="infoSubStatsMenu">Stats</button>
-        <mat-menu #infoSubStatsMenu="matMenu">
-          <button mat-menu-item [routerLink]="['/info/stats', 'THE_DUELIST']">The Duelist</button>
-          <div *ngFor="let char of characters">
-            <div *ngIf="char !== 'THE_DUELIST'">
-              <button mat-menu-item [routerLink]="['/info/stats', char]">{{char}}</button>
-            </div>
-          </div>
-        </mat-menu>-->
         <button mat-menu-item [routerLink]="['/info/run-count-country']">Run Count by Country</button>
       </mat-menu>
-      <button mat-menu-item [routerLink]="['/modList']">Mods</button>
 
-      <mat-label class="sidebar-options-label">Options</mat-label>
+      <!--  Graphs  -->
+      <button class="sidebar-option" mat-menu-item [matMenuTriggerFor]="graphmenu">Graphs</button>
+      <mat-menu #graphmenu="matMenu">
+        <button mat-menu-item [routerLink]="['/deckPopularity']">Deck Popularity</button>
+      </mat-menu>
+
+      <!--  Mods  -->
+      <button class="sidebar-option" mat-menu-item [routerLink]="['/modList']">Mods</button>
+
+      <!--  Links  -->
       <mat-divider></mat-divider>
-      <div *ngIf="getTitle() === 'Run Log'">
-        <button mat-menu-item (click)="toggleFilterBox('hide')" id="hide-filters">Hide Filters</button>
-        <button mat-menu-item (click)="toggleFilterBox('show')" style="display: none" id="show-filters">Show Filters</button>
-      </div>
-      <div *ngIf="getTitle() === 'Deck Popularity'">
-        <button mat-menu-item [matMenuTriggerFor]="years">Year</button>
-        <mat-menu #years="matMenu">
-          <button mat-menu-item [routerLink]="['/deckPopularity', 2020]">2020</button>
-          <button mat-menu-item [routerLink]="['/deckPopularity', 2019]">2019</button>
-        </mat-menu>
-      </div>
-
-
       <mat-label class="sidebar-links-label">Links</mat-label>
       <mat-divider></mat-divider>
-      <button mat-menu-item [matMenuTriggerFor]="sourceMenu">Source Code</button>
+      <button class="sidebar-option" mat-menu-item [matMenuTriggerFor]="extraFooterInfoMenu">Extras</button>
+      <mat-menu #extraFooterInfoMenu="matMenu">
+        <button mat-menu-item (click)="goToUrl('https://discord.gg/Tcwws6U', true)">Discord</button>
+        <button mat-menu-item (click)="goToUrl('https://steamcommunity.com/sharedfiles/filedetails/?id=1673346215', true)">Steam Workshop</button>
+      </mat-menu>
+      <button class="sidebar-option" mat-menu-item [matMenuTriggerFor]="donationMenu">Donate</button>
+      <mat-menu #donationMenu="matMenu">
+        <button mat-menu-item (click)="goToDonate()">Paypal</button>
+      </mat-menu>
+      <button class="sidebar-option" mat-menu-item [matMenuTriggerFor]="sourceMenu">Source</button>
       <mat-menu #sourceMenu="matMenu">
         <button mat-menu-item (click)="goToUrl('https://github.com/adambennett/StS-DuelistMod', true)">DuelistMod</button>
         <button mat-menu-item (click)="goToUrl('https://github.com/adambennett/StS-Metrics-Server', true)">Metrics API</button>
         <button mat-menu-item (click)="goToUrl('https://github.com/adambennett/StS-Metrics-Site', true)">Metrics Site</button>
       </mat-menu>
-      <button mat-menu-item [matMenuTriggerFor]="extraFooterInfoMenu">Extras</button>
-      <mat-menu #extraFooterInfoMenu="matMenu">
-        <button mat-menu-item (click)="goToUrl('https://discord.gg/Tcwws6U', true)">Discord</button>
-        <button mat-menu-item (click)="goToUrl('https://steamcommunity.com/sharedfiles/filedetails/?id=1673346215', true)">Steam Workshop</button>
-      </mat-menu>
-      <button mat-menu-item [matMenuTriggerFor]="donationMenu">Donate</button>
-      <mat-menu #donationMenu="matMenu">
-        <button mat-menu-item (click)="goToDonate()">Paypal</button>
-      </mat-menu>
+
+      <!--  Options  -->
+      <mat-divider></mat-divider>
+      <mat-label class="sidebar-options-label">Options</mat-label>
+      <mat-divider></mat-divider>
+      <div *ngIf="getTitle() === 'Run Log'">
+        <button class="sidebar-option" mat-menu-item (click)="toggleFilterBox('hide')" id="hide-filters">Hide Filters</button>
+        <button class="sidebar-option" mat-menu-item (click)="toggleFilterBox('show')" style="display: none" id="show-filters">Show Filters</button>
+      </div>
+      <div *ngIf="getTitle() === 'Deck Popularity'">
+        <button class="sidebar-option" mat-menu-item [matMenuTriggerFor]="years">Year</button>
+        <mat-menu #years="matMenu">
+          <div *ngFor="let year of graphYears">
+            <button mat-menu-item [routerLink]="['/deckPopularity', year]">{{year}}</button>
+          </div>
+        </mat-menu>
+      </div>
 
       <!--  Arrows to Collapse Sidenav Bar -->
 <!--      <div style="margin-left: 10px">
         <img src="https://visitor-badge.glitch.me/badge?page_id=sts-metrics-site" alt="visitor badge"/>
       </div>-->
-      <button mat-menu-item (click)="toggleSidebar(drawer)">
+<!--      <button mat-menu-item (click)="toggleSidebar(drawer)">
         <img src="assets/icons/arrows.svg" class="flipSvg" alt="sidebar toggle arrow icon (close)">
-      </button>
+      </button>-->
     </mat-drawer>
-
-    <!-- Open Sidebar -->
-    <div class="example-sidenav-content">
-      <div *ngIf="!isSidebarOpen()" id="sidebar-opener">
-        <button type="button" mat-button (click)="toggleSidebar(drawer)">
-          <img src="assets/icons/arrows.svg" alt="sidebar toggle arrow icon (open)">
-        </button>
-      </div>
-    </div>
 
     <!-- Dynamic Page Content -->
     <main class="dynamic-page-content">

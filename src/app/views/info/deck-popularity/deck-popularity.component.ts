@@ -4,6 +4,7 @@ import {DeckPopularity} from '../../../models/DeckPopularity';
 import {GeneralUtil} from '../../../utils/Utilities';
 import {Subscription} from 'rxjs/Subscription';
 import {ActivatedRoute, Router} from '@angular/router';
+import {StateService} from '../../../services/state.service';
 
 declare const Plotly: any;
 
@@ -22,28 +23,44 @@ export class DeckPopularityComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private runService: RunLogService) { }
+              private runService: RunLogService,
+              private state: StateService) { }
 
   ngOnInit(): void {
     GeneralUtil.setPageTitle('Deck Popularity');
     this.sub = this.route.params.subscribe(params => {
       this.year = params.year ? params.year : 2020;
-      this.runService.getDeckPopularity().subscribe(data => {
-        this.data = data;
-        this.graphData = this.getDecksFromData(this.data);
-        const layout = {
-          title: 'Runs by Month (Deck)',
-          height: 600,
-          xaxis: {
-            title: 'Month'
-          },
-          yaxis: {
-            title: 'Runs'
-          }
-        };
-        Plotly.newPlot('graph', this.graphData, layout);
-      });
+      if (this.state.getGraphData() != null) {
+        const data = this.state.getGraphData();
+        this.setupGraphData(data);
+      } else {
+        this.refreshGraphData();
+      }
     });
+  }
+
+  refreshGraphData(): void {
+    this.runService.getDeckPopularity().subscribe(data => {
+      this.setupGraphData(data);
+    });
+  }
+
+  setupGraphData(data: DeckPopularity[]) {
+    this.data = data;
+    this.state.setGraphData(data);
+    this.graphData = this.getDecksFromData(this.data);
+    const layout = {
+      title: 'Runs by Month (Deck)',
+      height: 600,
+      width: 1360,
+      xaxis: {
+        title: 'Month'
+      },
+      yaxis: {
+        title: 'Runs'
+      }
+    };
+    Plotly.newPlot('graph', this.graphData, layout);
   }
 
   click(): void {
