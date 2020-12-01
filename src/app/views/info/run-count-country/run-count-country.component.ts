@@ -1,9 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
-import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {CountryRunCount} from "../../../models/CountryRunCount";
 import {BundleService} from "../../../services/bundle-service/bundle.service";
+import {GeneralUtil} from '../../../utils/Utilities';
 
 @Component({
   selector: 'app-run-count-country',
@@ -21,6 +21,7 @@ export class RunCountCountryComponent implements OnInit {
   constructor(private bundleService: BundleService) { }
 
   ngOnInit(): void {
+    GeneralUtil.setPageTitle('Runs - Breakdown by Country');
     this.bundleService.getRunCountByCountry().subscribe(data => {
       this.countries = data;
       this.dataSource = new MatTableDataSource<CountryRunCount>(this.countries);

@@ -14,7 +14,10 @@ import {ModInfoBundle} from '../../../models/ModInfoBundle';
 import {BundleService} from '../../../services/bundle-service/bundle.service';
 import {InfoService} from '../../../services/info-service/info.service';
 import {MatSlideToggleChange} from '@angular/material/slide-toggle';
-import * as lookup from 'country-code-lookup'
+import {Timestamps} from '../../../models/Timestamps';
+import {Utilities} from '../../../utils/RunUtils';
+import {GeneralUtil} from '../../../utils/Utilities';
+import {MatRipple} from '@angular/material/core';
 
 @Component({
   selector: 'app-runs',
@@ -23,6 +26,7 @@ import * as lookup from 'country-code-lookup'
 })
 export class RunsComponent implements OnInit {
 
+  timeframes = Timestamps.times;
   params: Params;
   sub: Subscription;
   displayedColumns: string[];
@@ -31,18 +35,23 @@ export class RunsComponent implements OnInit {
   dataSource: MatTableDataSource<RunLog>;
   runType: string;
   columns: RunsColumnsModel = RunsColumns;
-  characters: string[];
+  characters: string[] = [];
+  killedBys: string[] = [];
   countries: Country[];
   mods: ModInfoBundle[];
-
   disableRefresh: boolean = false;
   matchAll: boolean = false;
-  characterFilter: string[];
-  countryFilter: string[];
-  timeFilter: string[];
+  characterFilter: string[] = [];
+  killedByFilter: string[] = [];
+  countryFilter: string[] = [];
+  startingDecks: string[] = [];
+  startingDecksFilter: string[] = [];
+  timeFilter: string = '';
+  loadedInitialRuns: boolean = false;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatRipple) ripple: MatRipple;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
@@ -51,6 +60,7 @@ export class RunsComponent implements OnInit {
               private infoService: InfoService) { }
 
   ngOnInit(): void {
+    GeneralUtil.setPageTitle('Run Log');
     this.sub = this.route.params.subscribe(params => {
       this.runs = null;
       this.params = params;
@@ -64,14 +74,63 @@ export class RunsComponent implements OnInit {
     this.infoService.getAllMods().subscribe(data =>       { this.mods = data; });
   }
 
-  toggleFilterBox(show: string): void {
-    if (show === 'show') {
-      document.getElementById('filter-box').style.display = 'block';
-      document.getElementById('show-filters').style.display = 'none';
-    } else {
-      document.getElementById('filter-box').style.display = 'none';
-      document.getElementById('show-filters').style.display = 'block';
+  launchRipple() {
+    const rippleRef = this.ripple.launch({
+      persistent: true,
+      centered: true
+    });
+
+    // Fade out the ripple later.
+    setTimeout(() => { rippleRef.fadeOut(); }, 300);
+
+  }
+
+  populateFilters(): void {
+    this.populateStartingDeckFilter();
+    this.populateCharacterFilter();
+    this.populateKilledBy();
+  }
+
+  populateStartingDeckFilter(): void {
+    this.startingDecks = [];
+    for (let i = 0; i < this.runs.length; i++) {
+      const run = this.runs[i];
+      if (!(run.deck === 'NotYugi' || this.startingDecks.indexOf(run.deck) > -1)) {
+        this.startingDecks.push(run.deck);
+      }
     }
+    this.startingDecks.sort((a,b) => a.localeCompare(b));
+  }
+
+  populateCharacterFilter(): void {
+    for (let i = 0; i < this.runs.length; i++) {
+      const run = this.runs[i];
+      if (this.characters.indexOf(run.characterName) < 0) {
+        this.characters.push(run.characterName);
+      }
+    }
+    this.characters.sort((a,b) => a.localeCompare(b));
+    this.characters.unshift('The Duelist');
+  }
+
+  populateKilledBy(): void {
+    for (let i = 0; i < this.runs.length; i++) {
+      const run = this.runs[i];
+      if (this.killedBys.indexOf(run.killedBy) < 0 && run.killedBy !== '') {
+        this.killedBys.push(run.killedBy);
+      }
+    }
+    this.killedBys.sort((a,b) => a.localeCompare(b));
+  }
+
+  refreshTable(): void {
+    this.dataSource = new MatTableDataSource<RunLog>(this.currentRuns.slice().reverse());
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  toggleFilterBox(show: string): void {
+    Utilities.toggleFilter(show);
   }
 
   onChange(value: MatSlideToggleChange): void {
@@ -83,7 +142,8 @@ export class RunsComponent implements OnInit {
     this.disableRefresh = true;
     setTimeout(() => {
       this.disableRefresh = false;
-    }, 30000);
+
+    }, 7500);
   }
 
   storeRunData(index: number): void {
@@ -93,118 +153,66 @@ export class RunsComponent implements OnInit {
   clearFilters(): void {
     this.characterFilter = [];
     this.countryFilter = [];
+    this.startingDecksFilter = [];
+    this.killedByFilter = [];
+    this.timeFilter = '';
+    const currentRunSize = this.currentRuns.length;
     this.currentRuns = this.runs;
-    this.dataSource = new MatTableDataSource<RunLog>(this.currentRuns.slice().reverse());
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    if (currentRunSize !== this.currentRuns.length) {
+      this.launchRipple();
+    }
+    this.refreshTable();
   }
 
-  getAllFromCountry(): RunLog[] {
-    const newRuns: RunLog[] = [];
-    this.countryFilter.forEach((locale) => {
-      this.runs.forEach((run) => {
-        if (run.country === locale) {
-          newRuns.push(run);
-        }
-      });
-    });
-    return newRuns;
+  allFiltersEmpty(): boolean {
+    return this.characterFilter.length < 1
+      && this.countryFilter.length < 1
+      && this.timeFilter === ''
+      && this.startingDecksFilter.length < 1
+      && this.killedByFilter.length < 1;
+  }
+
+  checkFilters(run: RunLog, all: boolean, allEmpty: boolean): boolean {
+    if (all) {
+      return Utilities.matchAtLeastOneSelectedCharacter(this.characterFilter, run, all)
+        &&   Utilities.matchAtLeastOneSelectedCountry(this.countryFilter, run, all)
+        &&   Utilities.matchSelectedTime(this.timeFilter, run, all)
+        &&   Utilities.matchFilterToRunProperty('deck', this.startingDecksFilter, run, all)
+        &&   Utilities.matchFilterToRunProperty('killedBy', this.killedByFilter, run, all);
+    } else {
+      return allEmpty
+        ||   Utilities.matchAtLeastOneSelectedCharacter(this.characterFilter, run, all)
+        ||   Utilities.matchAtLeastOneSelectedCountry(this.countryFilter, run, all)
+        ||   Utilities.matchSelectedTime(this.timeFilter, run, all)
+        ||   Utilities.matchFilterToRunProperty('deck', this.startingDecksFilter, run, all)
+        ||   Utilities.matchFilterToRunProperty('killedBy', this.killedByFilter, run, all);
+    }
   }
 
   filterRuns(): void {
+
     document.body.style.cursor = 'wait';
-    let filtered: boolean = false;
-    const allowed: RunLog[] = [];
-    const ignored: RunLog[] = [];
-    if (this.matchAll) {
-      if (this.characterFilter && this.characterFilter.length > 0) {
-        filtered = true;
-        this.characterFilter.forEach((char) => {
-          char = char === 'The Duelist' || char === 'THE_DUELIST' ? 'THE_DUELIST' : char;
-          this.runs.forEach((run) => {
-            if ((char === 'THE_DUELIST' && (run.deck !== 'NotYugi' || run.characterName.startsWith('The Duelist'))) || run.characterName === char) {
-              if (this.countryFilter && this.countryFilter.length > 0) {
-                this.countryFilter.forEach((locale) => {
-                  const country = lookup.byCountry(locale);
-                  if (locale === run.country || (country && run.country === country.iso2)) {
-                    allowed.push(run);
-                  }
-                });
-              } else {
-                allowed.push(run);
-              }
-            }
-          });
-        });
-      } else if (this.countryFilter && this.countryFilter.length > 0) {
-        this.runs.forEach((run) => {
-          this.countryFilter.forEach((locale) => {
-            const country = lookup.byCountry(locale);
-            if (locale === run.country || (country && run.country === country.iso2)) {
-              allowed.push(run);
-            }
-          });
-        });
-      }
-    } else {
-      if (this.characterFilter && this.characterFilter.length > 0) {
-        filtered = true;
-        this.characterFilter.forEach((char) => {
-          char = char === 'The Duelist' || char === 'THE_DUELIST' ? 'THE_DUELIST' : char;
-          this.runs.forEach((run) => {
-            if ((char === 'THE_DUELIST' && (run.deck !== 'NotYugi' || run.characterName.startsWith('The Duelist'))) || run.characterName === char) {
-              allowed.push(run);
-            } else {
-              ignored.push(run);
-            }
-          });
-        });
-      }
-
-      //const ignoredAfterCountry: RunLog[] = [];
-      if (this.countryFilter && this.countryFilter.length > 0) {
-        filtered = true;
-        this.countryFilter.forEach((locale) => {
-          if (ignored.length < 1) {
-            this.runs.forEach((run) => {
-              const country = lookup.byCountry(locale);
-              if (locale === run.country || (country && run.country === country.iso2)) {
-                allowed.push(run);
-              } else {
-                //ignoredAfterCountry.push(run);
-              }
-            });
-          } else {
-            ignored.forEach((run) => {
-              const country = lookup.byCountry(locale);
-              if (locale === run.country || (country && run.country === country.iso2)) {
-                allowed.push(run);
-              } else {
-                //ignoredAfterCountry.push(run);
-              }
-            });
-          }
-        });
-      }
-
+    const allFiltersAreEmpty: boolean = this.allFiltersEmpty();
+    const currentRunSize = this.currentRuns.length;
+    this.currentRuns = this.runs.filter((run) => this.checkFilters(run, this.matchAll, allFiltersAreEmpty));
+    if (currentRunSize !== this.currentRuns.length) {
+      this.launchRipple();
     }
-
-    if (filtered) {
-      this.currentRuns = allowed;
-      this.dataSource = new MatTableDataSource<RunLog>(this.currentRuns.slice().reverse());
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    }
+    this.refreshTable();
     document.body.style.cursor = 'auto';
   }
 
   refreshRuns(data: RunLog[]): void {
+    if (this.loadedInitialRuns) {
+      this.launchRipple();
+    } else {
+      this.loadedInitialRuns = true;
+    }
     if (this.runs == null || this.runs.length < data.length) {
       this.runs = data;
       this.currentRuns = this.runs;
-      this.dataSource = new MatTableDataSource<RunLog>(this.currentRuns.slice().reverse());
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+      this.populateFilters();
+      this.refreshTable();
     }
   }
 

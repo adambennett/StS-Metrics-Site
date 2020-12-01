@@ -1,0 +1,33 @@
+.duelist-info-grid {
+  margin: 5pt;
+}
+
+.duelist-info-grid-row {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 4px;
+  width: 100%;
+}
+
+.search-row {
+  margin: 10pt;
+}
+
+.duelist-info-grid-column {
+  flex: 50%;
+  padding: 0 20px;
+}
+
+.inner-column {
+  flex: 33%;
+  padding: 0 4px;
+}
+
+.inner-half-column {
+  flex: 50%;
+  padding: 0 4px;
+}
+
+.search-field {
+  margin-right: 5pt;
+}

@@ -2,9 +2,35 @@
 @import "~@angular/material/prebuilt-themes/pink-bluegrey.css";
 @import 'https://fonts.googleapis.com/icon?family=Material+Icons';
 
+app-root {
+  display: block;
+  height: 100%;
+}
+
 body {
   margin: 0;
   font-family: Roboto, sans-serif;
+  height: 100%;
+  min-height:100%;
+}
+
+html{
+  height: 100%;
+  min-height:100%;
+  position:relative;
+}
+
+.hidden-link {
+  -webkit-text-fill-color: white;
+  text-decoration: none !important;
+}
+
+.page-body {
+  margin: 0;
+  font-family: Roboto, sans-serif;
+  height: 100%;
+  min-height:100%;
+  position:relative;
 }
 
 // Define a custom mixin that takes in the current theme
@@ -27,6 +53,9 @@ body {
     background-color: mat-color($primary);
     outline-color: mat-color($primary);
     border-color: mat-color($accent);
+  }
+  html {
+    background: #303030;
   }
 }
 

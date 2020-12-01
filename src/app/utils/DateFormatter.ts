@@ -1,4 +1,5 @@
 import * as moment from 'moment';
+import {RunLog} from '../models/RunLog';
 
 export class DateFormatter {
   static getTimestamp = (type: string) => {
@@ -19,6 +20,14 @@ export class DateFormatter {
         break;
     }
     return timestamp;
+  }
+
+  static runMatchesTimeFilter = (run: RunLog, filter: string): boolean => {
+    const runDate = moment(run.filterDate, 'YYYYMMDDHHmmss');
+    const timestamp = DateFormatter.getTimestamp(filter);
+    const start = moment(timestamp.start, 'YYYYMMDDHHmmss');
+    const end = moment(timestamp.end, 'YYYYMMDDHHmmss');
+    return runDate.isBetween(start, end) || runDate.isSameOrAfter(start) || runDate.isSameOrBefore(end);
   }
 
   static formatDate = (date: Date) => {

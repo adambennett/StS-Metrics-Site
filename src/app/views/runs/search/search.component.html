@@ -1,0 +1,134 @@
+<div id="search-container">
+  <mat-card class="duelist-info-grid mat-elevation-z15">
+    <div class="duelist-info-grid-column">
+      <mat-card class="mat-elevation-z20 search-row">
+        <div class="duelist-info-grid-row">
+            <mat-label class="search-field">Decks: </mat-label>
+            <mat-icon-button style="margin-left:90%" (click)="clearFilter('deck')">
+              <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+              </svg>
+            </mat-icon-button>
+          <mat-select [multiple]="true" [(ngModel)]="deckFilter" (selectionChange)="log()">
+            <mat-option *ngFor="let deck of decks" [value]="deck.name">
+              {{deck.id}}
+            </mat-option>
+          </mat-select>
+        </div>
+      </mat-card>
+      <mat-card class="mat-elevation-z20 search-row">
+        <div class="duelist-info-grid-row">
+          <mat-label class="search-field">Killed By: </mat-label>
+          <mat-icon-button style="margin-left:90%" (click)="clearFilter('killedBy')">
+            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+              <path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+            </svg>
+          </mat-icon-button>
+          <mat-select [multiple]="true" [(ngModel)]="killedByFilter" (selectionChange)="log()">
+            <mat-option *ngFor="let deck of killedBys" [value]="deck">
+              {{deck}}
+            </mat-option>
+          </mat-select>
+        </div>
+      </mat-card>
+      <mat-card class="mat-elevation-z20 search-row">
+        <div class="duelist-info-grid-row">
+          <div class="inner-column">
+            <mat-label class="search-field">Ascension</mat-label><br>
+            <mat-icon-button (click)="clearFilter('ascension')">
+              <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+              </svg>
+            </mat-icon-button>
+          </div>
+          <div class="inner-column">
+            <mat-label class="search-field">From </mat-label>
+            <mat-select>
+              <mat-option *ngFor="let num of ascensions" [value]="ascensionFrom">
+                {{num}}
+              </mat-option>
+            </mat-select>
+          </div>
+          <div class="inner-column">
+            <mat-label class="search-field">To </mat-label>
+            <mat-select>
+              <mat-option *ngFor="let num of ascensions" [value]="ascensionTo">
+                {{num}}
+              </mat-option>
+            </mat-select>
+          </div>
+        </div>
+      </mat-card>
+      <mat-card class="mat-elevation-z20 search-row">
+        <div class="duelist-info-grid-row">
+          <div class="inner-column">
+            <mat-label class="search-field">Challenge</mat-label><br>
+            <mat-icon-button (click)="clearFilter('challenge')">
+              <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+              </svg>
+            </mat-icon-button>
+          </div>
+          <div class="inner-column">
+            <mat-label class="search-field">From </mat-label>
+            <mat-select>
+              <mat-option *ngFor="let num of challenges" [value]="challengeFrom">
+                {{num}}
+              </mat-option>
+            </mat-select>
+          </div>
+          <div class="inner-column">
+            <mat-label class="search-field">To </mat-label>
+            <mat-select>
+              <mat-option *ngFor="let num of challenges" [value]="challengeTo">
+                {{num}}
+              </mat-option>
+            </mat-select>
+          </div>
+        </div>
+      </mat-card>
+      <mat-card class="mat-elevation-z20 search-row">
+        <div class="duelist-info-grid-row">
+          <div class="inner-column">
+            <mat-label class="search-field">Date Range</mat-label><br>
+            <mat-icon-button type="button" (click)="clearFilter('date')">
+              <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-x-circle" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                <path fill-rule="evenodd" d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+              </svg>
+            </mat-icon-button>
+          </div>
+          <div class="inner-column">
+            <mat-label class="search-field">From </mat-label>
+            <mat-form-field appearance="fill">
+              <input matInput [matDatepicker]="fromDate" disabled (dateChange)="setFromDate('change', $event)">
+              <mat-datepicker-toggle matSuffix [for]="fromDate"></mat-datepicker-toggle>
+              <mat-datepicker #fromDate disabled="false"></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="inner-column">
+            <mat-label class="search-field">To </mat-label>
+            <mat-form-field appearance="fill">
+              <input matInput [matDatepicker]="toDate" disabled (dateChange)="setToDate('change', $event)">
+              <mat-datepicker-toggle matSuffix [for]="toDate"></mat-datepicker-toggle>
+              <mat-datepicker #toDate disabled="false"></mat-datepicker>
+            </mat-form-field>
+            <mat-datepicker></mat-datepicker>
+          </div>
+        </div>
+      </mat-card>
+      <div id="search-button" style="text-align:center">
+        <button class="mat-elevation-z20 btn btn-raised btn-primary color-btn">
+          Search
+        </button>
+      </div>
+    </div>
+  </mat-card>
+</div>
+
+
+

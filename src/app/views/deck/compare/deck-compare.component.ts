@@ -3,6 +3,7 @@ import {MatTableDataSource} from "@angular/material/table";
 import {MatSort} from "@angular/material/sort";
 import {RunLogService} from "../../../services/run-log-service/run-log.service";
 import {DisplayDeck} from '../../../models/DisplayDeck';
+import {GeneralUtil} from '../../../utils/Utilities';
 
 @Component({
   selector: 'app-deck-compare',
@@ -18,6 +19,7 @@ export class DeckCompareComponent implements OnInit {
   constructor(private runLogService: RunLogService) { }
 
   ngOnInit(): void {
+    GeneralUtil.setPageTitle('Deck Comparison');
     this.runLogService.getDeckCompare().subscribe(data => {
       this.decks = data;
       sessionStorage.hallOfFame = JSON.stringify(data);

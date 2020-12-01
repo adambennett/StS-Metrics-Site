@@ -1,5 +1,4 @@
 # StS-Metrics-Site
-Runs the front end for my StS-Metrics-Server project
+Angular front end for my [StS-Metrics-Server](https://github.com/adambennett/StS-Metrics-Server) project.
 
-## Site
-https://sts-metrics-site.herokuapp.com/
+Allows players to view detailed statistics and metrics concerning runs completed with [DuelistMod](https://github.com/adambennett/StS-DuelistMod) and other modded Slay the Spire characters as well.

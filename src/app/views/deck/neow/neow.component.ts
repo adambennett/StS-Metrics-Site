@@ -6,6 +6,7 @@ import {Subscription} from "rxjs/Subscription";
 import {ActivatedRoute, Router} from "@angular/router";
 import {DisplayObjectService} from "../../../services/display-object-service/display-object.service";
 import {DisplayObject} from "../../../models/DisplayObject";
+import {GeneralUtil} from '../../../utils/Utilities';
 
 @Component({
   selector: 'app-neow',
@@ -36,6 +37,7 @@ export class NeowComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    GeneralUtil.setPageTitle('Neow Stats');
     this.sub = this.route.params.subscribe(params => {
       const deck = params.deck;
       if (deck) {

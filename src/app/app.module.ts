@@ -61,6 +61,12 @@ import { CardListComponent } from './views/mods/card-list/card-list.component';
 import { RelicListComponent } from './views/mods/relic-list/relic-list.component';
 import { PotionListComponent } from './views/mods/potion-list/potion-list.component';
 import { CardLookupComponent } from './views/info/card-lookup/card-lookup.component';
+import { ModListComponent } from './views/info/mod-list/mod-list.component';
+import { ModDetailsComponent } from './views/mods/mod-details/mod-details.component';
+import { DeckPopularityComponent } from './views/info/deck-popularity/deck-popularity.component';
+import { DiscordComponent } from './views/info/discord/discord.component';
+import { SearchComponent } from './views/runs/search/search.component';
+
 
 const appRoutes: Routes = [
   {
@@ -120,6 +126,30 @@ const appRoutes: Routes = [
   {
     path: 'cardLookup/:card',
     component: CardLookupComponent
+  },
+  {
+    path: 'modList',
+    component: ModListComponent
+  },
+  {
+    path: 'deckPopularity',
+    component: DeckPopularityComponent
+  },
+  {
+    path: 'deckPopularity/:year',
+    component: DeckPopularityComponent
+  },
+  {
+    path: 'discord',
+    component: DiscordComponent
+  },
+  {
+    path: 'mod-view',
+    component: ModDetailsComponent
+  },
+  {
+    path: 'search-runs',
+    component: SearchComponent
   }
 ];
 
@@ -139,7 +169,12 @@ const appRoutes: Routes = [
     CardListComponent,
     RelicListComponent,
     PotionListComponent,
-    CardLookupComponent
+    CardLookupComponent,
+    ModListComponent,
+    ModDetailsComponent,
+    DeckPopularityComponent,
+    DiscordComponent,
+    SearchComponent
   ],
   imports: [
     BrowserModule,
@@ -188,10 +223,10 @@ const appRoutes: Routes = [
     MatTabsModule,
     MatToolbarModule,
     MatTooltipModule,
-    PortalModule,
+    PortalModule
   ],
   providers: [TopService, CardService, BundleService, DisplayObjectService, InfoService, RunLogService],
   bootstrap: [AppComponent]
 })
 
-export class AppModule { }
+export class AppModule {}
