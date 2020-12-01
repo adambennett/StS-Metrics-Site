@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TopService } from "./services/topservice/top.service";
@@ -66,7 +66,6 @@ import { ModDetailsComponent } from './views/mods/mod-details/mod-details.compon
 import { DeckPopularityComponent } from './views/info/deck-popularity/deck-popularity.component';
 import { DiscordComponent } from './views/info/discord/discord.component';
 import { SearchComponent } from './views/runs/search/search.component';
-
 
 const appRoutes: Routes = [
   {
@@ -223,10 +222,11 @@ const appRoutes: Routes = [
     MatTabsModule,
     MatToolbarModule,
     MatTooltipModule,
-    PortalModule
+    PortalModule,
   ],
   providers: [TopService, CardService, BundleService, DisplayObjectService, InfoService, RunLogService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 
 export class AppModule {}
