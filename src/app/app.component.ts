@@ -7,7 +7,7 @@ import {ModInfoBundle} from "./models/ModInfoBundle";
 import {InfoService} from "./services/info-service/info.service";
 import {Component} from '@angular/core';
 import {Utilities} from './utils/RunUtils';
-import {StateService} from './services/state.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -27,10 +27,10 @@ export class AppComponent {
   static pageTitle: string = '';
 
   constructor(
+    public route: Router,
     private bundleService: BundleService,
     private runService: RunLogService,
-    private infoService: InfoService,
-    private state: StateService)
+    private infoService: InfoService)
 
   {
     this.sidebarOpen = sessionStorage.sidebar ? sessionStorage.sidebar === 'true' : true;
@@ -74,10 +74,6 @@ export class AppComponent {
     if (document.getElementById('sidebar-opener')) {
       document.getElementById('sidebar-opener').style.display = this.sidebarOpen ? 'block' : 'none';
     }
-  }
-
-  getTitle(): string {
-    return AppComponent.pageTitle;
   }
 
   isSidebarOpen = () => sessionStorage.sidebar ? sessionStorage.sidebar === 'true' : this.sidebarOpen;

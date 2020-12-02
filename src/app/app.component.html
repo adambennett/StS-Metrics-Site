@@ -114,18 +114,18 @@
       <mat-divider></mat-divider>
       <mat-label class="sidebar-options-label">Options</mat-label>
       <mat-divider></mat-divider>
-      <div *ngIf="getTitle() === 'Run Log'">
+      <div *ngIf="route.url.includes('runs')">
         <button class="sidebar-option" mat-menu-item (click)="toggleFilterBox('hide')" id="hide-filters">Hide Filters</button>
         <button class="sidebar-option" mat-menu-item (click)="toggleFilterBox('show')" style="display: none" id="show-filters">Show Filters</button>
       </div>
-      <div *ngIf="getTitle() === 'Deck Popularity'">
+      <div *ngIf="route.url.includes('deckPopularity')">
         <button class="sidebar-option" mat-menu-item [matMenuTriggerFor]="years">Year</button>
         <mat-menu #years="matMenu">
           <div *ngFor="let year of graphYears">
             <button mat-menu-item [routerLink]="['/deckPopularity', year]">{{year}}</button>
           </div>
         </mat-menu>
-      </div>
+      </div>g
 
       <!--  Arrows to Collapse Sidenav Bar -->
 <!--      <div style="margin-left: 10px">
