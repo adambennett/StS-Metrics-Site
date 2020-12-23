@@ -4,7 +4,7 @@ import {RunLog} from "../../models/RunLog";
 import {TopService} from "../topservice/top.service";
 import {DisplayDeck} from "../../models/DisplayDeck";
 import {HttpParams} from '@angular/common/http';
-import {RunDetails} from '../../models/RunDetails';
+import {RunDetails} from '../../models/runDetails/RunDetails';
 import {DeckPopularity} from '../../models/DeckPopularity';
 
 @Injectable({

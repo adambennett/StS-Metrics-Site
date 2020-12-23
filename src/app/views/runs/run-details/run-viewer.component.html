@@ -44,7 +44,7 @@
       <mat-label>Master Deck</mat-label>
       <table style="display: block; width:100%; margin-top: 10pt;" class="table table-dark">
         <tr *ngFor="let card of run.top.event.master_deck">
-          <a target="_blank" (click)="getLookupCard(card)" [routerLink]="['/cardLookup', lookupCard]" class="btn btn-raised btn-link color-btn text-white">{{card}}</a>
+          <a target="_blank" (click)="getLookupCard(card.id)" [routerLink]="['/cardLookup', lookupCard]" class="btn btn-raised btn-link color-btn text-white">{{card.name}}</a>
         </tr>
       </table>
     </div>
@@ -79,14 +79,14 @@
         <tr>
           <th style="padding-right: 25px">Picked</th>
           <td class="right" *ngFor="let i of run.top.event.card_choices" style="font-weight: bold; padding-left: 35px; padding-right: 35px">
-            <a button target="_blank" (click)="getLookupCard(i.picked)" [routerLink]="['/cardLookup', lookupCard]" class="btn btn-raised btn-link color-btn text-white" style="font-weight: bold">{{i.picked}}</a>
+            <a button target="_blank" (click)="getLookupCard(i.cardId)" [routerLink]="['/cardLookup', lookupCard]" class="btn btn-raised btn-link color-btn text-white" style="font-weight: bold">{{i.cardName}}</a>
           </td>
         </tr>
         <tr>
           <th style="padding-right: 25px">Not Picked 1</th>
           <td class="right" *ngFor="let i of run.top.event.card_choices" style="padding-left: 35px; padding-right: 35px">
             <div *ngIf="i.not_picked.length > 0; else elseBlock">
-              <a button target="_blank" (click)="getLookupCard(i.not_picked[0])" [routerLink]="['/cardLookup', lookupCard]" class="btn btn-raised btn-link color-btn text-white">{{i.not_picked[0]}}</a>
+              <a button target="_blank" (click)="getLookupCard(i.not_picked[0].id)" [routerLink]="['/cardLookup', lookupCard]" class="btn btn-raised btn-link color-btn text-white">{{i.not_picked[0].name}}</a>
             </div>
             <ng-template #elseBlock>---</ng-template>
           </td>
@@ -95,7 +95,7 @@
           <th style="padding-right: 25px">Not Picked 2</th>
           <td class="right" *ngFor="let i of run.top.event.card_choices" style="padding-left: 35px; padding-right: 35px">
             <div *ngIf="i.not_picked.length > 1; else elseBlock">
-              <a button target="_blank" (click)="getLookupCard(i.not_picked[1])" [routerLink]="['/cardLookup', lookupCard]" class="btn btn-raised btn-link color-btn text-white">{{i.not_picked[1]}}</a>
+              <a button target="_blank" (click)="getLookupCard(i.not_picked[1].id)" [routerLink]="['/cardLookup', lookupCard]" class="btn btn-raised btn-link color-btn text-white">{{i.not_picked[1].name}}</a>
             </div>
             <ng-template #elseBlock>---</ng-template>
           </td>
@@ -104,7 +104,7 @@
           <th style="padding-right: 25px">Not Picked 3</th>
           <td class="right" *ngFor="let i of run.top.event.card_choices" style="padding-left: 35px; padding-right: 35px">
             <div *ngIf="i.not_picked.length > 2; else elseBlock">
-              <a button target="_blank" (click)="getLookupCard(i.not_picked[2])" [routerLink]="['/cardLookup', lookupCard]" class="btn btn-raised btn-link color-btn text-white">{{i.not_picked[2]}}</a>
+              <a button target="_blank" (click)="getLookupCard(i.not_picked[2].id)" [routerLink]="['/cardLookup', lookupCard]" class="btn btn-raised btn-link color-btn text-white">{{i.not_picked[2].name}}</a>
             </div>
             <ng-template #elseBlock>---</ng-template>
           </td>
@@ -113,7 +113,7 @@
           <th style="padding-right: 25px">Not Picked 4</th>
           <td class="right" *ngFor="let i of run.top.event.card_choices" style="padding-left: 35px; padding-right: 35px">
             <div *ngIf="i.not_picked.length > 3; else elseBlock">
-              <a button target="_blank" (click)="getLookupCard(i.not_picked[3])" [routerLink]="['/cardLookup', lookupCard]" class="btn btn-raised btn-link color-btn text-white">{{i.not_picked[3]}}</a>
+              <a button target="_blank" (click)="getLookupCard(i.not_picked[3].id)" [routerLink]="['/cardLookup', lookupCard]" class="btn btn-raised btn-link color-btn text-white">{{i.not_picked[3].name}}</a>
             </div>
             <ng-template #elseBlock>---</ng-template>
           </td>
@@ -122,7 +122,7 @@
           <th style="padding-right: 25px">Not Picked 5</th>
           <td class="right" *ngFor="let i of run.top.event.card_choices" style="padding-left: 35px; padding-right: 35px">
             <div *ngIf="i.not_picked.length > 4; else elseBlock">
-              <a button target="_blank" (click)="getLookupCard(i.not_picked[4])" [routerLink]="['/cardLookup', lookupCard]" class="btn btn-raised btn-link color-btn text-white">{{i.not_picked[4]}}</a>
+              <a button target="_blank" (click)="getLookupCard(i.not_picked[4].id)" [routerLink]="['/cardLookup', lookupCard]" class="btn btn-raised btn-link color-btn text-white">{{i.not_picked[4].name}}</a>
             </div>
             <ng-template #elseBlock>---</ng-template>
           </td>
@@ -139,27 +139,27 @@
         <tr>
           <th style="padding-right: 25px">Picked</th>
           <td class="right" *ngFor="let i of run.top.event.boss_relics" style="font-weight: bold; padding-left: 35px; padding-right: 35px">
-            {{i.picked}}
+            {{i.relicName}}
           </td>
         </tr>
         <tr>
           <th style="padding-right: 25px">Not Picked 1</th>
           <td class="right" *ngFor="let i of run.top.event.boss_relics" style="padding-left: 35px; padding-right: 35px">
-            <div *ngIf="i.not_picked.length > 0; else elseBlock">{{i.not_picked[0]}}</div>
+            <div *ngIf="i.not_picked.length > 0; else elseBlock">{{i.not_picked[0].name}}</div>
             <ng-template #elseBlock>---</ng-template>
           </td>
         </tr>
         <tr>
           <th style="padding-right: 25px">Not Picked 2</th>
           <td class="right" *ngFor="let i of run.top.event.boss_relics" style="padding-left: 35px; padding-right: 35px">
-            <div *ngIf="i.not_picked.length > 1; else elseBlock">{{i.not_picked[1]}}</div>
+            <div *ngIf="i.not_picked.length > 1; else elseBlock">{{i.not_picked[1].name}}</div>
             <ng-template #elseBlock>---</ng-template>
           </td>
         </tr>
         <tr>
           <th style="padding-right: 25px">Not Picked 3</th>
           <td class="right" *ngFor="let i of run.top.event.boss_relics" style="padding-left: 35px; padding-right: 35px">
-            <div *ngIf="i.not_picked.length > 2; else elseBlock">{{i.not_picked[2]}}</div>
+            <div *ngIf="i.not_picked.length > 2; else elseBlock">{{i.not_picked[2].name}}</div>
             <ng-template #elseBlock>---</ng-template>
           </td>
         </tr>
@@ -172,10 +172,10 @@
       <mat-label>Relics</mat-label>
       <table style="display: block; width:100%; margin-top: 10pt;" class="table table-dark">
         <tr *ngFor="let relic of run.top.event.relics">
-          {{relic}}
+          {{relic.name}}
         </tr>
         <tr *ngFor="let relic of run.top.event.boss_relics">
-          {{relic.picked}}
+          {{relic.relicName}}
         </tr>
       </table>
     </div>

@@ -23,7 +23,6 @@ export class CardLookupComponent implements OnInit {
   imageName: string = '';
   upgradeImageName: string = '';
   upgradeImageNames: string[] = [];
-  counter: number = 0;
 
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
@@ -48,23 +47,21 @@ export class CardLookupComponent implements OnInit {
         const newText = this.cardData.newLineText.replace(/ NL /gi, '\n');
         const next = newText.replace(/\*/gi, '');
         this.cardData.newLineText = next.replace(/\. /gi, '. \n');
+        console.log('this.upgradeImages', this.upgradeImageNames);
       });
     });
   }
 
-  incCounter(inc: number): void {
-    this.counter += inc;
-  }
-
   hideImage(): void {
-    document.getElementById('image-preview-solo').style.display = 'none';
-    document.getElementById('image-preview-double').style.display = 'none';
-    document.getElementById('image-plus-preview').style.display = 'none';
+    try { document.getElementById('image-preview-solo').style.display = 'none'; } catch (err: any) {}
+    try { document.getElementById('image-preview-double').style.display = 'none'; } catch (err: any) {}
+    try { document.getElementById('image-plus-preview').style.display = 'none'; } catch (err: any) {}
+    try { document.getElementById('upgrade-image-preview-left-1').style.display = 'none'; } catch (err: any) {}
   }
 
   fillUpgradeImages(): void {
     if (this.imageName) {
-      const upgrades = this.cardData.maxUpgrades;
+      const upgrades = this.cardData.duelistCard ? this.cardData.maxUpgrades : this.cardData.type !== 'Curse' ? 1 : 0;
       if (upgrades && upgrades !== -1) {
         for (let i = 1; i < upgrades + 1; i++) {
           this.upgradeImageNames.push(this.imageName + 'Plus' + i.toString());

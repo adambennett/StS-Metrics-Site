@@ -97,23 +97,13 @@
     <div *ngIf="upgradeImageNames.length > 0; else elseBlockOuter">
       <img class="card-preview-left" (error)="hideImage()" src="{{getImageFromS3(imageName)}}" id="image-preview-double">
       <img class="card-preview-right" src="{{getImageFromS3(upgradeImageNames[0])}}" id="upgrade-image-preview-left-1">
-      <div *ngFor="let image of upgradeImageNames">
-        <div *ngIf="counter !== 0; else elseBlockOut">
-          <div *ngIf="counter + 1 < upgradeImageNames.length; else elseBlock">
-            <img class="card-preview-left" src="{{getImageFromS3(upgradeImageNames[counter])}}">
-            <img class="card-preview-right" src="{{getImageFromS3(upgradeImageNames[counter + 1])}}">
-            {{incCounter(2)}}
+      <div *ngFor="let image of upgradeImageNames; let i = index">
+        <div *ngIf="i > 0">
+          <div *ngIf="i + i < upgradeImageNames.length">
+            <img class="card-preview-left" src="{{getImageFromS3(upgradeImageNames[i + (i - 1)])}}">
+            <img class="card-preview-right" src="{{getImageFromS3(upgradeImageNames[i + i])}}">
           </div>
-          <ng-template #elseBlock>
-            <div *ngIf="counter < upgradeImageNames.length">
-              <img class="card-preview-left" src="{{getImageFromS3(upgradeImageNames[counter])}}">
-              {{incCounter(1)}}
-            </div>
-          </ng-template>
         </div>
-        <ng-template #elseBlockOut>
-          {{incCounter(1)}}
-        </ng-template>
       </div>
     </div>
     <ng-template #elseBlockOuter>

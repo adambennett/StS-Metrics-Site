@@ -1,0 +1,36 @@
+export interface ScoredCard {
+  card_id: string
+  card_name: string;
+  pool_name: string;
+  act0_delta: number;
+  act1_delta: number;
+  act2_delta: number;
+  act3_delta: number;
+  act0_win_rate: number;
+  act1_win_rate: number;
+  act2_win_rate: number;
+  act3_win_rate: number;
+  act0_wins: number;
+  act1_wins: number;
+  act2_wins: number;
+  act3_wins: number;
+  act0_losses: number;
+  act1_losses: number;
+  act2_losses: number;
+  act3_losses: number;
+  act0_score: number;
+  act1_score: number;
+  act2_score: number;
+  act3_score: number;
+  overall_score: number;
+  position: number;
+  a0_position: number;
+  a1_position: number;
+  a2_position: number;
+  a3_position: number;
+  percentile: number;
+  a0_percentile: number;
+  a1_percentile: number;
+  a2_percentile: number;
+  a3_percentile: number;
+}

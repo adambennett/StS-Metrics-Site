@@ -76,15 +76,11 @@
       </mat-menu>
 
       <!--  Info  -->
-      <button class="sidebar-option" mat-menu-item [matMenuTriggerFor]="infomenu">Info</button>
+      <button class="sidebar-option" mat-menu-item [matMenuTriggerFor]="infomenu">Stats</button>
       <mat-menu #infomenu="matMenu">
-        <button mat-menu-item [routerLink]="['/info/run-count-country']">Run Count by Country</button>
-      </mat-menu>
-
-      <!--  Graphs  -->
-      <button class="sidebar-option" mat-menu-item [matMenuTriggerFor]="graphmenu">Graphs</button>
-      <mat-menu #graphmenu="matMenu">
+        <button mat-menu-item [routerLink]="['/compare']">Deck Stats</button>
         <button mat-menu-item [routerLink]="['/deckPopularity']">Deck Popularity</button>
+        <button mat-menu-item [routerLink]="['/info/run-count-country']">Runs by Country</button>
       </mat-menu>
 
       <!--  Mods  -->
