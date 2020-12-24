@@ -67,7 +67,9 @@
             <ng-template #elseBlock>
               <!--<button mat-menu-item [routerLink]="['/info', deck.id]">Info</button>-->
             </ng-template>
-            <button mat-menu-item [routerLink]="['/cards', deck.id]">Cards</button>
+            <div *ngIf="deck.name !== 'Exodia'">
+              <button mat-menu-item [routerLink]="['/cards', deck.id]">Cards</button>
+            </div>
             <button mat-menu-item [routerLink]="['/relics', deck.id]">Relics</button>
             <button mat-menu-item [routerLink]="['/potions', deck.id]">Potions</button>
             <button mat-menu-item [routerLink]="['/neow', deck.id]">Neow</button>

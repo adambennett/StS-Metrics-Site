@@ -7,6 +7,8 @@
           <div class="duelist-info-grid-row">
             <div class="duelist-info-grid-column">
               <mat-label><span style="font-weight:bold">Name:</span>  <br>{{cardData.name}}</mat-label><br><br>
+              <mat-label><span style="font-weight:bold">Module:</span> <br>{{cardData.module}}</mat-label><br><br>
+              <mat-label><span style="font-weight:bold">Authors:</span> <br>{{cardData.authors}}</mat-label><br><br>
               <div *ngIf="cardData.newLineText; else elseBlock">
                 <mat-label><span style="font-weight:bold">Text:</span>  <br><span class="card-text">{{cardData.newLineText}}</span></mat-label><br><br>
               </div>
@@ -55,14 +57,13 @@
       <ng-template #elseBlock2>
         <mat-card style="margin:5pt">
           <mat-label><span style="font-weight:bold">Name:</span>  <br>{{cardData.name}}</mat-label><br><br>
+          <mat-label><span style="font-weight:bold">Module:</span> <br>{{cardData.module}}</mat-label><br><br>
+          <mat-label><span style="font-weight:bold">Authors:</span> <br>{{cardData.authors}}</mat-label><br><br>
           <mat-label><span style="font-weight:bold">Text:</span>  <br>{{cardData.text}}</mat-label><br><br>
           <mat-label><span style="font-weight:bold">Color:</span>  <br>{{cardData.color}}</mat-label><br><br>
           <mat-label><span style="font-weight:bold">Rarity:</span>  <br>{{cardData.rarity}}</mat-label><br><br>
           <mat-label><span style="font-weight:bold">Type:</span>  <br>{{cardData.type}}</mat-label><br><br>
           <mat-label><span style="font-weight:bold">Cost:</span>  <br>{{cardData.cost}}</mat-label><br><br>
-          <mat-label><span style="font-weight:bold">Damage:</span> {{cardData.damage}}</mat-label><br>
-          <mat-label><span style="font-weight:bold">Block:</span>  {{cardData.block}}</mat-label><br>
-          <mat-label><span style="font-weight:bold">Magic Number:</span>  {{cardData.magicNumber}}</mat-label><br>
         </mat-card>
       </ng-template>
     </div>

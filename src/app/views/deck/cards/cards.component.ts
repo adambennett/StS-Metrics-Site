@@ -18,7 +18,7 @@ import {ScoredCard} from '../../../models/ScoredCard';
 })
 export class CardsComponent implements OnInit {
 
-  displayedColumns: string[] = ['name', 'act1_score', 'act2_score', 'act3_score', 'overall_score'];
+  displayedColumns: string[] = ['card_name', 'act1_score', 'act2_score', 'act3_score', 'overall_score', 'card_id'];
   cards: ScoredCard[];
   dataSource: MatTableDataSource<ScoredCard>;
   sub: Subscription;
@@ -60,6 +60,9 @@ export class CardsComponent implements OnInit {
         const pool = ((deck.startsWith('A') || deck.startsWith('P') || deck.startsWith('R')) && deck.length == 2) ? this.parseAscendedPharaohShorthand(deck) : deck;
           this.infoService.getCardScores(pool).subscribe(data => {
             this.cards = data;
+            this.cards.sort((a: ScoredCard, b: ScoredCard) => {
+              return a.card_name.localeCompare(b.card_name, undefined, {numeric: true, sensitivity: 'base'});
+            });
             this.dataSource = new MatTableDataSource<ScoredCard>(this.cards);
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
@@ -79,8 +82,8 @@ export class CardsComponent implements OnInit {
       case 'P3': return 'Pharaoh III';
       case 'P4': return 'Pharaoh IV';
       case 'P5': return 'Pharaoh V';
-      case 'RS':
-      case 'RB': return 'Random';
+      case 'RS': return 'Random (Small)';
+      case 'RB': return 'Random (Big)';
       default: return key;
     }
   }
