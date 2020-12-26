@@ -70,4 +70,21 @@ export class CardLookupComponent implements OnInit {
     }
   }
 
+  writeColor(): string {
+    switch (this.cardData.color) {
+      case 'Duelist_spells':
+        return 'Spell';
+      case 'Duelist_monsters':
+        return 'Monster';
+      case 'Duelist_traps':
+        return 'Trap';
+      case 'Duelist':
+        return 'Token';
+      case 'Duelist_special':
+        return 'Special Duelist Card';
+      default:
+        return this.cardData.color;
+    }
+  }
+
 }
