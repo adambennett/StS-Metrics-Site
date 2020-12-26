@@ -25,6 +25,7 @@ export class CardsComponent implements OnInit {
   lookupCard: string = '';
   fullCards: FullCardInfo[] = [];
   fullyLoaded: true;
+  urlCard: string;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -48,15 +49,6 @@ export class CardsComponent implements OnInit {
     this.sub = this.route.params.subscribe(params => {
       const deck = params.deck;
       if (deck) {
-        /*if (deck === 'All') {
-          this.cardService.getCards().subscribe(data => {
-            this.cards = data;
-            this.dataSource = new MatTableDataSource<DisplayCard>(this.cards);
-            this.dataSource.paginator = this.paginator;
-            this.dataSource.sort = this.sort;
-          });
-        } */
-        //else {
         const pool = ((deck.startsWith('A') || deck.startsWith('P') || deck.startsWith('R')) && deck.length == 2) ? this.parseAscendedPharaohShorthand(deck) : deck;
           this.infoService.getCardScores(pool).subscribe(data => {
             this.cards = data;
@@ -66,8 +58,15 @@ export class CardsComponent implements OnInit {
             this.dataSource = new MatTableDataSource<ScoredCard>(this.cards);
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
+            this.route.queryParams.subscribe(query => {
+              const card = query.card;
+              if (card) {
+                this.urlCard = card;
+              } else {
+                this.urlCard = null;
+              }
+            });
           });
-        //}
       }
     });
   }
