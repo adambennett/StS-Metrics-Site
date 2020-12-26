@@ -1,6 +1,7 @@
-import {TombSpentPoints} from './TombSpentPoints';
+import {TombSpentPoints} from '../TombSpentPoints';
+import {SimpleCard} from './SimpleCard';
 
-export interface Event {
+export interface DetailsEvent {
   event_id: number;
   damage_healed: number;
   gold_gain: number;
@@ -12,8 +13,8 @@ export interface Event {
   event_name: string;
   player_choice: string;
   duelist: boolean;
-  cards_obtained: string[];
-  relics_obtained: string[];
+  cards_obtained: SimpleCard[];
+  relics_obtained: SimpleCard[];
   spent_points: TombSpentPoints;
   magic_reward: number;
   greed_reward: number;

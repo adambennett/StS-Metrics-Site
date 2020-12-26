@@ -5,10 +5,11 @@ import {MatSort} from "@angular/material/sort";
 import {Subscription} from 'rxjs/Subscription';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CardService} from "../../../services/card-service/card.service";
-import {DisplayCard} from "../../../models/DisplayCard";
 import {InfoLookup} from '../../../utils/InfoLookup';
 import {FullCardInfo} from '../../../models/FullCardInfo';
 import {GeneralUtil} from '../../../utils/Utilities';
+import {InfoService} from '../../../services/info-service/info.service';
+import {ScoredCard} from '../../../models/ScoredCard';
 
 @Component({
   selector: 'app-cards',
@@ -17,20 +18,22 @@ import {GeneralUtil} from '../../../utils/Utilities';
 })
 export class CardsComponent implements OnInit {
 
-  displayedColumns: string[] = ['name', 'popularity', 'power', 'offered', 'picked', 'pickVic'];
-  cards: DisplayCard[];
-  dataSource: MatTableDataSource<DisplayCard>;
+  displayedColumns: string[] = ['card_name', 'act1_score', 'act2_score', 'act3_score', 'overall_score', 'card_id'];
+  cards: ScoredCard[];
+  dataSource: MatTableDataSource<ScoredCard>;
   sub: Subscription;
   lookupCard: string = '';
   fullCards: FullCardInfo[] = [];
   fullyLoaded: true;
+  urlCard: string;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private cardService: CardService) { }
+              private cardService: CardService,
+              private infoService: InfoService) { }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -46,23 +49,42 @@ export class CardsComponent implements OnInit {
     this.sub = this.route.params.subscribe(params => {
       const deck = params.deck;
       if (deck) {
-        if (deck === 'All') {
-          this.cardService.getCards().subscribe(data => {
+        const pool = ((deck.startsWith('A') || deck.startsWith('P') || deck.startsWith('R')) && deck.length == 2) ? this.parseAscendedPharaohShorthand(deck) : deck;
+          this.infoService.getCardScores(pool).subscribe(data => {
             this.cards = data;
-            this.dataSource = new MatTableDataSource<DisplayCard>(this.cards);
+            this.cards.sort((a: ScoredCard, b: ScoredCard) => {
+              return a.card_name.localeCompare(b.card_name, undefined, {numeric: true, sensitivity: 'base'});
+            });
+            this.dataSource = new MatTableDataSource<ScoredCard>(this.cards);
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
+            this.route.queryParams.subscribe(query => {
+              const card = query.card;
+              if (card) {
+                this.urlCard = card;
+              } else {
+                this.urlCard = null;
+              }
+            });
           });
-        } else {
-          this.cardService.getCardsFromDeck(deck).subscribe(data => {
-            this.cards = data;
-            this.dataSource = new MatTableDataSource<DisplayCard>(this.cards);
-            this.dataSource.paginator = this.paginator;
-            this.dataSource.sort = this.sort;
-          });
-        }
       }
     });
+  }
+
+  parseAscendedPharaohShorthand(key: string): string {
+    switch (key) {
+      case 'A1': return 'Ascended I';
+      case 'A2': return 'Ascended II';
+      case 'A3': return 'Ascended III';
+      case 'P1': return 'Pharaoh I';
+      case 'P2': return 'Pharaoh II';
+      case 'P3': return 'Pharaoh III';
+      case 'P4': return 'Pharaoh IV';
+      case 'P5': return 'Pharaoh V';
+      case 'RS': return 'Random (Small)';
+      case 'RB': return 'Random (Big)';
+      default: return key;
+    }
   }
 
   getLookupCard(card: string): void {

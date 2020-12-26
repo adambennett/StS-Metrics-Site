@@ -222,7 +222,7 @@ const appRoutes: Routes = [
     MatTabsModule,
     MatToolbarModule,
     MatTooltipModule,
-    PortalModule,
+    PortalModule
   ],
   providers: [TopService, CardService, BundleService, DisplayObjectService, InfoService, RunLogService],
   bootstrap: [AppComponent],

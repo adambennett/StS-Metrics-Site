@@ -8,6 +8,8 @@ export interface LookupCard {
   cost: string;
   text: string;
   newLineText: string;
+  module: string;
+  authors: string;
   block: number;
   damage: number;
   magicNumber: number;

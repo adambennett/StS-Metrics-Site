@@ -7,11 +7,11 @@ import {environment} from '../../../../environments/environment';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
-import {RunDetails} from '../../../models/RunDetails';
-import {TopBundle} from '../../../models/TopBundle';
+import {RunDetails} from '../../../models/runDetails/RunDetails';
 import {RunLog} from '../../../models/RunLog';
 import {InfoLookup} from '../../../utils/InfoLookup';
 import {GeneralUtil} from '../../../utils/Utilities';
+import {RunTop} from '../../../models/runDetails/RunTop';
 
 @Component({
   selector: 'app-run-viewer',
@@ -41,7 +41,7 @@ export class RunViewerComponent implements OnInit {
     'remove_toons',
     'victory'
   ];
-  dataSource: MatTableDataSource<TopBundle>;
+  dataSource: MatTableDataSource<RunTop>;
   pathIcons: PathIconArchive = Archive;
   pathURLs: string[] = [];
   emptyPath: boolean = false;
@@ -67,9 +67,9 @@ export class RunViewerComponent implements OnInit {
       if (id) {
         this.runService.getRunView(id).subscribe(data => {
           this.run = data;
-          const arr: TopBundle[] = [];
+          const arr: RunTop[] = [];
           arr.push(this.run.top);
-          this.dataSource = new MatTableDataSource<TopBundle>(arr);
+          this.dataSource = new MatTableDataSource<RunTop>(arr);
           this.calculatePath();
         });
       }

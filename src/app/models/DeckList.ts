@@ -1,6 +1,6 @@
 export class DeckList {
   static decks = [
-    {id: 'All', name: 'All'},
+    /*{id: 'All', name: 'All'},*/
     {id: 'Standard', name: 'Standard'},
     {id: 'Dragon', name: 'Dragon'},
     {id: 'Naturia', name: 'Naturia'},

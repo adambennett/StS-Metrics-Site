@@ -7,13 +7,15 @@
           <div class="duelist-info-grid-row">
             <div class="duelist-info-grid-column">
               <mat-label><span style="font-weight:bold">Name:</span>  <br>{{cardData.name}}</mat-label><br><br>
+              <mat-label><span style="font-weight:bold">Module:</span> <br>{{cardData.module}}</mat-label><br><br>
+              <mat-label><span style="font-weight:bold">Authors:</span> <br>{{cardData.authors}}</mat-label><br><br>
               <div *ngIf="cardData.newLineText; else elseBlock">
                 <mat-label><span style="font-weight:bold">Text:</span>  <br><span class="card-text">{{cardData.newLineText}}</span></mat-label><br><br>
               </div>
               <ng-template #elseBlock>
                 <mat-label><span style="font-weight:bold">Text:</span>  <br>{{cardData.text}}</mat-label><br><br>
               </ng-template>
-              <mat-label><span style="font-weight:bold">Color:</span>  <br>{{cardData.color}}</mat-label><br><br>
+              <mat-label><span style="font-weight:bold">Color:</span>  <br>{{writeColor()}}</mat-label><br><br>
               <mat-label><span style="font-weight:bold">Rarity:</span>  <br>{{cardData.rarity}}</mat-label><br><br>
               <mat-label><span style="font-weight:bold">Type:</span>  <br>{{cardData.type}}</mat-label><br><br>
               <mat-label><span style="font-weight:bold">Duelist Type:</span>  <br>{{cardData.duelistType}}</mat-label><br><br>
@@ -55,14 +57,13 @@
       <ng-template #elseBlock2>
         <mat-card style="margin:5pt">
           <mat-label><span style="font-weight:bold">Name:</span>  <br>{{cardData.name}}</mat-label><br><br>
+          <mat-label><span style="font-weight:bold">Module:</span> <br>{{cardData.module}}</mat-label><br><br>
+          <mat-label><span style="font-weight:bold">Authors:</span> <br>{{cardData.authors}}</mat-label><br><br>
           <mat-label><span style="font-weight:bold">Text:</span>  <br>{{cardData.text}}</mat-label><br><br>
           <mat-label><span style="font-weight:bold">Color:</span>  <br>{{cardData.color}}</mat-label><br><br>
           <mat-label><span style="font-weight:bold">Rarity:</span>  <br>{{cardData.rarity}}</mat-label><br><br>
           <mat-label><span style="font-weight:bold">Type:</span>  <br>{{cardData.type}}</mat-label><br><br>
           <mat-label><span style="font-weight:bold">Cost:</span>  <br>{{cardData.cost}}</mat-label><br><br>
-          <mat-label><span style="font-weight:bold">Damage:</span> {{cardData.damage}}</mat-label><br>
-          <mat-label><span style="font-weight:bold">Block:</span>  {{cardData.block}}</mat-label><br>
-          <mat-label><span style="font-weight:bold">Magic Number:</span>  {{cardData.magicNumber}}</mat-label><br>
         </mat-card>
       </ng-template>
     </div>
@@ -97,23 +98,13 @@
     <div *ngIf="upgradeImageNames.length > 0; else elseBlockOuter">
       <img class="card-preview-left" (error)="hideImage()" src="{{getImageFromS3(imageName)}}" id="image-preview-double">
       <img class="card-preview-right" src="{{getImageFromS3(upgradeImageNames[0])}}" id="upgrade-image-preview-left-1">
-      <div *ngFor="let image of upgradeImageNames">
-        <div *ngIf="counter !== 0; else elseBlockOut">
-          <div *ngIf="counter + 1 < upgradeImageNames.length; else elseBlock">
-            <img class="card-preview-left" src="{{getImageFromS3(upgradeImageNames[counter])}}">
-            <img class="card-preview-right" src="{{getImageFromS3(upgradeImageNames[counter + 1])}}">
-            {{incCounter(2)}}
+      <div *ngFor="let image of upgradeImageNames; let i = index">
+        <div *ngIf="i > 0">
+          <div *ngIf="i + i < upgradeImageNames.length">
+            <img class="card-preview-left" src="{{getImageFromS3(upgradeImageNames[i + (i - 1)])}}">
+            <img class="card-preview-right" src="{{getImageFromS3(upgradeImageNames[i + i])}}">
           </div>
-          <ng-template #elseBlock>
-            <div *ngIf="counter < upgradeImageNames.length">
-              <img class="card-preview-left" src="{{getImageFromS3(upgradeImageNames[counter])}}">
-              {{incCounter(1)}}
-            </div>
-          </ng-template>
         </div>
-        <ng-template #elseBlockOut>
-          {{incCounter(1)}}
-        </ng-template>
       </div>
     </div>
     <ng-template #elseBlockOuter>

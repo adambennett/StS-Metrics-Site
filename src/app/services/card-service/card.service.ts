@@ -19,5 +19,4 @@ export class CardService extends TopService {
   getCardsFromDeck(deck: string): Observable<DisplayCard[]> {
     return this.http.get<DisplayCard[]>(this.API + 'cards/' + deck);
   }
-
 }

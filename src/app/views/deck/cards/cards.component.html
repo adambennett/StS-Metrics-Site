@@ -5,41 +5,43 @@
 
 <div class="mat-elevation-z8">
   <table mat-table [dataSource]="dataSource" matSort>
-    <ng-container matColumnDef="name">
+    <ng-container matColumnDef="card_name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Card Name </th>
       <td mat-cell *matCellDef="let element">
-        <a target="_blank" (click)="getLookupCard(element.name)" [routerLink]="['/cardLookup', element.name]" class="btn btn-raised btn-link color-btn text-white">{{element.name}}</a>
+        <a target="_blank" (click)="getLookupCard(element.card_id)" [routerLink]="['/cardLookup', element.card_id]" class="btn btn-raised btn-link color-btn text-white">{{element.card_name}}</a>
       </td>
     </ng-container>
 
-    <ng-container matColumnDef="popularity">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Popularity </th>
-      <td mat-cell *matCellDef="let element"> {{element.popularity * 100 | number : '1.2-2'}} </td>
+    <ng-container matColumnDef="act1_score">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Act 1 </th>
+      <td mat-cell *matCellDef="let element"> {{element.act1_score}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="power">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Power </th>
-      <td mat-cell *matCellDef="let element"> {{element.power * 100 | number : '1.2-2'}} </td>
+    <ng-container matColumnDef="act2_score">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Act 2 </th>
+      <td mat-cell *matCellDef="let element"> {{element.act2_score}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="offered">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Offered </th>
-      <td mat-cell *matCellDef="let element"> {{element.offered}} </td>
+    <ng-container matColumnDef="act3_score">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Act 3 </th>
+      <td mat-cell *matCellDef="let element"> {{element.act3_score}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="picked">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Picked </th>
-      <td mat-cell *matCellDef="let element"> {{element.picked}} </td>
+    <ng-container matColumnDef="overall_score">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Overall Score </th>
+      <td mat-cell *matCellDef="let element" style="color: darkgoldenrod"> {{element.overall_score}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="pickVic">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Picked (Victory) </th>
-      <td mat-cell *matCellDef="let element"> {{element.pickVic}} </td>
+    <ng-container matColumnDef="card_id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Card ID </th>
+      <td mat-cell *matCellDef="let element"> {{element.card_id}} </td>
     </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr
+      [class.selected-row]="urlCard != null && row.card_id === urlCard"
+      mat-row *matRowDef="let row; columns: displayedColumns;">
     </tr>
   </table>
-  <mat-paginator [pageSizeOptions]="[5, 10, 20, 50, 100, 500, 1000, 5000]" [showFirstLastButtons]="true"></mat-paginator>
+  <mat-paginator [pageSize]="2000" [pageSizeOptions]="[5, 10, 20, 50, 100, 500, 1000, 2000]" [showFirstLastButtons]="true"></mat-paginator>
 </div>

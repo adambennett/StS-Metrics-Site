@@ -67,7 +67,9 @@
             <ng-template #elseBlock>
               <!--<button mat-menu-item [routerLink]="['/info', deck.id]">Info</button>-->
             </ng-template>
-            <button mat-menu-item [routerLink]="['/cards', deck.id]">Cards</button>
+            <div *ngIf="deck.name !== 'Exodia'">
+              <button mat-menu-item [routerLink]="['/cards', deck.id]">Cards</button>
+            </div>
             <button mat-menu-item [routerLink]="['/relics', deck.id]">Relics</button>
             <button mat-menu-item [routerLink]="['/potions', deck.id]">Potions</button>
             <button mat-menu-item [routerLink]="['/neow', deck.id]">Neow</button>
@@ -76,15 +78,11 @@
       </mat-menu>
 
       <!--  Info  -->
-      <button class="sidebar-option" mat-menu-item [matMenuTriggerFor]="infomenu">Info</button>
+      <button class="sidebar-option" mat-menu-item [matMenuTriggerFor]="infomenu">Stats</button>
       <mat-menu #infomenu="matMenu">
-        <button mat-menu-item [routerLink]="['/info/run-count-country']">Run Count by Country</button>
-      </mat-menu>
-
-      <!--  Graphs  -->
-      <button class="sidebar-option" mat-menu-item [matMenuTriggerFor]="graphmenu">Graphs</button>
-      <mat-menu #graphmenu="matMenu">
+        <button mat-menu-item [routerLink]="['/compare']">Deck Stats</button>
         <button mat-menu-item [routerLink]="['/deckPopularity']">Deck Popularity</button>
+        <button mat-menu-item [routerLink]="['/info/run-count-country']">Runs by Country</button>
       </mat-menu>
 
       <!--  Mods  -->
