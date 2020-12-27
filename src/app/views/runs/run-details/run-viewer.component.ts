@@ -67,10 +67,14 @@ export class RunViewerComponent implements OnInit {
       if (id) {
         this.runService.getRunView(id).subscribe(data => {
           this.run = data;
-          const arr: RunTop[] = [];
-          arr.push(this.run.top);
-          this.dataSource = new MatTableDataSource<RunTop>(arr);
-          this.calculatePath();
+          if (this.run != null) {
+            const arr: RunTop[] = [];
+            arr.push(this.run.top);
+            this.dataSource = new MatTableDataSource<RunTop>(arr);
+            this.calculatePath();
+          } else {
+            console.log("Run data was null. It's possible this run has not finished processing just yet. Check back soon.");
+          }
         });
       }
     });
