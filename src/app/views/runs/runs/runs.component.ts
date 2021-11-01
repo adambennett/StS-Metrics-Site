@@ -1,6 +1,5 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator} from "@angular/material/paginator";
-import {MatTableDataSource} from "@angular/material/table";
 import {MatSort} from "@angular/material/sort";
 import {Subscription} from 'rxjs/Subscription';
 import {ActivatedRoute, Params, Router} from '@angular/router';
@@ -18,21 +17,25 @@ import {Timestamps} from '../../../models/Timestamps';
 import {Utilities} from '../../../utils/RunUtils';
 import {GeneralUtil} from '../../../utils/Utilities';
 import {MatRipple} from '@angular/material/core';
+import {RunServiceService} from '../../../services/run-service/run-service.service';
+import {RunsDataSource} from '../../../models/RunsDataSource';
+import {tap} from 'rxjs/operators';
 
 @Component({
   selector: 'app-runs',
   templateUrl: './runs.component.html',
   styleUrls: ['./runs.component.scss']
 })
-export class RunsComponent implements OnInit {
+export class RunsComponent implements AfterViewInit, OnInit {
 
   timeframes = Timestamps.times;
+  totalPages: number;
   params: Params;
   sub: Subscription;
   displayedColumns: string[];
   runs: RunLog[];
   currentRuns: RunLog[];
-  dataSource: MatTableDataSource<RunLog>;
+  dataSource: RunsDataSource;
   runType: string;
   columns: RunsColumnsModel = RunsColumns;
   characters: string[] = [];
@@ -47,7 +50,6 @@ export class RunsComponent implements OnInit {
   startingDecks: string[] = [];
   startingDecksFilter: string[] = [];
   timeFilter: string = '';
-  loadedInitialRuns: boolean = false;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
@@ -57,11 +59,19 @@ export class RunsComponent implements OnInit {
               private router: Router,
               private runService: RunLogService,
               private bundleService: BundleService,
-              private infoService: InfoService) { }
+              private infoService: InfoService,
+              private runService2: RunServiceService) { }
 
   ngOnInit(): void {
     GeneralUtil.setPageTitle('Run Log');
+    this.dataSource = new RunsDataSource(this.runService2);
     this.sub = this.route.params.subscribe(params => {
+      if (params?.type !== 'hall-of-fame') {
+        this.runService2.countRuns(params).subscribe(data => {
+          this.totalPages = data;
+          this.paginator.length = data;
+        });
+      }
       this.runs = null;
       this.params = params;
       this.render(params);
@@ -72,6 +82,17 @@ export class RunsComponent implements OnInit {
     });
     this.bundleService.getCountries().subscribe(data =>   { this.countries = data;  });
     this.infoService.getAllMods().subscribe(data =>       { this.mods = data; });
+
+  }
+
+  ngAfterViewInit() {
+    this.paginator.page.pipe(tap(() => this.loadRuns())).subscribe();
+  }
+
+  loadRuns(options = this.dataSource.options) {
+    options.pageNumber = this.paginator.pageIndex.toString();
+    options.pageSize = this.paginator.pageSize.toString();
+    this.dataSource.getAllRuns(options);
   }
 
   launchRipple() {
@@ -123,12 +144,6 @@ export class RunsComponent implements OnInit {
     this.killedBys.sort((a,b) => a.localeCompare(b));
   }
 
-  refreshTable(): void {
-    this.dataSource = new MatTableDataSource<RunLog>(this.currentRuns.slice().reverse());
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
-
   toggleFilterBox(show: string): void {
     Utilities.toggleFilter(show);
   }
@@ -142,7 +157,6 @@ export class RunsComponent implements OnInit {
     this.disableRefresh = true;
     setTimeout(() => {
       this.disableRefresh = false;
-
     }, 7500);
   }
 
@@ -161,7 +175,7 @@ export class RunsComponent implements OnInit {
     if (currentRunSize !== this.currentRuns.length) {
       this.launchRipple();
     }
-    this.refreshTable();
+    //this.refreshTable();
   }
 
   allFiltersEmpty(): boolean {
@@ -198,15 +212,18 @@ export class RunsComponent implements OnInit {
     if (currentRunSize !== this.currentRuns.length) {
       this.launchRipple();
     }
-    this.refreshTable();
+    //this.refreshTable();
     document.body.style.cursor = 'auto';
   }
 
-  refreshRuns(data: RunLog[]): void {
+  /*refreshRuns(data: RunLog[]): void {
     if (this.loadedInitialRuns) {
       this.launchRipple();
     } else {
       this.loadedInitialRuns = true;
+    }
+    if (data == null) {
+      return;
     }
     if (this.runs == null || this.runs.length < data.length) {
       this.runs = data;
@@ -214,7 +231,7 @@ export class RunsComponent implements OnInit {
       this.populateFilters();
       this.refreshTable();
     }
-  }
+  }*/
 
   render(params: Params): void {
     document.body.style.cursor = 'wait';
@@ -226,46 +243,32 @@ export class RunsComponent implements OnInit {
       switch (runType) {
         case 'All':
           this.runType = 'All';
-          this.runService.getAllRuns().subscribe(data => {
-            this.refreshRuns(data);
-          });
+          this.dataSource.getAllRuns();
           break;
         case 'Duelist':
           this.runType = 'Duelist';
-          this.runService.getDuelistRuns().subscribe(data => {
-            this.refreshRuns(data);
-          });
+          this.dataSource.getDuelistRuns();
           break;
         case 'Non-Duelist':
           this.runType = 'Non-Duelist';
-          this.runService.getNonDuelistRuns().subscribe(data => {
-            this.refreshRuns(data);
-          });
+          this.dataSource.getNonDuelistRuns();
           break;
         case 'Character':
           this.runType = 'Character';
-          this.runService.getCharacterRuns(specificRunType).subscribe(data => {
-            this.refreshRuns(data);
-          });
+          this.dataSource.getCharacterRuns(specificRunType);
           break;
         case 'Country':
           this.runType = 'Country';
-          this.runService.getRunsByCountry(specificRunType).subscribe(data => {
-            this.refreshRuns(data);
-          });
+          this.dataSource.getRunsByCountry(specificRunType);
           break;
         case 'Time':
           this.runType = 'Time';
           const timestamp = DateFormatter.getTimestamp(specificRunType);
-          this.runService.getRunsByTime(timestamp.start, timestamp.end).subscribe(data => {
-            this.refreshRuns(data);
-          });
+          this.dataSource.getRunsByTime(timestamp.start, timestamp.end);
           break;
         case 'Host':
           this.runType = 'Host';
-          this.runService.getRunsByHost(specificRunType).subscribe(data => {
-            this.refreshRuns(data);
-          });
+          this.dataSource.getRunsByHost(specificRunType);
           break;
         case 'hall-of-fame':
           let runs: DisplayDeck[] = [];
@@ -286,12 +289,13 @@ export class RunsComponent implements OnInit {
               break;
             }
           }
-          this.runService.getRunsByIds(runIds).subscribe(data => {
-            this.refreshRuns(data);
-          });
+          this.totalPages = runIds.length;
+          this.paginator.length = runIds.length;
+          this.dataSource.getRunsByIds(runIds);
           break;
       }
     }
     document.body.style.cursor = 'auto';
+    this.paginator.pageIndex = 0;
   }
 }
