@@ -94,3 +94,4 @@ testem.log
 .DS_Store
 Thumbs.db
 /src/main/resources/
+/package-lock.json
